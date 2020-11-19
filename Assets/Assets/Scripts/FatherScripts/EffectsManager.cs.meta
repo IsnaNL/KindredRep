@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 9e2ab9f067156af40ab16ba087449e9b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - BloodEffect: {fileID: 6460528798923968704, guid: 18065ed7a70373b4bb5e9c5be74a8ad3,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
