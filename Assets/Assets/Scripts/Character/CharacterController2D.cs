@@ -155,7 +155,7 @@ public class CharacterController2D : Health
         // velocity.x = Mathf.MoveTowards(velocity.x, speed * moveInput, acceleration * Time.deltaTime);
         HorizontalMovement(acceleration, deceleration);
         HitImpact();
-        WallCol();
+       
         GetInputJumpMethod();
         GetInputSetCoditionsForSwordDash();
         GetInputSetConditionsForShotgunBlast();
@@ -234,7 +234,12 @@ public class CharacterController2D : Health
                 velocity.y -= gravityScale * Time.deltaTime;
 
             }
-            LandingAnimationCall();
+           if (velocity.y < 0)
+            {
+                animator.SetBool("IsFalling", true);
+                animator.SetBool("Idle", false);
+                
+            }
 
         }
        
@@ -246,6 +251,7 @@ public class CharacterController2D : Health
     }
     void FixedUpdate()
     {
+        WallCol();
         if (isSwordDashing && !IsShotgunKnockback && !isPickaxeClawing && !TopWallCheck && !BottomWallCheck)
         {
             transform.Translate(dashVelocity * Time.fixedDeltaTime);
@@ -267,6 +273,8 @@ public class CharacterController2D : Health
     {
         if (moveInput != 0)
         {
+            animator.SetBool("Idle", false);
+
             if (IsGrounded)
             {
                 animator.SetBool("IsRunning", true);
@@ -297,9 +305,10 @@ public class CharacterController2D : Health
         {
             //animator.SetBool("IsMoving", false);
             velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.deltaTime);
+            velocity.x *= deceleration * Time.deltaTime;
             //animator.SetBool("IsMoving", false);
             animator.SetBool("IsRunning", false);
-            animator.SetTrigger("Idle");
+            animator.SetBool("Idle",true);
         }
     }
     private void GetInputSetConditionsForPickaxeClawing()
@@ -346,9 +355,9 @@ public class CharacterController2D : Health
                 //    velocity.y = Mathf.MoveTowards(velocity.y, jumpHeight.y, jumpAcceleration);
                 //}
                 //StartCoroutine("JumpCoroutine");
+
                 StartCoroutine("JumpCoroutine");
                 StartCoroutine(TrailTime());
-                animator.SetTrigger("JumpAnim");
                 //AudioManager.a_Instance.AlixJumpAudio();
 
                 //LeanTween.move(gameObject, new Vector3(velocity.x, jumpHeight * Time.deltaTime), 0.8f );
@@ -425,11 +434,26 @@ public class CharacterController2D : Health
                 dashRight = false;
                 //velocity.x = -dashForce;
             }
-            //Can Shorten to else
+           
         }
     }
     private void WallCol()
     {
+        if (islookingright)
+        {
+            //  transform.rotation = Quaternion.Euler(0, 0, 0);
+            BottomWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.5f), Vector2.right, 0.5f, groundLayerMask);
+            TopWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 0.25f), Vector2.right, 0.5f, groundLayerMask);
+           
+        }
+        else
+        {
+
+            // transform.rotation = Quaternion.Euler(0, 180, 0);
+            BottomWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.5f), Vector2.left, 0.5f, groundLayerMask);
+            TopWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 0.25f), Vector2.left, 0.5f, groundLayerMask);
+            
+        }
         if (TopWallCheck && BottomWallCheck)
         {
             velocity.x = 0f;
@@ -503,6 +527,16 @@ public class CharacterController2D : Health
 
         if (isSwordDashing)
         {
+          /*  if (islookingright)
+            {
+                RaycastHit2D destination = Physics2D.Raycast(transform.position, Vector2.right, groundLayerMask);
+
+            }
+            else
+            {
+                RaycastHit2D destination = Physics2D.Raycast(transform.position, Vector2.left, groundLayerMask);
+
+            }
 
             //RaycastHit2D checkForWallRight = Physics2D.Raycast(transform.position, Vector2.right,10, groundLayerMask);
             //RaycastHit2D checkForWallLeft = Physics2D.Raycast(transform.position, Vector2.left,10, groundLayerMask);
@@ -518,23 +552,49 @@ public class CharacterController2D : Health
 
                 if (dashRight)
                 {
+                    RaycastHit2D destination = Physics2D.Raycast(transform.position, Vector2.right,100f, groundLayerMask);
 
-                    dashVelocity.x += dashForce * Time.deltaTime;
+                    if(transform.position.x >= destination.point.x)
+                    {
+                        velocity.x = dashVelocity.x * 0.15f;
+
+                        isSwordDashing = false;
+                        dashCurrentWaitTime = 0f;
+                    }
+                    else
+                    {
+                        dashVelocity.x += dashForce * Time.deltaTime;
+
+                    }
                     //WallCheckDir = 1;
                     //rb.AddForce(new Vector2(dashForce*Time.deltaTime , 0),ForceMode2D.Force);
                 }
                 else
                 {
                     //rb.AddForce(new Vector2(-dashForce*Time.deltaTime, 0),ForceMode2D.Force);
+                    RaycastHit2D destination = Physics2D.Raycast(transform.position, Vector2.left, 100f, groundLayerMask);
 
+                    if (transform.position.x <= destination.point.x)
+                    {
+                        velocity.x = dashVelocity.x * 0.15f;
 
-                    dashVelocity.x += -dashForce * Time.deltaTime;
+                        isSwordDashing = false;
+                        dashCurrentWaitTime = 0f;
+                    }
+                    else
+                    {
+                        dashVelocity.x += -dashForce * Time.deltaTime;
+
+                    }
                     //WallCheckDir = -1;
                 }
             }
             else
             {
                 velocity.x = 0;
+                isSwordDashing = false;
+                dashCurrentWaitTime = 0f;
+
             }
 
 
@@ -565,7 +625,7 @@ public class CharacterController2D : Health
                 //    rb.gravityScale = 1;
                 //}
                 //rb.velocity = Vector2.zero;
-                velocity.x = dashVelocity.x * 0.1f;
+                velocity.x = dashVelocity.x * 0.15f;
                 dashCurrentWaitTime = 0f;
                 isSwordDashing = false;
             }
@@ -693,7 +753,7 @@ public class CharacterController2D : Health
     //    currentScale = savedScale;
     //    //transform.localScale = currentScale;
     //}
-    void LandingAnimationCall()
+   /* void LandingAnimationCall()
     {
 
         RaycastHit2D hitGround = Physics2D.CircleCast(transform.position, 0.4f, Vector2.down, 0.6f, groundLayerMask);
@@ -702,7 +762,7 @@ public class CharacterController2D : Health
             animator.speed = 1;
             //animator.SetTrigger("Land");
         }
-    }
+    }*/
     void GetAimAngleForShotgun()//on a scale of -1 to 1 divided by 5
     {
         
@@ -769,16 +829,18 @@ public class CharacterController2D : Health
 
 
     }
-    void SetIsGroundedTofalse()//called from Invoke
+    /*void SetIsGroundedTofalse()//called from Invoke
     {
         IsGrounded = false;
 
-    }
+    }*/
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //IsGrounded = collision != null && (((1 << collision.gameObject.layer) & groundLayer) != 0);
         if (collision.gameObject.layer == groundLayer)
         {
+            animator.SetTrigger("Land");
+
             groundTriggerCount++;
             if (groundTriggerCount == 1)
             {
@@ -835,9 +897,10 @@ public class CharacterController2D : Health
             if (groundTriggerCount == 0)
             {
                 gravityScale = savedGravityScale;
-
-                Invoke("SetIsGroundedTofalse", 0.1f);
-
+               // animator.SetBool("Idle", false);
+                //Invoke("SetIsGroundedTofalse",0.1f);
+                IsGrounded = false;
+                animator.SetBool("Idle", false);
                 //Debug.Log("NOTGrounded" + IsGrounded);
             }
         }
@@ -846,14 +909,14 @@ public class CharacterController2D : Health
         //        collision.GetComponent<Enemy>().TakeDamage(weapon.damage);
         //    }
     }
-    public void FallingAnimationCall()
+   /* public void FallingAnimationCall()
     {
         animator.speed = 0;
         //if (IsGrounded)
         //{
         //    animator.speed = 1;
         //}
-    }
+    }*/
     IEnumerator TrailTime()
     {
         trail.enabled = true;
@@ -873,6 +936,7 @@ public class CharacterController2D : Health
         isjumping = true;
 
         animator.SetBool("IsJumping", true);
+        animator.SetTrigger("JumpAnim");
 
         //float startingpos = transform.position.y;
         float Destination = transform.position.y + jumpHeight.y;
@@ -894,11 +958,13 @@ public class CharacterController2D : Health
             //currentjumpAcceleration *= 0.99f;
             //currentJumpX *= 0.99f;
             velocity += new Vector2(currentJumpX * moveInput * Time.deltaTime * 0.9f, currentjumpAcceleration * Time.deltaTime * 0.9f);
+
             //transform.position += new Vector3(currentJumpX * moveInput * Time.deltaTime * 0.8f, currentjumpAcceleration * Time.deltaTime * 0.8f, 0);
             if (transform.position.y >= Destination)
             {
                 animator.SetBool("IsJumping", false);
-                animator.SetBool("IsFalling", true);
+              //  animator.SetBool("IsFalling", true);
+               
                 velocity *= 0.99f;
                 isjumping = false;
 
