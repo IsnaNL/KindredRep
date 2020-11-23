@@ -223,6 +223,7 @@ public class Benny : Health
             jumpAcceleration.x = -startingJumpAccelerationX;
         }
         animator.SetTrigger("AttackTrigger");
+        AudioManager.a_Instance.BennyJumpAudio();
         StartCoroutine((JumpCoRou()));
     }
     public void StopAnimation()

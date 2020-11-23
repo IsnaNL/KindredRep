@@ -34,6 +34,7 @@ public class OnBulletCollision : MonoBehaviour
 
 
         }
+        AudioManager.a_Instance.AlyxShotGunclashAudio();
         animator.SetTrigger("Hit");
         velocity = Vector2.zero;
         Destroy(gameObject, 0.3f);

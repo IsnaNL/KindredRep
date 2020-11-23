@@ -70,14 +70,14 @@ public class Weapon : MonoBehaviour
     {
         if (IsSwordWeapon)
         {
-            
             if (Input.GetButtonDown("Fire1"))
             {
                 if (timeBtwAttacks <= 0)
                 {
 
+                    AudioManager.a_Instance.AlyxJetSwordAttackAudio();
 
-                   // AudioManager.a_Instance.AlixAttackAudio();
+                    // AudioManager.a_Instance.AlixAttackAudio();
                     //  Debug.Log("attacking");
                     SlashAnimation();
                     //SwordAttackGizmo();
@@ -470,8 +470,9 @@ public class Weapon : MonoBehaviour
     void ShotgunShot()
     {
 
-        
-        
+        AudioManager.a_Instance.AlyxShotGunShotAudio();
+
+
          GameObject bulletInstance = Instantiate(shotgunBullet,weaponCollider.position, Quaternion.identity);
         if (player.islookingright)
         {

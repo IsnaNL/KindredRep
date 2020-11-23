@@ -71,7 +71,7 @@ public class CharacterController2D : Health
     public bool IsGrounded;
     public Vector2 hitKnockBack;
     public Vector2 shotgunBlastForce;
-    public float jumpAcceleration;
+    public Vector2 jumpAcceleration;
     public float ceilingCheckDis;
     public float dashWallCheckRange;
     public float gravityScale;
@@ -155,7 +155,6 @@ public class CharacterController2D : Health
         // velocity.x = Mathf.MoveTowards(velocity.x, speed * moveInput, acceleration * Time.deltaTime);
         HorizontalMovement(acceleration, deceleration);
         HitImpact();
-       
         GetInputJumpMethod();
         GetInputSetCoditionsForSwordDash();
         GetInputSetConditionsForShotgunBlast();
@@ -304,8 +303,16 @@ public class CharacterController2D : Health
         else
         {
             //animator.SetBool("IsMoving", false);
-            velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.deltaTime);
-            velocity.x *= deceleration * Time.deltaTime;
+           velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.deltaTime);
+         /*  if(velocity.x >= 0)
+            {
+                velocity.x -= deceleration * Time.deltaTime;
+                
+            }
+           if(velocity.x < 0)
+            {
+                velocity = 0;
+            }*/
             //animator.SetBool("IsMoving", false);
             animator.SetBool("IsRunning", false);
             animator.SetBool("Idle",true);
@@ -405,6 +412,7 @@ public class CharacterController2D : Health
             FireBoostFromShotGunParitcals.Play();
             shotGunBlastWaitTime = 0f;
             canShotGunBlast = false;
+            AudioManager.a_Instance.AlyxShotGunMobilityAudio();
             IsShotgunKnockback = true;
         }
     }
@@ -423,8 +431,10 @@ public class CharacterController2D : Health
             dashwaitTime = 0f;
             canDash = false;
             isSwordDashing = true;
+            AudioManager.a_Instance.AlyxJetSwordDashAudio();
+            animator.SetTrigger("SwordDash");
             //savedvelocity = rb.velocity;
-            if (/*savedMousePos.x >= transform.position.x*/ islookingright)
+            if (islookingright/*savedMousePos.x >= transform.position.x*/ )
             {
                 dashRight = true;
                 //velocity.x = dashForce;
@@ -549,7 +559,6 @@ public class CharacterController2D : Health
             //int WallCheckDir;
             if (!TopWallCheck && !BottomWallCheck)
             {
-
                 if (dashRight)
                 {
                     RaycastHit2D destination = Physics2D.Raycast(transform.position, Vector2.right,100f, groundLayerMask);
@@ -632,8 +641,7 @@ public class CharacterController2D : Health
 
             //   Debug.Log("click");
         }
-        ShotgunMovementAbility();
-        PickaxeMovementAbility();
+       
         //if (isShrink)
         //{
         //    StartCoroutine(ShrinkTime());
@@ -675,7 +683,8 @@ public class CharacterController2D : Health
         if (IsShotgunKnockback)
         {
             // rb.gravityScale = 0.7f;
-            trail.enabled = false;
+            // trail.enabled = false;
+        
             //ShotgunBlastVelocity.y = transform.position.y;
             blastCurrentWaitTime += Time.deltaTime;
             //knockBackOverTime += Time.deltaTime;
@@ -685,15 +694,12 @@ public class CharacterController2D : Health
                 //Debug.Log(IsGrounded + "IsGrounded");
                 blastCurrentWaitTime = 0f;
                 IsShotgunKnockback = false;
-                if (IsGrounded)
-                {
-                    velocity = ShotgunBlastVelocity * 0.5f;
 
-                }
-                else
-                {
-                    velocity = ShotgunBlastVelocity;
-                }
+                velocity = ShotgunBlastVelocity;
+
+                
+                
+             
                 // rb.gravityScale = 1.5f;
                 //if (ShotgunBlastVelocity.x >= 0)
                 //{
@@ -722,8 +728,8 @@ public class CharacterController2D : Health
                 ShotgunBlastVelocity.x =  weapon.ShotgunShotDir.x * shotgunBlastForce.x;
                 ShotgunBlastVelocity.y = -weapon.ShotgunShotDir.y * shotgunBlastForce.y;
             }
-          
-            animator.SetBool("IsFalling", true);
+           
+           // animator.SetBool("IsFalling", true);
             //if (IsGrounded)
             //{
             //    ShotgunBlastVelocity.x = -mouseDir.x * ShotBlastForceX;
@@ -740,6 +746,7 @@ public class CharacterController2D : Health
             // }
             // else
             // {
+           
             //     //rb.AddForce(ShotBlastAirForce * -mouseDir * Time.fixedDeltaTime, ForceMode2D.Impulse);
             // }
         }
@@ -940,8 +947,8 @@ public class CharacterController2D : Health
 
         //float startingpos = transform.position.y;
         float Destination = transform.position.y + jumpHeight.y;
-        float currentjumpAcceleration = jumpAcceleration;
-        float currentJumpX = JumpXBoost;
+        float currentjumpAccelerationY = jumpAcceleration.y;
+        float currentjumpAccelerationX = jumpAcceleration.x;
         Vector2 currentvelocity = velocity;
         velocity.y = 5;
         //if (islookingright)
@@ -957,7 +964,7 @@ public class CharacterController2D : Health
             
             //currentjumpAcceleration *= 0.99f;
             //currentJumpX *= 0.99f;
-            velocity += new Vector2(currentJumpX * moveInput * Time.deltaTime * 0.9f, currentjumpAcceleration * Time.deltaTime * 0.9f);
+            velocity += new Vector2(jumpAcceleration.x * moveInput * Time.deltaTime * 0.99f, jumpAcceleration.y * Time.deltaTime * 0.99f);
 
             //transform.position += new Vector3(currentJumpX * moveInput * Time.deltaTime * 0.8f, currentjumpAcceleration * Time.deltaTime * 0.8f, 0);
             if (transform.position.y >= Destination)

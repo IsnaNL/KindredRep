@@ -43,6 +43,10 @@ public class AudioManager : MonoBehaviour
     {
         audioSource.PlayOneShot(Alixclips[3]);
     }
+    public void AlyxLandAudio()
+    {
+        audioSource.PlayOneShot(Alixclips[3]);
+    }
 
     public void AlyxJetSwordAttackAudio()
     {
@@ -51,6 +55,10 @@ public class AudioManager : MonoBehaviour
     public void AlyxJetSwordDashAudio()
     {
         audioSource.PlayOneShot(JetSwordClips[3]);
+    }
+    public void AlyxJetSwordClashWithTerrainAudio()
+    {
+        audioSource.PlayOneShot(JetSwordClips[2]);
     }
     public void AlyxShotGunMobilityAudio()
     {
@@ -68,12 +76,6 @@ public class AudioManager : MonoBehaviour
     public void AlyxPickaxeClashWithTerrain()
     {
         audioSource.PlayOneShot(PickaxeClips[0]);
-    }
-
-
-    public void AlyxJetSwordClashWithTerrainAudio()
-    {
-        audioSource.PlayOneShot(JetSwordClips[2]);
     }
     public void BennyJumpAudio()
     {
