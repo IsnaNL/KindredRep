@@ -50,8 +50,6 @@ public class Benny : Health
     void Update()
     {
         healthBar.value = health;
-       
-
         //if (!isGrounded)
         //{
         //    velocity.y -= GravityScale * Time.deltaTime;
@@ -61,11 +59,7 @@ public class Benny : Health
         //    velocity.y = 0;
         //}
         //velocity.x *= 0.999f;
-        if (IsAttacking)
-        {
-
-        }
-        else
+        if (!IsAttacking)
         {
 
 
@@ -88,7 +82,8 @@ public class Benny : Health
 
 
         }
-      
+
+
         //transform.Translate(velocity * Time.deltaTime);
     }
 
@@ -122,7 +117,16 @@ public class Benny : Health
     {
         WhenHit();
         CheckPeekCondition();
-        CheckForLandingAnimation();
+
+        // CheckAttackCondition();
+        if (IsAttacking)
+        {
+            CheckForLandingAnimation();
+
+        }
+
+
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -133,6 +137,9 @@ public class Benny : Health
             IsAttacking = false;
             isVulnerable = false;
             bodyCollider.gameObject.layer = groundCheckLayer;
+            //animator.SetTrigger("Land");
+            animator.SetTrigger("BackToIdle");
+
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -177,20 +184,25 @@ public class Benny : Health
     }
    public void CheckForLandingAnimation()
     {
-        RaycastHit2D hit = Physics2D.CircleCast(new Vector2(transform.position.x,transform.position.y -0.5f), 0.5f,Vector2.down, GroundCheckDistanceForLanding,GroundLayerMask);
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, 0.3f,Vector2.down, GroundCheckDistanceForLanding,GroundLayerMask);
         if (hit)
         {
-            animator.speed = 1;
-            
+           
+            animator.SetTrigger("Land");
+
         }
     }
     public void CheckPeekCondition()
     {
        RaycastHit2D hit = Physics2D.CircleCast(transform.position, RangeToPeek,Vector2.up,0.1f,playerLayerMask);
        if(hit)
-        {
+       {
             PeekExecute();
-        }
+       }
+       else
+       {
+            animator.SetTrigger("BackToIdle");
+       }
     }
   
     public void PeekExecute()
@@ -226,18 +238,20 @@ public class Benny : Health
         AudioManager.a_Instance.BennyJumpAudio();
         StartCoroutine((JumpCoRou()));
     }
-    public void StopAnimation()
+    /*public void StopAnimation()
     {
         animator.speed = 0;
-    }
+    }*/
  
     public IEnumerator JumpCoRou()
     {
         yield return new WaitForSeconds(0.1f);
-        IsAttacking = true;
+        
         isVulnerable = true;
         bodyCollider.gameObject.layer = EnemyLayer;
         RB2D.AddForce(jumpAcceleration, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(0.1f);
+        IsAttacking = true;
         //yield return new WaitForSeconds(0.5f);
         //isAccelerating = true;
         //float Destination = transform.position.y + JumpForce;
@@ -248,7 +262,7 @@ public class Benny : Health
         //while (isAccelerating)
         //{
         //    velocity += new Vector2(currentjumpAccelerationX * Direction * Time.deltaTime, currentjumpAccelerationY * Time.deltaTime);
-           
+
         //    if (transform.position.y >= Destination || transform.position.y < negDestination)
         //    {
         //        velocity.y *= 0.5f;

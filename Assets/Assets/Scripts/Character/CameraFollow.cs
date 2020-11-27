@@ -21,13 +21,14 @@ public class CameraFollow : MonoBehaviour
    public void Init()
     {
         Debug.Log("caminit");
+        Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
         //Cursor.SetCursor(cursorgfx, Vector3.zero, CursorMode.ForceSoftware);
         //Cursor.visible = true;
     }
     private void Update()
     {
-        Cursor.visible = false;
+      
 
     }
 

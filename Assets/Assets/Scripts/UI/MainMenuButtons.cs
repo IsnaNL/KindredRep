@@ -8,9 +8,13 @@ public class MainMenuButtons : MonoBehaviour
 {
     public GameObject frontPage;
     public GameObject settingsPage;
+
     // Start is called before the first frame update
-   
-   public void ExitButtonPressed()
+    private void OnEnable()
+    {
+        UnityEngine.Cursor.lockState = CursorLockMode.Confined; 
+    }
+    public void ExitButtonPressed()
     {
         Application.Quit();
     }

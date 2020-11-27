@@ -21,6 +21,7 @@ public class PauseMenuButtons : MonoBehaviour
     {
         isButtonsActive = false;
         Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.Locked;
 
     }
     public void CombatTestScene()
@@ -42,6 +43,7 @@ public class PauseMenuButtons : MonoBehaviour
         {
             isButtonsActive = true;
             Time.timeScale = 0.1f;
+            Cursor.lockState = CursorLockMode.Confined;
     
         }
         if (isButtonsActive)

@@ -160,7 +160,6 @@ public class CharacterController2D : Health
         GetInputSetConditionsForShotgunBlast();
         GetInputSetConditionsForPickaxeClawing();
         CheckFlip();
-        ceilingCheck();
         GetAimAngleForShotgun();
         //animator.SetFloat("MouseDir", MouseYDelta);
         //else
@@ -250,6 +249,7 @@ public class CharacterController2D : Health
     }
     void FixedUpdate()
     {
+        ceilingCheck();
         WallCol();
         if (isSwordDashing && !IsShotgunKnockback && !isPickaxeClawing && !TopWallCheck && !BottomWallCheck)
         {

@@ -95,7 +95,7 @@ Animator:
   m_GameObject: {fileID: 799295091}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0e32db404e604234b8b1c79c6a03e82c, type: 2}
+  m_Controller: {fileID: 9100000, guid: fd7429aea6bfc364d96c28dce78a2488, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 2
   m_ApplyRootMotion: 1
@@ -319,7 +319,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.1233778, y: -0.66490555}
+  m_Offset: {x: -0.14555264, y: -0.6525879}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -330,7 +330,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.58122826, y: 0.24906158}
+  m_Size: {x: 0.48760033, y: 0.22442627}
   m_EdgeRadius: 0
 --- !u!1 &2187893808038624332
 GameObject:
@@ -381,14 +381,14 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 10
+  m_Mass: 1
   m_LinearDrag: 0.5
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: 9a80b777994f68846af5f4495a9c1002, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!96 &2187893808038624328
 TrailRenderer:
@@ -510,7 +510,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.028427124, y: -0.13887405}
+  m_Offset: {x: -0.028427124, y: -0.14131165}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -521,7 +521,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7, y: 1.1661301}
+  m_Size: {x: 0.7, y: 1.1710052}
   m_EdgeRadius: 0
 --- !u!114 &2187893808038624325
 MonoBehaviour:
@@ -541,9 +541,9 @@ MonoBehaviour:
   isVulnerable: 0
   speed: 4.5
   walkAcceleration: 15
-  airAcceleration: 12
-  groundDeceleration: 40
-  jumpHeight: {x: 0, y: 2}
+  airAcceleration: 13
+  groundDeceleration: 30
+  jumpHeight: {x: 0, y: 2.5}
   MouseYDelta: 0
   shrinkTime: 10
   JumpXBoost: 1.5
@@ -555,9 +555,9 @@ MonoBehaviour:
   shotGunBlastCoolDown: 1
   dashCooldown: 0.8
   blastTargetWaitTime: 0.1
-  dashTargetWaitTime: 0.25
+  dashTargetWaitTime: 0.22
   islookingright: 1
-  dashForce: 90
+  dashForce: 120
   velocity: {x: 0, y: 0}
   FireBoostFromShotGunParitcals: {fileID: 0}
   weapon: {fileID: 2187893807733490671}
@@ -570,14 +570,14 @@ MonoBehaviour:
     m_Bits: 1024
   IsGrounded: 0
   hitKnockBack: {x: 6, y: 2}
-  shotgunBlastForce: {x: 5, y: 10}
-  jumpAcceleration: 25
-  ceilingCheckDis: 0.15
+  shotgunBlastForce: {x: 7.5, y: 10}
+  jumpAcceleration: {x: 1.5, y: 25}
+  ceilingCheckDis: 0.25
   dashWallCheckRange: 0.4
-  gravityScale: 24
+  gravityScale: 25
   groundTriggerCount: 0
   rb: {fileID: 0}
-  DeltaCap: 7
+  DeltaCap: 6
 --- !u!1 &2187893809089136335
 GameObject:
   m_ObjectHideFlags: 0
