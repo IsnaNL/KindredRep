@@ -8,6 +8,7 @@ public class WeaponHandler : MonoBehaviour
     public int trapLayer;
     public int enemyLayer;
     public int bossLayer;
+    public int groundLayer;
    
     // Start is called before the first frame update
     private void OnTriggerEnter2D(Collider2D collision)
@@ -28,6 +29,11 @@ public class WeaponHandler : MonoBehaviour
         {
             collision.GetComponent<SunFlower>().TakeDamage(damage);
           
+
+        }
+        if(collision.gameObject.layer == groundLayer)
+        {
+            AudioManager.a_Instance.AlyxJetSwordClashWithTerrainAudio();
 
         }
     }

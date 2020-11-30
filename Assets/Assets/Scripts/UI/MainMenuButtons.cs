@@ -27,6 +27,7 @@ public class MainMenuButtons : MonoBehaviour
     {
         frontPage.SetActive(false);
         settingsPage.SetActive(true);
+        //CoinCol.Instance.TestFunc();
     }
     public void BackToMainMenuButtonPressed()
     {

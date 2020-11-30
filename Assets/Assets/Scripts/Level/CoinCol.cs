@@ -6,9 +6,11 @@ public sealed class CoinCol
 {
     private static CoinCol CoinColinstance = null;
     private static readonly object padlock = new object();
+    private int CoinsCollected;
 
     CoinCol()
     {
+       
     }
 
     public static CoinCol Instance
@@ -24,5 +26,10 @@ public sealed class CoinCol
                 return CoinColinstance;
             }
         }
+       
+    }
+    public void AddToCoinsCollected()
+    {
+        CoinsCollected++;
     }
 }

@@ -32,7 +32,7 @@ public class SwapWeaponAnimatorController : MonoBehaviour
         }
         if (player.weapon.IsPickaxeWeapon)
         {
-            player.animator.runtimeAnimatorController = weaponAnimationControllers[0];
+            player.animator.runtimeAnimatorController = weaponAnimationControllers[2];
             sr.sprite = DefaultSpriteRendererSprites[0];
 
         }

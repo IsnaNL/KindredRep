@@ -78,6 +78,7 @@ public class CharacterController2D : Health
     public int groundTriggerCount;
     public Rigidbody2D rb;
     public float DeltaCap;
+    private float verInput;
     //private float playerToMousePosAngle;
     //private Vector2 mouseDir;
 
@@ -150,8 +151,9 @@ public class CharacterController2D : Health
         float acceleration = IsGrounded ? walkAcceleration : airAcceleration;
         float deceleration = IsGrounded ? groundDeceleration : 0;
         moveInput = Input.GetAxisRaw("Horizontal");
+        verInput = Input.GetAxisRaw("Vertical");
 
-        Debug.Log(mouseDirNormalized);
+        //Debug.Log(mouseDirNormalized);
         // velocity.x = Mathf.MoveTowards(velocity.x, speed * moveInput, acceleration * Time.deltaTime);
         HorizontalMovement(acceleration, deceleration);
         HitImpact();
@@ -528,6 +530,7 @@ public class CharacterController2D : Health
         if (isHit)
         {
             EffectsManager.e_Instance.BloodHitEffect(transform);
+            AudioManager.a_Instance.AlyxHitAudio();
             isHit = false;
 
         }
@@ -789,6 +792,7 @@ public class CharacterController2D : Health
 
                 mouseDeltaCounter = 0;
             }
+            
             //if (MouseYDelta >= 0.6f)
             //{
             //    ShotgunShotDir = Vector2.up;
