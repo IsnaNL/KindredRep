@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
         BennyList.AddRange(FindObjectsOfType<Benny>());
         trapsList.AddRange(FindObjectsOfType<TrapCol>());
        
-        print(BennyList.Count);
+        //print(BennyList.Count);
         foreach (Benny b in BennyList)
         {
             b.Init();

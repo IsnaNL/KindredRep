@@ -21,17 +21,29 @@ public class WeaponHandler : MonoBehaviour
         }
         if (collision.gameObject.layer == trapLayer)
         {
-            collision.GetComponent<MovingSnapTrapSides>().TakeDamage(damage);
+            collision.GetComponent<MovingSnapTrapSides>().TakeDamage(damage);   
             
 
         }
         if (collision.gameObject.layer == bossLayer)
         {
-            collision.GetComponent<SunFlower>().TakeDamage(damage);
-          
+            if (collision.GetComponent<SunFlower>() != null)
+            {
+                collision.GetComponent<SunFlower>().TakeDamage(damage);
+
+            }
+            if (collision.GetComponent<PumpkinHead>() != null)
+            {
+                collision.GetComponent<PumpkinHead>().TakeDamage(damage);
+            }
+            if (collision.GetComponent<GhostMovement>() != null)
+            {
+                collision.GetComponent<GhostMovement>().TakeDamage(damage);
+
+            }
 
         }
-        if(collision.gameObject.layer == groundLayer)
+        if (collision.gameObject.layer == groundLayer)
         {
             AudioManager.a_Instance.AlyxJetSwordClashWithTerrainAudio();
 

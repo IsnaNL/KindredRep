@@ -13,7 +13,7 @@ abstract public class Health : MonoBehaviour
     
    virtual public void Start()
     {
-        Debug.Log("AbstractHealthInit");
+       // Debug.Log("AbstractHealthInit");
         isVulnerable = true;
     }
 
@@ -40,11 +40,11 @@ abstract public class Health : MonoBehaviour
 
     }
    
-    public IEnumerator HITSLOWTIME()
+  /*  public IEnumerator HITSLOWTIME()
     {
         Time.timeScale = 0.3f;
         yield return new WaitForSeconds(0.1f);
         Time.timeScale = 1f;
 
-    }
+    }*/
 }

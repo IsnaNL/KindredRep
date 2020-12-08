@@ -30,8 +30,20 @@ public class OnBulletCollision : MonoBehaviour
         }
         if (collision.gameObject.layer == bossLayer)
         {
-            collision.GetComponent<SunFlower>().TakeDamage(damage);
+            if (collision.GetComponent<SunFlower>() != null)
+            {
+                collision.GetComponent<SunFlower>().TakeDamage(damage);
 
+            }
+            if(collision.GetComponent<PumpkinHead>() != null)
+            {
+                collision.GetComponent<PumpkinHead>().TakeDamage(damage);
+            }
+            if (collision.GetComponent<GhostMovement>() != null)
+            {
+                collision.GetComponent<GhostMovement>().TakeDamage(damage);
+
+            }
 
         }
         AudioManager.a_Instance.AlyxShotGunclashAudio();
