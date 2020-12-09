@@ -40,13 +40,13 @@ public class HUD : MonoBehaviour
             playerHealthUITranslation = 4;
             SceneManager.LoadScene(0);
         }
-        if (weapon.IsSwordWeapon)
+        if (weapon.weaponCheck == 0)
         {
             weaponNumberUiTranslation = 0;
-        }else if (weapon.IsShotgunWeapon)
+        }else if (weapon.weaponCheck == 1)
         {
             weaponNumberUiTranslation = 1;
-        }else if (weapon.IsPickaxeWeapon)
+        }else if (weapon.weaponCheck == 2)
         {
             weaponNumberUiTranslation = 2;
         }

@@ -189,6 +189,7 @@ MonoBehaviour:
   enemyLayer: 9
   bossLayer: 15
   groundLayer: 8
+  groundColCount: 0
 --- !u!1 &2187893807733490673
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +199,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2187893807733490672}
-  - component: {fileID: 2187893807733490671}
+  - component: {fileID: 464099670}
+  - component: {fileID: 464099667}
+  - component: {fileID: 464099669}
   m_Layer: 12
   m_Name: WeaponHolder
   m_TagString: Untagged
@@ -221,7 +224,7 @@ Transform:
   m_Father: {fileID: 799295092}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2187893807733490671
+--- !u!114 &464099670
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -230,37 +233,62 @@ MonoBehaviour:
   m_GameObject: {fileID: 2187893807733490673}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ac252c06e6936f45ad65a39c0c15dfa, type: 3}
+  m_Script: {fileID: 11500000, guid: 42c9ebec5309fcc4185a478f139912e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsSwordWeapon: 1
-  IsShotgunWeapon: 0
-  IsPickaxeWeapon: 0
+  weaponHandler: {fileID: 1763441709}
+  runningCooldown: 0
+  Cooldown: 1
+  AttackRange: 0.5
+  player: {fileID: 2187893808038624325}
+  weaponCollider: {fileID: 1763441707}
+  weaponList: []
+  weaponCheck: 0
+--- !u!114 &464099667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2187893807733490673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 421e2e2e54fcf9a419c0de25c5fa5220, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponHandler: {fileID: 1763441709}
+  runningCooldown: 0
+  Cooldown: 1
+  AttackRange: 0.5
+  player: {fileID: 2187893808038624325}
+  weaponCollider: {fileID: 1763441707}
+  weaponList: []
+  weaponCheck: 0
+--- !u!114 &464099669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2187893807733490673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63bdb6f03906ae347b274f2fbd96ff88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponHandler: {fileID: 1763441709}
+  runningCooldown: 0
+  Cooldown: 1
+  AttackRange: 0.5
+  player: {fileID: 2187893808038624325}
+  weaponCollider: {fileID: 1763441707}
+  weaponList: []
+  weaponCheck: 0
+  bulletSpeed: 10
+  ShotgunShotDir: {x: 0, y: 0}
   shotgunBullet: {fileID: 8074422508009855967, guid: fbcf62e97eaefac4389a5f8aed52b67f,
     type: 3}
-  enemylayer:
-    serializedVersion: 2
-    m_Bits: 512
-  sunflowerRef: {fileID: 0}
-  enemyLayerValue: 9
-  bossLayerValue: 15
-  startTimeBtwAttacks: 0.5
-  AttackRange: 1
-  sr: {fileID: 0}
-  player: {fileID: 2187893808038624325}
   shotGunParticals: {fileID: 0}
-  PickaxeFirstAttack: 0
-  PickaxeSecondAttack: 0
-  secondAttackBoost: 10
-  currentTimeTillSecondAttack: 0
-  currentTimeTillThirdAttack: 0
-  SecondAttackCooldown: 1.5
-  ThirdAttackCooldown: 2
-  weaponCollider: {fileID: 1763441707}
-  pickaxeDashTiming: 0
-  TrapsLayerValue: 13
-  bulletSpeed: 8
-  ShotgunShotDir: {x: 0, y: 0}
 --- !u!1 &2187893807736094906
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,7 +591,7 @@ MonoBehaviour:
   dashForce: 120
   velocity: {x: 0, y: 0}
   FireBoostFromShotGunParitcals: {fileID: 0}
-  weapon: {fileID: 2187893807733490671}
+  weapon: {fileID: 0}
   shrinkSize: {x: 0.5, y: 0.5}
   groundLayerMask:
     serializedVersion: 2

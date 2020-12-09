@@ -118,6 +118,7 @@ public class CharacterController2D : Health
         islookingright = true;
         currentScale = new Vector2(transform.localScale.x, transform.localScale.y);
         savedGravityScale = gravityScale;
+        //weapon.Invoke("FakeInit",0);
         weapon.Init();
         animationControllerSwapper.Init();
 
@@ -216,7 +217,7 @@ public class CharacterController2D : Health
         //}
 
 
-        if (!weapon.IsPickaxeWeapon)
+        if (weapon.weaponCheck == 2)
         {
             isPickaxeClawed = false;
             isPickaxeClawing = false;
@@ -322,7 +323,7 @@ public class CharacterController2D : Health
     }
     private void GetInputSetConditionsForPickaxeClawing()
     {
-        if (Input.GetButtonDown("Fire2") && weapon.IsPickaxeWeapon)
+        if (Input.GetButtonDown("Fire2") && weapon.weaponCheck == 2)
         {
             //isClawing = true;
             if (isPickaxeClawing)
@@ -403,7 +404,7 @@ public class CharacterController2D : Health
 
     private void GetInputSetConditionsForShotgunBlast()
     {
-        if (Input.GetButtonDown("Fire2") && canShotGunBlast && weapon.IsShotgunWeapon)
+        if (Input.GetButtonDown("Fire2") && canShotGunBlast && weapon.weaponCheck == 1)
         {
             //  rb.velocity = new Vector3(0, 0, 0);
             saveMouseDir = mouseDirNormalized;
@@ -420,7 +421,7 @@ public class CharacterController2D : Health
     }
     private void GetInputSetCoditionsForSwordDash()
     {
-        if (Input.GetButtonDown("Fire2") && canDash && weapon.IsSwordWeapon)
+        if (Input.GetButtonDown("Fire2") && canDash && weapon.weaponCheck == 0)
         {
             //rb.gravityScale = -1.5f;
             StartCoroutine(TrailTime());
@@ -723,13 +724,13 @@ public class CharacterController2D : Health
             //velocity = ShotgunBlastVelocity;
             if (islookingright)
             {
-                ShotgunBlastVelocity.x = -weapon.ShotgunShotDir.x * shotgunBlastForce.x;
-                ShotgunBlastVelocity.y = -weapon.ShotgunShotDir.y * shotgunBlastForce.y;
+                ShotgunBlastVelocity.x = -weapon.weaponList[1].GetComponent<Shotgun>().ShotgunShotDir.x * shotgunBlastForce.x;
+                ShotgunBlastVelocity.y = -weapon.weaponList[1].GetComponent<Shotgun>().ShotgunShotDir.y * shotgunBlastForce.y;
             }
             else
             {
-                ShotgunBlastVelocity.x =  weapon.ShotgunShotDir.x * shotgunBlastForce.x;
-                ShotgunBlastVelocity.y = -weapon.ShotgunShotDir.y * shotgunBlastForce.y;
+                ShotgunBlastVelocity.x = weapon.weaponList[1].GetComponent<Shotgun>().ShotgunShotDir.x * shotgunBlastForce.x;
+                ShotgunBlastVelocity.y = -weapon.weaponList[1].GetComponent<Shotgun>().ShotgunShotDir.y * shotgunBlastForce.y;
             }
            
            // animator.SetBool("IsFalling", true);
@@ -1005,7 +1006,7 @@ public class CharacterController2D : Health
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(weapon.transform.position, ClawRange);
+       // Gizmos.DrawWireSphere(weapon.transform.position, ClawRange);
         Gizmos.color = Color.yellow;
         //Gizmos.DrawWireSphere(transform.position, dashWallCheckRange);
         if (islookingright)

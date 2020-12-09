@@ -9,7 +9,7 @@ public class WeaponHandler : MonoBehaviour
     public int enemyLayer;
     public int bossLayer;
     public int groundLayer;
-   
+    public int groundColCount;
     // Start is called before the first frame update
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -45,7 +45,13 @@ public class WeaponHandler : MonoBehaviour
         }
         if (collision.gameObject.layer == groundLayer)
         {
-            AudioManager.a_Instance.AlyxJetSwordClashWithTerrainAudio();
+
+            groundColCount++;
+            if (groundColCount == 1)
+            {
+                AudioManager.a_Instance.AlyxJetSwordClashWithTerrainAudio();
+               
+            }
 
         }
     }

@@ -15,13 +15,13 @@ public class GameManager : MonoBehaviour
     
     
     // Start is called before the first frame update
-    void OnEnable()
+    void Start()
     {
         //Application.targetFrameRate = 30;
         //QualitySettings.vSyncCount = 0;
 
         Player.Init();
-        levelgenerator.Init();
+     //   levelgenerator.Init();
         BennyList = new List<Benny>();
         trapsList = new List<TrapCol>();
         BennyList.AddRange(FindObjectsOfType<Benny>());
@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
         foreach (Benny b in BennyList)
         {
             b.Init();
+            b.player = Player;
           
         }
         foreach(TrapCol t in trapsList)

@@ -466,7 +466,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6, y: 0.12}
+  m_Size: {x: 0.5, y: 0.1}
   m_EdgeRadius: 0
 --- !u!1 &6747397642060985178
 GameObject:
@@ -487,7 +487,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6747397642060985174
 Transform:
   m_ObjectHideFlags: 0
@@ -591,6 +591,7 @@ MonoBehaviour:
   animator: {fileID: 6747397642060985176}
   isHit: 0
   isVulnerable: 0
+  player: {fileID: 0}
   GroundLayerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -602,6 +603,7 @@ MonoBehaviour:
   RangeToPeek: 5
   JumpForce: 1
   Direction: 0
+  defaultLayer: 0
   isAccelerating: 0
   jumpAcceleration: {x: 7, y: 5}
   HitForce: {x: 6, y: 1}
@@ -611,7 +613,7 @@ MonoBehaviour:
   startingJumpAccelerationX: 6
   damage: 15
   healthBar: {fileID: 8093370558755750489}
-  GroundCheckDistanceForLanding: 0.25
+  GroundCheckDistanceForLanding: 0.6
   bodyCollider: {fileID: 6747397640210961706}
   groundCheckLayer: 11
   EnemyLayer: 9

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Benny : Health
 {
-    private CharacterController2D player;
+    public CharacterController2D player;
     private SpriteRenderer SR;
     private bool isGrounded;
     public LayerMask GroundLayerMask;
@@ -40,7 +40,7 @@ public class Benny : Health
     // Start is called before the first frame update
     public void Init()
     {
-        player = FindObjectOfType<CharacterController2D>();
+      //  player = FindObjectOfType<CharacterController2D>();
         SR = GetComponent<SpriteRenderer>();
         RB2D = GetComponent<Rigidbody2D>();
         //velocity = new Vector2(0, 0);
@@ -84,7 +84,7 @@ public class Benny : Health
 
 
         }
-
+        
 
         //transform.Translate(velocity * Time.deltaTime);
     }
@@ -121,11 +121,11 @@ public class Benny : Health
         CheckPeekCondition();
 
         // CheckAttackCondition();
-        if (IsAttacking && RB2D.velocity.y < 0)  
-        {
-            CheckForLandingAnimation();
+      //  if (/*IsAttacking &&*/ RB2D.velocity.y < 0)  
+      //  {
+            //CheckForLandingAnimation();
 
-        }
+     //   }
         
 
 
@@ -142,7 +142,8 @@ public class Benny : Health
                 IsAttacking = false;
                 isVulnerable = false;
                 bodyCollider.gameObject.layer = defaultLayer;
-                //  animator.SetTrigger("Land");
+                animator.SetTrigger("Land");
+                RB2D.velocity = Vector2.zero;
                 //animator.SetTrigger("BackToIdle");
 
             }
@@ -190,7 +191,7 @@ public class Benny : Health
             RB2D.velocity = Vector2.zero;
         }
     }
-   public void CheckForLandingAnimation()
+  /* public void CheckForLandingAnimation()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position,Vector2.down, GroundCheckDistanceForLanding,GroundLayerMask);
         if (hit)
@@ -199,7 +200,7 @@ public class Benny : Health
             animator.SetTrigger("Land");
 
         }
-    }
+    }*/
     public void CheckPeekCondition()
     {
        RaycastHit2D hit = Physics2D.CircleCast(transform.position, RangeToPeek,Vector2.up,0.1f,playerLayerMask);

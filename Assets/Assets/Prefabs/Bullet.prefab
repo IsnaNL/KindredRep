@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3680382999929132404}
   - component: {fileID: 6590003599954934625}
   - component: {fileID: 9119426829408752708}
+  - component: {fileID: 4124265369291243786}
   m_Layer: 16
   m_Name: Bullet
   m_TagString: Untagged
@@ -137,3 +138,24 @@ MonoBehaviour:
   enemyLayer: 9
   trapLayer: 13
   bossLayer: 15
+--- !u!50 &4124265369291243786
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8074422508009855967}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

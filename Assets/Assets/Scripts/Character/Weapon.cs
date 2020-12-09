@@ -1,36 +1,47 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public abstract class Weapon : MonoBehaviour
 {
-    public bool IsSwordWeapon;
+   /* public bool IsSwordWeapon;
     public bool IsShotgunWeapon;
     public bool IsPickaxeWeapon;
-    public GameObject shotgunBullet;
-    public LayerMask enemylayer;
-    public SunFlower sunflowerRef;
-    public int enemyLayerValue;
-    public int bossLayerValue;
-    private float timeBtwAttacks;
-    public float startTimeBtwAttacks;
+   */
+  //  public LayerMask enemylayer;
+    //public SunFlower sunflowerRef;
+    public WeaponHandler weaponHandler;
+    public float runningCooldown;
+    public float Cooldown;
     public float AttackRange;
-    public SpriteRenderer sr;
     public CharacterController2D player;
-    public ParticleSystem shotGunParticals;
-    public bool PickaxeFirstAttack;
-    public bool PickaxeSecondAttack;
-    public float secondAttackBoost;
-    public float currentTimeTillSecondAttack;
-    public float currentTimeTillThirdAttack;
-    public float SecondAttackCooldown;
-    public float ThirdAttackCooldown;
     public Transform weaponCollider;
-    public float pickaxeDashTiming;
-    public int TrapsLayerValue;
-    public float bulletSpeed;
-    public Vector2 ShotgunShotDir;
+    public List<Weapon> weaponList = new List<Weapon>();
+    private Pickaxe pickaxe;
+    private Shotgun shotgun;
+    private JetSword sword;
+    public int weaponCheck;
+   // public int enemyLayerValue;
+    //public SpriteRenderer sr;
 
+
+
+   
+
+
+
+
+   // public int bossLayerValue;
+   // public bool PickaxeFirstAttack;
+   // public bool PickaxeSecondAttack;
+  //  public float secondAttackBoost;
+    //public float currentTimeTillSecondAttack;
+    //public float currentTimeTillThirdAttack;
+    //public float SecondAttackCooldown;
+   // public float ThirdAttackCooldown;
+   //public float pickaxeDashTiming;
+    //public int TrapsLayerValue;
 
     //public bool IsFoilWeapon;
     //public bool foilFirstAttack;
@@ -47,15 +58,25 @@ public class Weapon : MonoBehaviour
 
     public void Init()
     {
-
-        PickaxeFirstAttack = false;
+        weaponList.Clear();
+        pickaxe = FindObjectOfType<Pickaxe>();
+        weaponList.Add(pickaxe);
+        shotgun = FindObjectOfType<Shotgun>();
+        weaponList.Add(shotgun);
+        sword = FindObjectOfType<JetSword>();
+        weaponList.Add(sword);
+        GetCurrentWeapon(weaponCheck);
+        //PickaxeFirstAttack = false;
         Debug.Log("weaponinited");
-      
-
+        weaponHandler = GetComponentInChildren<WeaponHandler>();
     }
     void Update()
     {
-      SwapWeapon();
+        if(Input.GetKeyDown(KeyCode.Q)|| Input.GetKeyDown(KeyCode.E))
+        {
+            SwapWeapon();
+        }
+      
       Attack();
 
 
@@ -63,111 +84,60 @@ public class Weapon : MonoBehaviour
 
 
     }
-
-    
-
-    void Attack()
+    public abstract void Attack();
+    private void SwapWeapon()
     {
-        if (IsSwordWeapon)
+      
+        if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (Input.GetButtonDown("Fire1"))
-            {
-                if (timeBtwAttacks <= 0)
-                {
+            weaponCheck--;
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            weaponCheck++;
+           
+        }
+        if (weaponCheck < 0)
+        {
+            weaponCheck = weaponList.Count;
+        }
+        if(weaponCheck > weaponList.Count)
+        {
+            weaponCheck = 0;
+        }
+        GetCurrentWeapon(weaponCheck);
 
-                    AudioManager.a_Instance.AlyxJetSwordAttackAudio();
-
-                    // AudioManager.a_Instance.AlixAttackAudio();
-                    //  Debug.Log("attacking");
-                    SlashAnimation();
-                    //SwordAttackGizmo();
-                }
-                timeBtwAttacks = startTimeBtwAttacks;
-                
-            }
-            else
+    }
+    void GetCurrentWeapon(int weaponIndex)
+    {
+        foreach (Weapon w in weaponList)
+        {
+            w.enabled = false;
+            if(weaponList.IndexOf(w) == weaponIndex)
             {
-                timeBtwAttacks -= Time.deltaTime;
+                w.enabled = true;
             }
         }
-        if (IsShotgunWeapon)
-        {
-           //aimcheck
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position, AttackRange);
+        //if (IsFoilWeapon)
+        //{
+        //    if (foilFirstAttack)
+        //    {
 
-            if (Input.GetButtonDown("Fire1"))
-            { 
-                if (timeBtwAttacks <= 0)
-                {
+        //        Gizmos.color = Color.red;
+        //        Gizmos.DrawLine(transform.position, foilHitPointForGizmos);
+        //        Gizmos.DrawRay(transform.position,foilHitPointForGizmos)
+        //        Gizmos.DrawSphere(foilHitPointForGizmos, AttackRange);
+        //    }  
 
+        //}
 
-                    //shotGunParticals.transform.position = player.transform.position;
-
-                    ShotgunShot();
-
-                    // Instantiate(shotgunBullet, transform.position, transform.rotation);
-                    timeBtwAttacks = startTimeBtwAttacks;
-
-                }
-            }
-            else
-            {
-                timeBtwAttacks -= Time.deltaTime;
-
-            }
-        }
-        if (IsPickaxeWeapon)
-        {
-           
-            if (Input.GetButtonDown("Fire1"))
-            {
-                if (PickaxeFirstAttack)
-                {
-                currentTimeTillSecondAttack += Time.deltaTime;
-                if (currentTimeTillSecondAttack >= SecondAttackCooldown)
-                {
-                    PickaxeSecondAttack = false;
-                    PickaxeFirstAttack = false;
-                    currentTimeTillSecondAttack = 0;
-                }
-                else
-                {
-
-                    PickaxeSecondAttack = true;
-                }
-            }
-
-            if (PickaxeSecondAttack)
-            {
-                transform.localPosition = new Vector3(0.5f, 0f, 0f);
-                AttackRange = 1f;
-                StartCoroutine(PickaxeAttackTiming());
-                currentTimeTillSecondAttack = SecondAttackCooldown;
-                }
-                if (timeBtwAttacks <= 0)
-                {
-
-
-
-
-                    if (!PickaxeFirstAttack)
-                    {
-                        Debug.Log("firstattack");
-                        //ClawAttackGizmo();
-                        PickaxeFirstAttack = true;
-                    }
-
-                }
-
-                    timeBtwAttacks = startTimeBtwAttacks;
-                
-
-            }
-            else
-            {
-                timeBtwAttacks -= Time.deltaTime;
-
-            }
-           
+    }
+               
             
             //    if (clawSecondAttack)
             //    {
@@ -218,7 +188,7 @@ public class Weapon : MonoBehaviour
 
 
             //}
-        }
+        
 
         //if (IsFoilWeapon)
         //{
@@ -370,7 +340,7 @@ public class Weapon : MonoBehaviour
 
         //    }
         //}
-    }
+    
    
     // void SwordAttackGizmo()
     //{
@@ -443,90 +413,9 @@ public class Weapon : MonoBehaviour
     //    }
     //}
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(transform.position, AttackRange);
-        //if (IsFoilWeapon)
-        //{
-        //    if (foilFirstAttack)
-        //    {
-
-        //        Gizmos.color = Color.red;
-        //        Gizmos.DrawLine(transform.position, foilHitPointForGizmos);
-        //        Gizmos.DrawRay(transform.position,foilHitPointForGizmos)
-        //        Gizmos.DrawSphere(foilHitPointForGizmos, AttackRange);
-        //    }  
-
-        //}
-
-    }
-    void SlashAnimation()
-    {
-      
-        player.animator.SetTrigger("JetSwordAttack");
-     
-    }
-    void ShotgunShot()
-    {
-
-        AudioManager.a_Instance.AlyxShotGunShotAudio();
-
-
-         GameObject bulletInstance = Instantiate(shotgunBullet,weaponCollider.position, Quaternion.identity);
-        if (player.islookingright)
-        {
-            bulletInstance.GetComponent<OnBulletCollision>().velocity = ShotgunShotDir * bulletSpeed;
-
-        }
-        else
-        {
-            bulletInstance.GetComponent<OnBulletCollision>().velocity = new Vector2(-ShotgunShotDir.x, ShotgunShotDir.y) * bulletSpeed;
-
-        }
-        //shotGunParticals.transform.rotation = Quaternion.Euler(0, -90, 0);
-        //shotGunParticals.Play();
-        //player.animator.SetTrigger("ShotgunShot");
-
-
-        //GameObject Clone = Instantiate(shotGunParticals, player.transform.position, Quaternion.Euler(0, -90, 0));
-        //Destroy(Clone, 2f);
-
-
-
-        //ShotGunAttackGizmo();
-
-        //void ShotGunAttackGizmo()
-        //{
-        //    Collider2D[] enemiesToHit = Physics2D.OverlapCircleAll(transform.position, AttackRange, enemylayer);
-        //    for (int i = 0; i < enemiesToHit.Length; i++)
-        //    {
-        //        if (enemiesToHit[i].gameObject.layer == enemyLayerValue)
-        //        {
-        //            Enemy enemyInstance = enemiesToHit[i].GetComponent<Enemy>();
-        //            enemyInstance.TakeDamage(damage);
-        //            //enemyInstance.TakeDamage();
-
-        //        }
-        //        if (enemiesToHit[i].gameObject.layer == bossLayerValue)
-        //        {
-        //            //  Debug.Log("hit");
-        //            //   boss = enemiesToHit[i].GetComponent<SunFlower>();
-        //            sunflowerRef.TakeDamage(damage);
-        //        }
-        //        if (enemiesToHit[i].gameObject.layer == TrapsLayerValue)
-        //        {
-
-        //            MovingSnapTrapSides trap = enemiesToHit[i].GetComponent<MovingSnapTrapSides>();
-        //            trap.TakeDamage(damage);
-
-
-
-        //        }
-        //    }
-        //}
-    }
-     IEnumerator PickaxeAttackTiming()
+   
+   
+   /*  IEnumerator PickaxeAttackTiming()
     {
         float currentvelocity; 
         currentvelocity = player.velocity.x; 
@@ -551,7 +440,7 @@ public class Weapon : MonoBehaviour
             yield return null;
         }
        
-    }
+    }*/
     //IEnumerator FoilTiming()
     //{
     //    FoilWeaponCollider.enabled = true;
@@ -567,59 +456,7 @@ public class Weapon : MonoBehaviour
     //    secondAttack = false;
 
 
-    //}
-    private void SwapWeapon()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            IsSwordWeapon = true;
-            IsShotgunWeapon = false;
-            IsPickaxeWeapon = false;
-            //IsFoilWeapon = false;
-
-            //if (IsSwordWeapon)
-            //{
-            //    IsSwordWeapon = false;
-            //    IsShotgunWeapon = true;
-            //    IsClawWeapon = false;
-            //}
-
-            //else if (IsShotgunWeapon)
-            //{
-            //    IsSwordWeapon = false;
-            //    IsShotgunWeapon = false;
-            //    IsClawWeapon = true;
-
-            //} else if (IsClawWeapon)
-            //{
-            //    IsSwordWeapon = true;
-            //    IsShotgunWeapon = false;
-            //    IsClawWeapon = false;
-            //}
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            IsSwordWeapon = false;
-            IsShotgunWeapon = true;
-            IsPickaxeWeapon = false;
-            //IsFoilWeapon = false;
-
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            IsSwordWeapon = false;
-            IsShotgunWeapon = false;
-            IsPickaxeWeapon = true;
-            //IsFoilWeapon = false;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            IsSwordWeapon = false;
-            IsShotgunWeapon = false;
-            IsPickaxeWeapon = false;
-            //IsFoilWeapon = true;
-        }
-    }
+    //}if(input.Q || E)
     //private void OnTriggerEnter2D(Collider2D collision)
     //{
     //    if (IsFoilWeapon)
