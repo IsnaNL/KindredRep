@@ -17,7 +17,7 @@ public abstract class Weapon : MonoBehaviour
     //public float AttackRange;
     public Transform weaponCollider;
     public CharacterController2D player;
-    protected KeyCode attack= KeyCode.Z;
+    protected KeyCode attack = KeyCode.Z;
     
     // public int enemyLayerValue;
     //public SpriteRenderer sr;

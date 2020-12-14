@@ -38,7 +38,7 @@ public class CharacterController2D : Health
     private int groundLayer;
     private Vector2 mousePos;
     private TrailRenderer trail;
-    //private int enemyLayer;
+    private KeyCode mobilityAbility = KeyCode.X;
     private Vector2 currentScale;
     public bool isJumping;
     public float moveInput;
@@ -79,8 +79,8 @@ public class CharacterController2D : Health
     public Rigidbody2D rb;
     public float DeltaCap;
     public float verInput;
+    public bool isFalling;
 
-    public bool isFalling { get; private set; }
 
     //private float playerToMousePosAngle;
     //private Vector2 mouseDir;
@@ -149,9 +149,9 @@ public class CharacterController2D : Health
         //{
 
         //}
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseDirNormalized = new Vector2(mousePos.x - transform.position.x, mousePos.y - transform.position.y).normalized;
-        MouseYDelta =  Input.GetAxis("Mouse Y");
+     //   mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+      //  mouseDirNormalized = new Vector2(mousePos.x - transform.position.x, mousePos.y - transform.position.y).normalized;
+       // MouseYDelta =  Input.GetAxis("Mouse Y");
         Debug.DrawRay(transform.position, mouseDirNormalized, Color.red);
         Debug.DrawRay(transform.position, -mouseDirNormalized, Color.blue);
         float acceleration = IsGrounded ? walkAcceleration : airAcceleration;
@@ -258,7 +258,7 @@ public class CharacterController2D : Health
     }
     void FixedUpdate()
     {
-        ceilingCheck();
+        CeilingCheck();
         WallCol();
         if (isSwordDashing && !IsShotgunKnockback && !isPickaxeClawing && !TopWallCheck && !BottomWallCheck)
         {
@@ -425,7 +425,7 @@ public class CharacterController2D : Health
 
     private void GetInputSetConditionsForShotgunBlast()
     {
-        if (Input.GetButtonDown("Fire2") && canShotGunBlast && inventory.weaponCheck == 1)
+        if (Input.GetKeyDown(mobilityAbility) && canShotGunBlast && inventory.weaponCheck == 1)
         {
             //  rb.velocity = new Vector3(0, 0, 0);
             saveMouseDir = mouseDirNormalized;
@@ -442,7 +442,7 @@ public class CharacterController2D : Health
     }
     private void GetInputSetCoditionsForSwordDash()
     {
-        if (Input.GetButtonDown("Fire2") && canDash && inventory.weaponCheck == 0)
+        if (Input.GetKeyDown(mobilityAbility) && canDash && inventory.weaponCheck == 0)
         {
             //rb.gravityScale = -1.5f;
             StartCoroutine(TrailTime());
@@ -743,16 +743,14 @@ public class CharacterController2D : Health
             }
 
             //velocity = ShotgunBlastVelocity;
-            if (islookingright)
-            {
-                ShotgunBlastVelocity.x = -inventory.shotgun.ShotDir.x * shotgunBlastForce.x;
-                ShotgunBlastVelocity.y = -inventory.shotgun.ShotDir.y * shotgunBlastForce.y;
-            }
-            else
-            {
-                ShotgunBlastVelocity.x = inventory.shotgun.ShotDir.x * shotgunBlastForce.x;
-                ShotgunBlastVelocity.y = -inventory.shotgun.ShotDir.y * shotgunBlastForce.y;
-            }
+            
+            
+                ShotgunBlastVelocity = -inventory.shotgun.ShotDir * shotgunBlastForce;
+             
+            
+            
+            
+            
            
            // animator.SetBool("IsFalling", true);
             //if (IsGrounded)
@@ -908,9 +906,9 @@ public class CharacterController2D : Health
 
         //float startingpos = transform.position.y;
         float Destination = transform.position.y + jumpHeight.y;
-        float currentjumpAccelerationY = jumpAcceleration.y;
-        float currentjumpAccelerationX = jumpAcceleration.x;
-        Vector2 currentvelocity = velocity;
+       /// float currentjumpAccelerationY = jumpAcceleration.y;
+       // float currentjumpAccelerationX = jumpAcceleration.x;
+       // Vector2 currentvelocity = velocity;
         velocity.y = 5;
         //if (islookingright)
         //{
@@ -944,7 +942,7 @@ public class CharacterController2D : Health
         }
 
     }
-    void ceilingCheck()
+    void CeilingCheck()
     {
         RaycastHit2D hit = Physics2D.CircleCast(transform.position, 0.3f, Vector2.up, ceilingCheckDis, groundLayerMask);
         if (hit)
