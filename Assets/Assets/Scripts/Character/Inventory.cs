@@ -8,7 +8,7 @@ public  class Inventory : MonoBehaviour
     public Pickaxe pickaxe;
     public Shotgun shotgun;
     public JetSword sword;
-  //  public CharacterController2D player;
+  //public CharacterController2D player;
 
 
     public void Init()

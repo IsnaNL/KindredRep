@@ -26,7 +26,7 @@ public class JetSword : Weapon
             runningCooldown = 0;
 
         }
-         if( runningCooldown <Cooldown)
+         if( runningCooldown < Cooldown)
         {
             runningCooldown += Time.deltaTime;
         }

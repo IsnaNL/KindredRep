@@ -19,7 +19,7 @@ public class CharacterController2D : Health
     Vector2 jumpHeight;
     //  private Vector2 savedMousePos;
     //private bool isShrink;
-    private Vector2 mouseDirNormalized;
+    //private Vector2 mouseDirNormalized;
 
 
     private Vector2 dashVelocity;
@@ -34,21 +34,18 @@ public class CharacterController2D : Health
     private bool canDash;
     private bool dashRight;
     private bool canShotGunBlast;
-    private Vector2 saveMouseDir;
     private int groundLayer;
-    private Vector2 mousePos;
     private TrailRenderer trail;
     private KeyCode mobilityAbility = KeyCode.X;
     private Vector2 currentScale;
-    public bool isJumping;
-    public float moveInput;
     private RaycastHit2D BottomWallCheck;
     private int coinLayer;
     private float savedGravityScale;
     private RaycastHit2D TopWallCheck;
     private SwapWeaponAnimatorController animationControllerSwapper;
-    private float mouseDeltaCounter;
     public float MouseYDelta;
+    public bool isJumping;
+    public float moveInput;
     public float shrinkTime;
     public float JumpXBoost;
     public bool isPickaxeClawing;
@@ -98,6 +95,9 @@ public class CharacterController2D : Health
     //private BoxCollider2D boxCollider;
     //private Vector2 savedvelocity;
     //private float currentVelocityY;
+   // private Vector2 saveMouseDir;
+    //private Vector2 mousePos;
+   // private float mouseDeltaCounter;
 
 
     public override void Start()
@@ -152,8 +152,8 @@ public class CharacterController2D : Health
      //   mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
       //  mouseDirNormalized = new Vector2(mousePos.x - transform.position.x, mousePos.y - transform.position.y).normalized;
        // MouseYDelta =  Input.GetAxis("Mouse Y");
-        Debug.DrawRay(transform.position, mouseDirNormalized, Color.red);
-        Debug.DrawRay(transform.position, -mouseDirNormalized, Color.blue);
+     //   Debug.DrawRay(transform.position, mouseDirNormalized, Color.red);
+      //  Debug.DrawRay(transform.position, -mouseDirNormalized, Color.blue);
         float acceleration = IsGrounded ? walkAcceleration : airAcceleration;
         float deceleration = IsGrounded ? groundDeceleration : 0;
         moveInput = Input.GetAxisRaw("Horizontal");
@@ -428,7 +428,7 @@ public class CharacterController2D : Health
         if (Input.GetKeyDown(mobilityAbility) && canShotGunBlast && inventory.weaponCheck == 1)
         {
             //  rb.velocity = new Vector3(0, 0, 0);
-            saveMouseDir = mouseDirNormalized;
+            //saveMouseDir = mouseDirNormalized;
             //Debug.Log("ShotGUnBLAsT");
             //ShotgunBlastVelocity.x = velocity.x;
             //ShotgunBlastVelocity.y = velocity.y;
@@ -555,6 +555,24 @@ public class CharacterController2D : Health
             AudioManager.a_Instance.AlyxHitAudio();
             isHit = false;
 
+        }
+    }
+    void CeilingCheck()
+    {
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, 0.3f, Vector2.up, ceilingCheckDis, groundLayerMask);
+        if (hit)
+        {
+
+            StopCoroutine("JumpCoroutine");
+            isFalling = true;
+            IsShotgunKnockback = false;
+            if (velocity.y >= 0)
+            {
+                velocity.y = 0;
+            }
+
+            //velocity.x *= 0.9f;
+            Debug.Log("Ceilinghit");
         }
     }
     public void SwordMovementAbility()
@@ -941,24 +959,6 @@ public class CharacterController2D : Health
             yield return null;
         }
 
-    }
-    void CeilingCheck()
-    {
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, 0.3f, Vector2.up, ceilingCheckDis, groundLayerMask);
-        if (hit)
-        {
-
-            StopCoroutine("JumpCoroutine");
-            isFalling = true;
-            IsShotgunKnockback = false;
-            if (velocity.y >= 0)
-            {
-                velocity.y = 0;
-            }
-
-            //velocity.x *= 0.9f;
-            Debug.Log("Ceilinghit");
-        }
     }
     private void OnDrawGizmosSelected()
     {
