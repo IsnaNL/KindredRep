@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public List<Benny> BennyList;
     public List<TrapCol> trapsList;
     public CharacterController2D Player;
+    public JetSword weaponInit;
     public CameraFollow PlayerCam;
     public LevelGenerator levelgenerator;
   
@@ -20,13 +21,15 @@ public class GameManager : MonoBehaviour
         //Application.targetFrameRate = 30;
         //QualitySettings.vSyncCount = 0;
 
+        //   levelgenerator.Init();
         Player.Init();
-     //   levelgenerator.Init();
+        weaponInit = Player.GetComponentInChildren<JetSword>();
         BennyList = new List<Benny>();
         trapsList = new List<TrapCol>();
         BennyList.AddRange(FindObjectsOfType<Benny>());
         trapsList.AddRange(FindObjectsOfType<TrapCol>());
-       
+        weaponInit.Init();
+
         //print(BennyList.Count);
         foreach (Benny b in BennyList)
         {

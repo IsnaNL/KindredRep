@@ -12,7 +12,7 @@ public class HUD : MonoBehaviour
     public Image HeartUI;
     public Image WeaponUI;
     public CharacterController2D player;
-    public Weapon weapon;
+    public Inventory inventory;
     private int playerHealthUITranslation;
     private int weaponNumberUiTranslation;
     public Slider hpSlider;
@@ -40,13 +40,13 @@ public class HUD : MonoBehaviour
             playerHealthUITranslation = 4;
             SceneManager.LoadScene(0);
         }
-        if (weapon.weaponCheck == 0)
+        if (inventory.weaponCheck == 0)
         {
             weaponNumberUiTranslation = 0;
-        }else if (weapon.weaponCheck == 1)
+        }else if (inventory.weaponCheck == 1)
         {
             weaponNumberUiTranslation = 1;
-        }else if (weapon.weaponCheck == 2)
+        }else if (inventory.weaponCheck == 2)
         {
             weaponNumberUiTranslation = 2;
         }

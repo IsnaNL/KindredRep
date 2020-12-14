@@ -5,9 +5,10 @@ using UnityEngine;
 public class Pickaxe : Weapon
 {
     // Start is called before the first frame update
+   
     public override void Attack()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetKeyDown(attack))
         {
             Debug.Log("Pickaxe Attack");
             /* if (PickaxeFirstAttack)

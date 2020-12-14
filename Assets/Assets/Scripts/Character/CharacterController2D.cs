@@ -38,10 +38,10 @@ public class CharacterController2D : Health
     private int groundLayer;
     private Vector2 mousePos;
     private TrailRenderer trail;
-    private int enemyLayer;
+    //private int enemyLayer;
     private Vector2 currentScale;
-    private bool isjumping;
-    private float moveInput;
+    public bool isJumping;
+    public float moveInput;
     private RaycastHit2D BottomWallCheck;
     private int coinLayer;
     private float savedGravityScale;
@@ -64,7 +64,7 @@ public class CharacterController2D : Health
     public float dashForce;
     public Vector2 velocity;
     public ParticleSystem FireBoostFromShotGunParitcals;
-    public Weapon weapon;
+    public Inventory inventory;
     public Vector2 shrinkSize;
     public LayerMask groundLayerMask;
     public LayerMask playerLayerMask;
@@ -78,7 +78,10 @@ public class CharacterController2D : Health
     public int groundTriggerCount;
     public Rigidbody2D rb;
     public float DeltaCap;
-    private float verInput;
+    public float verInput;
+
+    public bool isFalling { get; private set; }
+
     //private float playerToMousePosAngle;
     //private Vector2 mouseDir;
 
@@ -108,7 +111,7 @@ public class CharacterController2D : Health
         clawVelocity = Vector2.zero;
         isPickaxeClawing = false;
         groundLayer = 8;
-        enemyLayer = 9;
+        //enemyLayer = 9;
         coinLayer = 14;
         canDash = true;
         IsGrounded = false;
@@ -118,8 +121,10 @@ public class CharacterController2D : Health
         islookingright = true;
         currentScale = new Vector2(transform.localScale.x, transform.localScale.y);
         savedGravityScale = gravityScale;
+        inventory = GetComponentInChildren<Inventory>();
+        inventory.Init();
         //weapon.Invoke("FakeInit",0);
-        weapon.Init();
+        // weapon.Init();
         animationControllerSwapper.Init();
 
         //groundcheck = GetComponentInChildren<GroundCheck>();
@@ -153,7 +158,7 @@ public class CharacterController2D : Health
         float deceleration = IsGrounded ? groundDeceleration : 0;
         moveInput = Input.GetAxisRaw("Horizontal");
         verInput = Input.GetAxisRaw("Vertical");
-
+      
         //Debug.Log(mouseDirNormalized);
         // velocity.x = Mathf.MoveTowards(velocity.x, speed * moveInput, acceleration * Time.deltaTime);
         HorizontalMovement(acceleration, deceleration);
@@ -163,7 +168,7 @@ public class CharacterController2D : Health
         GetInputSetConditionsForShotgunBlast();
         GetInputSetConditionsForPickaxeClawing();
         CheckFlip();
-        GetAimAngleForShotgun();
+       
         //animator.SetFloat("MouseDir", MouseYDelta);
         //else
         //{
@@ -217,7 +222,7 @@ public class CharacterController2D : Health
         //}
 
 
-        if (weapon.weaponCheck == 2)
+        if (inventory.weaponCheck == 2)
         {
             isPickaxeClawed = false;
             isPickaxeClawing = false;
@@ -237,6 +242,7 @@ public class CharacterController2D : Health
             }
            if (velocity.y < 0)
             {
+                isFalling = true;
                 animator.SetBool("IsFalling", true);
                 animator.SetBool("Idle", false);
                 
@@ -302,6 +308,21 @@ public class CharacterController2D : Health
                 animator.SetBool("IsRunning", false);
 
             }
+            if(moveInput == 1)
+            {
+                if(velocity.x < 0)
+                {
+                    velocity.x += 1;
+                }
+            }else if (moveInput == -1)
+            {
+                if (velocity.x > 0)
+                {
+                    velocity.x -= 1;
+
+                }
+
+            }
         }
         else
         {
@@ -323,7 +344,7 @@ public class CharacterController2D : Health
     }
     private void GetInputSetConditionsForPickaxeClawing()
     {
-        if (Input.GetButtonDown("Fire2") && weapon.weaponCheck == 2)
+        if (Input.GetButtonDown("Fire2") && inventory.weaponCheck == 2)
         {
             //isClawing = true;
             if (isPickaxeClawing)
@@ -404,7 +425,7 @@ public class CharacterController2D : Health
 
     private void GetInputSetConditionsForShotgunBlast()
     {
-        if (Input.GetButtonDown("Fire2") && canShotGunBlast && weapon.weaponCheck == 1)
+        if (Input.GetButtonDown("Fire2") && canShotGunBlast && inventory.weaponCheck == 1)
         {
             //  rb.velocity = new Vector3(0, 0, 0);
             saveMouseDir = mouseDirNormalized;
@@ -421,7 +442,7 @@ public class CharacterController2D : Health
     }
     private void GetInputSetCoditionsForSwordDash()
     {
-        if (Input.GetButtonDown("Fire2") && canDash && weapon.weaponCheck == 0)
+        if (Input.GetButtonDown("Fire2") && canDash && inventory.weaponCheck == 0)
         {
             //rb.gravityScale = -1.5f;
             StartCoroutine(TrailTime());
@@ -658,7 +679,7 @@ public class CharacterController2D : Health
         {
             isPickaxeClawing = false;
 
-            Collider2D[] wallToHit = Physics2D.OverlapCircleAll(weapon.transform.position, ClawRange, groundLayerMask);
+            Collider2D[] wallToHit = Physics2D.OverlapCircleAll(inventory.transform.position, ClawRange, groundLayerMask);
             for (int i = 0; i < wallToHit.Length; i++)
             {
                 //    Debug.Log(wallToHit[i].gameObject.name);
@@ -724,13 +745,13 @@ public class CharacterController2D : Health
             //velocity = ShotgunBlastVelocity;
             if (islookingright)
             {
-                ShotgunBlastVelocity.x = -weapon.weaponList[1].GetComponent<Shotgun>().ShotgunShotDir.x * shotgunBlastForce.x;
-                ShotgunBlastVelocity.y = -weapon.weaponList[1].GetComponent<Shotgun>().ShotgunShotDir.y * shotgunBlastForce.y;
+                ShotgunBlastVelocity.x = -inventory.shotgun.ShotDir.x * shotgunBlastForce.x;
+                ShotgunBlastVelocity.y = -inventory.shotgun.ShotDir.y * shotgunBlastForce.y;
             }
             else
             {
-                ShotgunBlastVelocity.x = weapon.weaponList[1].GetComponent<Shotgun>().ShotgunShotDir.x * shotgunBlastForce.x;
-                ShotgunBlastVelocity.y = -weapon.weaponList[1].GetComponent<Shotgun>().ShotgunShotDir.y * shotgunBlastForce.y;
+                ShotgunBlastVelocity.x = inventory.shotgun.ShotDir.x * shotgunBlastForce.x;
+                ShotgunBlastVelocity.y = -inventory.shotgun.ShotDir.y * shotgunBlastForce.y;
             }
            
            // animator.SetBool("IsFalling", true);
@@ -774,73 +795,7 @@ public class CharacterController2D : Health
             //animator.SetTrigger("Land");
         }
     }*/
-    void GetAimAngleForShotgun()//on a scale of -1 to 1 divided by 5
-    {
-        
-            
-            mouseDeltaCounter += MouseYDelta;
-            mouseDeltaCounter *= 0.99f;
-           
-            
-            if(mouseDeltaCounter > DeltaCap)
-            {
-                animator.SetTrigger("AngleUp");
-                mouseDeltaCounter = 0;
-            }
-            else if (mouseDeltaCounter < -DeltaCap)
-            {
-                animator.SetTrigger("AngleDown");
-
-                mouseDeltaCounter = 0;
-            }
-            
-            //if (MouseYDelta >= 0.6f)
-            //{
-            //    ShotgunShotDir = Vector2.up;
-            //}
-            //if (MouseYDelta >= 0.2f && MouseYDelta <= 0.6)
-            //{
-            //    if (islookingright)
-            //    {
-            //        ShotgunShotDir = new Vector2(1, 0.7f);
-            //    }
-            //    else
-            //    {
-            //        ShotgunShotDir = new Vector2(-1, 0.7f);
-            //    }
-            //}
-            //if (MouseYDelta >= -0.2f && MouseYDelta <= 0.2)
-            //{
-            //    if (islookingright)
-            //    {
-            //        ShotgunShotDir = Vector2.right;
-            //    }
-            //    else
-            //    {
-            //        ShotgunShotDir = Vector2.left;
-            //    }
-            //}
-            //if (MouseYDelta >= -0.6f && MouseYDelta <= -0.2)
-            //{
-            //    if (islookingright)
-            //    {
-            //        ShotgunShotDir = new Vector2(1, -0.7f);
-            //    }
-            //    else
-            //    {
-            //        ShotgunShotDir = new Vector2(-1, -0.7f);
-            //    }
-            //}
-            //if (MouseYDelta <= -0.6f)
-            //{
-            //    ShotgunShotDir = Vector2.down;
-            //}
-
-        
-
-
-
-    }
+   
     /*void SetIsGroundedTofalse()//called from Invoke
     {
         IsGrounded = false;
@@ -865,6 +820,8 @@ public class CharacterController2D : Health
                 //rb.gravityScale = 1f;
                 animator.SetBool("IsFalling", false);
                 animator.SetBool("IsJumping", false);
+                isJumping = false;
+                isFalling = false;
                 StopCoroutine("JumpCoroutine");
 
 
@@ -945,8 +902,7 @@ public class CharacterController2D : Health
         //}
 
 
-        isjumping = true;
-
+        isJumping = true;
         animator.SetBool("IsJumping", true);
         animator.SetTrigger("JumpAnim");
 
@@ -964,7 +920,7 @@ public class CharacterController2D : Health
         //{
         //    JumpXBoost = -1;
         //}
-        while (Input.GetButton("Jump") && isjumping)
+        while (Input.GetButton("Jump") && isJumping)
         {
             
             //currentjumpAcceleration *= 0.99f;
@@ -975,10 +931,12 @@ public class CharacterController2D : Health
             if (transform.position.y >= Destination)
             {
                 animator.SetBool("IsJumping", false);
-              //  animator.SetBool("IsFalling", true);
-               
+                
+
+                //  animator.SetBool("IsFalling", true);
+
                 velocity *= 0.99f;
-                isjumping = false;
+                isJumping = false;
 
 
             }
@@ -991,8 +949,9 @@ public class CharacterController2D : Health
         RaycastHit2D hit = Physics2D.CircleCast(transform.position, 0.3f, Vector2.up, ceilingCheckDis, groundLayerMask);
         if (hit)
         {
-            StopCoroutine("JumpCoroutine");
 
+            StopCoroutine("JumpCoroutine");
+            isFalling = true;
             IsShotgunKnockback = false;
             if (velocity.y >= 0)
             {

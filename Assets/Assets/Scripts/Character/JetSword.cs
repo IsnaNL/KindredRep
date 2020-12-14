@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class JetSword : Weapon
 {
-  void FakeInit()
+    public override void Init()
     {
         base.Init();
     }
     // Start is called before the first frame update
     public override void Attack()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetKeyDown(attack))
         {
-            if (runningCooldown <= 0)
+            if (runningCooldown >= Cooldown)
             {
                 weaponHandler.groundColCount = 0;
 
@@ -23,12 +23,12 @@ public class JetSword : Weapon
                 StartCoroutine(SlashAnimation());
                 //SwordAttackGizmo();
             }
-            runningCooldown = Cooldown;
+            runningCooldown = 0;
 
         }
-        else
+         if( runningCooldown <Cooldown)
         {
-            runningCooldown -= Time.deltaTime;
+            runningCooldown += Time.deltaTime;
         }
     }
     IEnumerator SlashAnimation()

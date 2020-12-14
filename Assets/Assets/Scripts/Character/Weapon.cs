@@ -14,33 +14,30 @@ public abstract class Weapon : MonoBehaviour
     public WeaponHandler weaponHandler;
     public float runningCooldown;
     public float Cooldown;
-    public float AttackRange;
-    public CharacterController2D player;
+    //public float AttackRange;
     public Transform weaponCollider;
-    public List<Weapon> weaponList = new List<Weapon>();
-    private Pickaxe pickaxe;
-    private Shotgun shotgun;
-    private JetSword sword;
-    public int weaponCheck;
-   // public int enemyLayerValue;
+    public CharacterController2D player;
+    protected KeyCode attack= KeyCode.Z;
+    
+    // public int enemyLayerValue;
     //public SpriteRenderer sr;
 
 
 
-   
 
 
 
 
-   // public int bossLayerValue;
-   // public bool PickaxeFirstAttack;
-   // public bool PickaxeSecondAttack;
-  //  public float secondAttackBoost;
+
+    // public int bossLayerValue;
+    // public bool PickaxeFirstAttack;
+    // public bool PickaxeSecondAttack;
+    //  public float secondAttackBoost;
     //public float currentTimeTillSecondAttack;
     //public float currentTimeTillThirdAttack;
     //public float SecondAttackCooldown;
-   // public float ThirdAttackCooldown;
-   //public float pickaxeDashTiming;
+    // public float ThirdAttackCooldown;
+    //public float pickaxeDashTiming;
     //public int TrapsLayerValue;
 
     //public bool IsFoilWeapon;
@@ -56,27 +53,17 @@ public abstract class Weapon : MonoBehaviour
     //private Vector2 foilHitPointForGizmos;
     //public float foilAttackCapsuleDis;
 
-    public void Init()
+    public virtual void Init()
     {
-        weaponList.Clear();
-        pickaxe = FindObjectOfType<Pickaxe>();
-        weaponList.Add(pickaxe);
-        shotgun = FindObjectOfType<Shotgun>();
-        weaponList.Add(shotgun);
-        sword = FindObjectOfType<JetSword>();
-        weaponList.Add(sword);
-        GetCurrentWeapon(weaponCheck);
+        
         //PickaxeFirstAttack = false;
         Debug.Log("weaponinited");
         weaponHandler = GetComponentInChildren<WeaponHandler>();
     }
+
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q)|| Input.GetKeyDown(KeyCode.E))
-        {
-            SwapWeapon();
-        }
-      
+              
       Attack();
 
 
@@ -85,44 +72,11 @@ public abstract class Weapon : MonoBehaviour
 
     }
     public abstract void Attack();
-    private void SwapWeapon()
-    {
-      
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            weaponCheck--;
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            weaponCheck++;
-           
-        }
-        if (weaponCheck < 0)
-        {
-            weaponCheck = weaponList.Count;
-        }
-        if(weaponCheck > weaponList.Count)
-        {
-            weaponCheck = 0;
-        }
-        GetCurrentWeapon(weaponCheck);
-
-    }
-    void GetCurrentWeapon(int weaponIndex)
-    {
-        foreach (Weapon w in weaponList)
-        {
-            w.enabled = false;
-            if(weaponList.IndexOf(w) == weaponIndex)
-            {
-                w.enabled = true;
-            }
-        }
-    }
+    
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(transform.position, AttackRange);
+      //  Gizmos.DrawWireSphere(transform.position, AttackRange);
         //if (IsFoilWeapon)
         //{
         //    if (foilFirstAttack)
