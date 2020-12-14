@@ -118,7 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponAnimationControllers:
   - {fileID: 9100000, guid: fd7429aea6bfc364d96c28dce78a2488, type: 2}
-  - {fileID: 9100000, guid: 0e32db404e604234b8b1c79c6a03e82c, type: 2}
+  - {fileID: 9100000, guid: 4d23c6d286810a241a5fe0e6d11a540e, type: 2}
   - {fileID: 9100000, guid: a32e1472f9a92cb44a31935b604e3d20, type: 2}
   DefaultSpriteRendererSprites:
   - {fileID: 21300000, guid: 082471d1d5dc0974486e155c4e59ba9d, type: 3}
@@ -150,7 +150,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1763441706}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.519, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2187893807733490672}
@@ -236,6 +236,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponCheck: 0
   weaponList: []
+  pickaxe: {fileID: 0}
+  shotgun: {fileID: 0}
+  sword: {fileID: 0}
 --- !u!1 &2187893807733490673
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,12 +287,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponHandler: {fileID: 1763441709}
   runningCooldown: 0
-  Cooldown: 1
-  AttackRange: 0.5
-  player: {fileID: 2187893808038624325}
+  Cooldown: 0.5
   weaponCollider: {fileID: 1763441707}
-  weaponList: []
-  weaponCheck: 0
+  player: {fileID: 2187893808038624325}
+  isSwordDashing: 0
+  canDash: 1
+  MidDashCurrentTime: 0
+  dashForce: 100
+  dashTargetLengthTime: 0.25
+  dashwaitTime: 0
+  dashRight: 0
+  dashCooldown: 0.8
 --- !u!114 &464099667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,12 +312,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponHandler: {fileID: 1763441709}
   runningCooldown: 0
-  Cooldown: 1
-  AttackRange: 0.5
-  player: {fileID: 2187893808038624325}
+  Cooldown: 0.5
   weaponCollider: {fileID: 1763441707}
-  weaponList: []
-  weaponCheck: 0
+  player: {fileID: 2187893808038624325}
+  isPickaxeClawing: 0
+  isPickaxeClawed: 0
+  pickaxeJump: {x: 5, y: 10}
+  pickaxeRange: 1
+  shouldFlip: 0
 --- !u!114 &464099669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,17 +334,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponHandler: {fileID: 1763441709}
   runningCooldown: 0
-  Cooldown: 1
-  AttackRange: 0.5
-  player: {fileID: 2187893808038624325}
+  Cooldown: 0.5
   weaponCollider: {fileID: 1763441707}
-  weaponList: []
-  weaponCheck: 0
-  bulletSpeed: 10
-  ShotgunShotDir: {x: 0, y: 0}
+  player: {fileID: 2187893808038624325}
+  bulletSpeed: 11
+  ShotDir: {x: 0, y: 0}
   shotgunBullet: {fileID: 8074422508009855967, guid: fbcf62e97eaefac4389a5f8aed52b67f,
     type: 3}
-  shotGunParticals: {fileID: 0}
+  MobilityAbilityCoolDown: 0.8
+  FireBoostFromShotGunParitcals: {fileID: 0}
+  MobilityAbilityCoolDownCurrentTime: 0
+  canShotGunBlast: 0
+  shotgunBlastForce: {x: 5, y: 10}
+  IsShotgunKnockback: 0
 --- !u!1 &2187893807736094906
 GameObject:
   m_ObjectHideFlags: 0
@@ -616,28 +628,21 @@ MonoBehaviour:
   animator: {fileID: 799295094}
   isHit: 0
   isVulnerable: 0
-  speed: 4.5
+  speed: 5
   walkAcceleration: 15
   airAcceleration: 13
-  groundDeceleration: 30
+  groundDeceleration: 45
   jumpHeight: {x: 0, y: 2.5}
+  groundLayer: 0
   MouseYDelta: 0
+  isJumping: 0
+  moveInput: 0
   shrinkTime: 10
   JumpXBoost: 1.5
-  isPickaxeClawing: 0
-  isPickaxeClawed: 0
   maxMagnitude: 8
-  clawJump: {x: 6, y: 9}
-  ClawRange: 0.5
-  shotGunBlastCoolDown: 1
-  dashCooldown: 0.8
-  blastTargetWaitTime: 0.1
-  dashTargetWaitTime: 0.22
   islookingright: 1
-  dashForce: 120
   velocity: {x: 0, y: 0}
-  FireBoostFromShotGunParitcals: {fileID: 0}
-  weapon: {fileID: 0}
+  inventory: {fileID: 0}
   shrinkSize: {x: 0.5, y: 0.5}
   groundLayerMask:
     serializedVersion: 2
@@ -647,14 +652,14 @@ MonoBehaviour:
     m_Bits: 1024
   IsGrounded: 0
   hitKnockBack: {x: 6, y: 2}
-  shotgunBlastForce: {x: 7.5, y: 10}
   jumpAcceleration: {x: 1.5, y: 25}
   ceilingCheckDis: 0.25
-  dashWallCheckRange: 0.4
   gravityScale: 25
   groundTriggerCount: 0
   rb: {fileID: 0}
   DeltaCap: 6
+  verInput: 0
+  isFalling: 0
 --- !u!1 &2187893809089136335
 GameObject:
   m_ObjectHideFlags: 0

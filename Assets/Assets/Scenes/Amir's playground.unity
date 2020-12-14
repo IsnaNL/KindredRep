@@ -24587,43 +24587,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 464099669, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
-      propertyPath: shotGunParticals
-      value: 
-      objectReference: {fileID: 1556318501}
-    - target: {fileID: 799295094, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: fd7429aea6bfc364d96c28dce78a2488, type: 2}
-    - target: {fileID: 799295095, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
-      propertyPath: weaponAnimationControllers.Array.data[1]
-      value: 
-      objectReference: {fileID: 9100000, guid: 4d23c6d286810a241a5fe0e6d11a540e, type: 2}
-    - target: {fileID: 1763441707, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.519
-      objectReference: {fileID: 0}
-    - target: {fileID: 1763441707, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1763441708, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2187893808038624325, guid: 6d349fe5026649048bf2e330c163de78,
-        type: 3}
       propertyPath: FireBoostFromShotGunParitcals
       value: 
       objectReference: {fileID: 1556318501}
-    - target: {fileID: 2187893808038624325, guid: 6d349fe5026649048bf2e330c163de78,
+    - target: {fileID: 1814010280477587803, guid: 6d349fe5026649048bf2e330c163de78,
         type: 3}
-      propertyPath: groundDeceleration
-      value: 45
+      propertyPath: weaponCheck
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2187893808038624325, guid: 6d349fe5026649048bf2e330c163de78,
         type: 3}
-      propertyPath: speed
-      value: 5
+      propertyPath: groundLayer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2187893808038624329, guid: 6d349fe5026649048bf2e330c163de78,
         type: 3}

@@ -18,7 +18,9 @@ public abstract class Weapon : MonoBehaviour
     public Transform weaponCollider;
     public CharacterController2D player;
     protected KeyCode attack = KeyCode.Z;
-    
+    protected KeyCode mobilityAbility = KeyCode.X;
+
+
     // public int enemyLayerValue;
     //public SpriteRenderer sr;
 
@@ -65,14 +67,17 @@ public abstract class Weapon : MonoBehaviour
     {
               
       Attack();
-
-
-
+      MobilityAbility();
+      GetInput();
 
 
     }
     public abstract void Attack();
-    
+    public abstract void MobilityAbility();
+    public abstract void GetInput();
+
+
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.white;

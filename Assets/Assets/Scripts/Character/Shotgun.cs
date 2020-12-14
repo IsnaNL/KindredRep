@@ -7,9 +7,16 @@ public class Shotgun : Weapon
     public float bulletSpeed;
     public Vector2 ShotDir;
     public GameObject shotgunBullet;
-    public ParticleSystem shotGunParticals;
-
-    
+   // public ParticleSystem shotGunParticals;
+    public float MobilityAbilityCoolDown;
+    public ParticleSystem FireBoostFromShotGunParitcals;
+    public float MobilityAbilityCoolDownCurrentTime;
+    public bool canShotGunBlast;
+    public Vector2 shotgunBlastForce;
+    public bool IsShotgunKnockback;
+  //  public Vector2 ShotgunBlastVelocity;
+   // public float blastTargetWaitTime;
+  //  public float blastCurrentWaitTime;
     // Start is called before the first frame update
     public override void Attack()
     {
@@ -52,6 +59,108 @@ public class Shotgun : Weapon
 
 
 
+    }
+    public override void GetInput()
+    {
+        if (Input.GetKeyDown(mobilityAbility) && canShotGunBlast)
+        {
+            //  rb.velocity = new Vector3(0, 0, 0);
+            //saveMouseDir = mouseDirNormalized;
+            //Debug.Log("ShotGUnBLAsT");
+            //ShotgunBlastVelocity.x = velocity.x;
+            //ShotgunBlastVelocity.y = velocity.y;
+            FireBoostFromShotGunParitcals.transform.position = transform.position;
+            FireBoostFromShotGunParitcals.Play();
+            MobilityAbilityCoolDownCurrentTime = 0f;
+            canShotGunBlast = false;
+            AudioManager.a_Instance.AlyxShotGunMobilityAudio();
+            IsShotgunKnockback = true;
+        }
+
+        if (IsShotgunKnockback)
+        {
+            this.MobilityAbility();
+        }
+        if (MobilityAbilityCoolDownCurrentTime <= MobilityAbilityCoolDown)
+        {
+            MobilityAbilityCoolDownCurrentTime += Time.deltaTime;
+        }
+        else
+        {
+            canShotGunBlast = true;
+        }
+    }
+    public override void MobilityAbility()
+    {
+      
+
+        if (IsShotgunKnockback)
+        {
+            // rb.gravityScale = 0.7f;
+            // trail.enabled = false;
+
+            //ShotgunBlastVelocity.y = transform.position.y;
+         //   blastCurrentWaitTime += Time.deltaTime;
+            //knockBackOverTime += Time.deltaTime;
+           // {
+
+                //Debug.Log(IsGrounded + "IsGrounded");
+             //   blastCurrentWaitTime = 0f;
+                
+
+              // player.velocity = ShotgunBlastVelocity;
+
+
+
+
+                // rb.gravityScale = 1.5f;
+                //if (ShotgunBlastVelocity.x >= 0)
+                //{
+                //    velocity.x += afterBlastVelocityX;
+                //    Debug.Log(velocity.x);
+                //}
+                //else
+                //{
+                //    velocity.x += -afterBlastVelocityX;
+                //    Debug.Log(velocity.x);
+                //}
+                //knockBackOverTime >= knockBackOverTargetTime 
+                /*IsGrounded &&*/
+                /* knockBackOverTime >= knockBackOverTargetTime ||*/
+                //knockBackOverTime = 0f;
+          //  }
+
+            //velocity = ShotgunBlastVelocity;
+
+
+            player.velocity = -ShotDir * shotgunBlastForce;
+            IsShotgunKnockback = false;
+
+
+
+
+
+            // animator.SetBool("IsFalling", true);
+            //if (IsGrounded)
+            //{
+            //    ShotgunBlastVelocity.x = -mouseDir.x * ShotBlastForceX;
+            //    ShotgunBlastVelocity.y = -mouseDir.y * ShotBlastForceY;
+            //}
+            //else
+            //{
+            //    ShotgunBlastVelocity.x = -mouseDir.x * ShotBlastForceX;
+            //    ShotgunBlastVelocity.y = -mouseDir.y * ShotBlastForceY;
+            //}
+            //if (IsGrounded)
+            // {
+            //   rb.AddForce(ShotgunBlastVelocity * -mouseDir * Time.fixedDeltaTime, ForceMode2D.Impulse);
+            // }
+            // else
+            // {
+
+            //     //rb.AddForce(ShotBlastAirForce * -mouseDir * Time.fixedDeltaTime, ForceMode2D.Impulse);
+            // }
+        }
     }
     void GetAimAngleForShotgun()//on a scale of -1 to 1 divided by 5
     {

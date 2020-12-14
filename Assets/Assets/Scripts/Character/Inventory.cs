@@ -29,7 +29,7 @@ public  class Inventory : MonoBehaviour
 
     private void SwapWeapon()
     {
-
+       
         if (Input.GetKeyDown(KeyCode.Q))
         {
             weaponCheck--;
@@ -37,21 +37,27 @@ public  class Inventory : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             weaponCheck++;
-
         }
+        //  if (Input.GetKeyDown(KeyCode.C))
         if (weaponCheck < 0)
         {
-            weaponCheck = weaponList.Count;
+            weaponCheck = weaponList.Count-1;
         }
-        if (weaponCheck > weaponList.Count)
+        if (weaponCheck > weaponList.Count-1)
         {
             weaponCheck = 0;
         }
-        GetCurrentWeapon(weaponCheck);
+       
+
+      // }
+        
+            GetCurrentWeapon(weaponCheck);
 
     }
     void GetCurrentWeapon(int weaponIndex)
     {
+      
+        
         foreach (Weapon w in weaponList)
         {
             w.enabled = false;
