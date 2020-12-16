@@ -48,6 +48,7 @@ MonoBehaviour:
   BennyList: []
   trapsList: []
   Player: {fileID: 0}
+  weaponInit: {fileID: 0}
   PlayerCam: {fileID: 0}
   levelgenerator: {fileID: 7515731041012343369}
 --- !u!1001 &927297240264904136

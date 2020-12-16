@@ -633,8 +633,7 @@ MonoBehaviour:
   airAcceleration: 13
   groundDeceleration: 45
   jumpHeight: {x: 0, y: 2.5}
-  groundLayer: 0
-  MouseYDelta: 0
+  groundLayer: 8
   isJumping: 0
   moveInput: 0
   shrinkTime: 10
@@ -643,7 +642,6 @@ MonoBehaviour:
   islookingright: 1
   velocity: {x: 0, y: 0}
   inventory: {fileID: 0}
-  shrinkSize: {x: 0.5, y: 0.5}
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -657,7 +655,6 @@ MonoBehaviour:
   gravityScale: 25
   groundTriggerCount: 0
   rb: {fileID: 0}
-  DeltaCap: 6
   verInput: 0
   isFalling: 0
 --- !u!1 &2187893809089136335

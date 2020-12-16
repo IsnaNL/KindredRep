@@ -1424,6 +1424,78 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1589923948}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &129657745
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 129657747}
+  - component: {fileID: 129657746}
+  m_Layer: 0
+  m_Name: Global Light 2D
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &129657746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129657745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LightType: 4
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_LightVolumeOpacity: 0
+  m_ApplyToSortingLayers: 00000000
+  m_LightCookieSprite: {fileID: 0}
+  m_UseNormalMap: 0
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_ShadowIntensity: 0
+  m_ShadowVolumeIntensity: 0
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 1
+  m_PointLightDistance: 3
+  m_PointLightQuality: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
+--- !u!4 &129657747
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129657745}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.224962, y: 4.385417, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &132325099 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 431212360249607029, guid: 48cf294b52508cd4ea9f7d809bae9c2b,
@@ -4597,6 +4669,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6747397642060985175, guid: 3805726ce2268d14e92c51e2fc6569a8,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0190ac7f9f69c3b49b57db83b80f47f3, type: 2}
     - target: {fileID: 6747397642060985178, guid: 3805726ce2268d14e92c51e2fc6569a8,
         type: 3}
       propertyPath: m_Name
@@ -9468,16 +9545,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6167314605068387485, guid: ceb3299ab08269749b6526bfba367fbd,
-        type: 3}
-      propertyPath: m_LookaheadTime
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6167314605068387485, guid: ceb3299ab08269749b6526bfba367fbd,
-        type: 3}
-      propertyPath: m_LookaheadSmoothing
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6167314605934915430, guid: ceb3299ab08269749b6526bfba367fbd,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9533,76 +9600,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6167314605934915481, guid: ceb3299ab08269749b6526bfba367fbd,
-        type: 3}
-      propertyPath: field of view
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 6167314605934915481, guid: ceb3299ab08269749b6526bfba367fbd,
-        type: 3}
-      propertyPath: near clip plane
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6167314605934915481, guid: ceb3299ab08269749b6526bfba367fbd,
-        type: 3}
-      propertyPath: far clip plane
-      value: 2000
-      objectReference: {fileID: 0}
     - target: {fileID: 6167314605934915482, guid: ceb3299ab08269749b6526bfba367fbd,
         type: 3}
       propertyPath: m_Name
       value: Main Camera
-      objectReference: {fileID: 0}
-    - target: {fileID: 6167314605934915482, guid: ceb3299ab08269749b6526bfba367fbd,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6167314605939352752, guid: ceb3299ab08269749b6526bfba367fbd,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6167314605939352752, guid: ceb3299ab08269749b6526bfba367fbd,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6167314605939352752, guid: ceb3299ab08269749b6526bfba367fbd,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6167314605939352753, guid: ceb3299ab08269749b6526bfba367fbd,
         type: 3}
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 2118256316}
-    - target: {fileID: 6167314605939352753, guid: ceb3299ab08269749b6526bfba367fbd,
-        type: 3}
-      propertyPath: m_LookAt
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6167314605939352753, guid: ceb3299ab08269749b6526bfba367fbd,
-        type: 3}
-      propertyPath: m_Lens.FieldOfView
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 6167314605939352753, guid: ceb3299ab08269749b6526bfba367fbd,
-        type: 3}
-      propertyPath: m_Lens.Dutch
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6167314605939352753, guid: ceb3299ab08269749b6526bfba367fbd,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6167314605939352753, guid: ceb3299ab08269749b6526bfba367fbd,
-        type: 3}
-      propertyPath: m_Lens.FarClipPlane
-      value: 2000
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ceb3299ab08269749b6526bfba367fbd, type: 3}
 --- !u!4 &912190575 stripped
@@ -20187,6 +20194,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6747397642060985175, guid: 3805726ce2268d14e92c51e2fc6569a8,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0190ac7f9f69c3b49b57db83b80f47f3, type: 2}
     - target: {fileID: 6747397642060985178, guid: 3805726ce2268d14e92c51e2fc6569a8,
         type: 3}
       propertyPath: m_Name
@@ -24590,16 +24602,10 @@ PrefabInstance:
       propertyPath: FireBoostFromShotGunParitcals
       value: 
       objectReference: {fileID: 1556318501}
-    - target: {fileID: 1814010280477587803, guid: 6d349fe5026649048bf2e330c163de78,
-        type: 3}
-      propertyPath: weaponCheck
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2187893808038624325, guid: 6d349fe5026649048bf2e330c163de78,
-        type: 3}
-      propertyPath: groundLayer
-      value: 8
-      objectReference: {fileID: 0}
+    - target: {fileID: 799295093, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0190ac7f9f69c3b49b57db83b80f47f3, type: 2}
     - target: {fileID: 2187893808038624329, guid: 6d349fe5026649048bf2e330c163de78,
         type: 3}
       propertyPath: m_LocalPosition.x
