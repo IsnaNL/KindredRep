@@ -261,6 +261,7 @@ MonoBehaviour:
   velocity: {x: 0, y: 0}
   speed: 5
   DistanceForTele: 20
+  fullHp: 0
   playerMask:
     serializedVersion: 2
     m_Bits: 1024
@@ -280,6 +281,7 @@ MonoBehaviour:
   delayForSummon: 1.2
   delayForBackTele: 2
   DelayFromPatrolToAttack: 1.5
+  SecondBossPhaseActive: 0
 --- !u!50 &1404846270
 Rigidbody2D:
   serializedVersion: 4

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7247231206800111707}
   - component: {fileID: 513355000}
   m_Layer: 0
-  m_Name: AudioManager
+  m_Name: AudioManagment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,11 +47,31 @@ MonoBehaviour:
   audioSource: {fileID: 7247231207656493753}
   Alixclips:
   - {fileID: 8300000, guid: 97f60f7487529194cabdb0c8e13fea47, type: 3}
-  - {fileID: 8300000, guid: e5e9bcadfe86cb141b48193518689219, type: 3}
-  - {fileID: 8300000, guid: 26053fa9138abea45a214a06ec02e774, type: 3}
+  - {fileID: 8300000, guid: e6af5800a28a0ca42b5db5bac1d314ec, type: 3}
+  - {fileID: 8300000, guid: c8fa2d5796245a24c8265bfa824a269e, type: 3}
+  - {fileID: 8300000, guid: 6347250196d58bf43a267283c81f6f3d, type: 3}
   BennyClips:
-  - {fileID: 8300000, guid: d00af76ed68a31a46ab744f12c4daa8d, type: 3}
-  - {fileID: 8300000, guid: f94a87c21f62b86429e581465e69ba8b, type: 3}
+  - {fileID: 8300000, guid: fc3a63fb30fd19e44843f3072d311af9, type: 3}
+  - {fileID: 8300000, guid: ddf7d23694240544cb727979e7e72461, type: 3}
+  - {fileID: 8300000, guid: 7ca706218c12c53458ade2819e76169a, type: 3}
+  - {fileID: 8300000, guid: b5433dc9bdb387d46940c2b01888370b, type: 3}
+  - {fileID: 8300000, guid: e466fb6a0d620564f80df830bf0ea540, type: 3}
+  JetSwordClips:
+  - {fileID: 8300000, guid: c030e08038d99124c8f13379810a1317, type: 3}
+  - {fileID: 8300000, guid: 61c02a9799c8f2b489f38ee37251dfea, type: 3}
+  - {fileID: 8300000, guid: 541ed2c8af4c6a646a067910e68d5f24, type: 3}
+  - {fileID: 8300000, guid: 6a3154e3edfba3f45b635ac80f0081fe, type: 3}
+  ShotGunClips:
+  - {fileID: 8300000, guid: b45d28fd0a0d42e4a8011b7286ddf57f, type: 3}
+  - {fileID: 8300000, guid: d3975096ef60d6542ad37f7ce90091e6, type: 3}
+  - {fileID: 8300000, guid: 21ac3caaf67832f4caa52e2fe41bb132, type: 3}
+  PickaxeClips:
+  - {fileID: 8300000, guid: 9004b5f2a39ff2c4599fbbce61defbf7, type: 3}
+  AmbianceClips:
+  - {fileID: 8300000, guid: 72dbc1f0e44c8694d92e3c1b1b7702fa, type: 3}
+  - {fileID: 8300000, guid: 15670ab7143a922499154b2dee9b72ca, type: 3}
+  MenuClips:
+  - {fileID: 8300000, guid: f7f860c8166986d47b4091867fec8e34, type: 3}
 --- !u!1 &7247231207656493751
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,11 +113,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_audioClip: {fileID: 8300000, guid: 72dbc1f0e44c8694d92e3c1b1b7702fa, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.155
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
