@@ -7,6 +7,7 @@ public class GhostMovement : Health
     public Vector2 velocity;
     public float speed;
     private CharacterController2D player;
+    public PumpkinHead pumkinHead;
     public int GhostDamage;
 
 
@@ -15,6 +16,7 @@ public class GhostMovement : Health
     public override void Start()
     {
         player = FindObjectOfType<CharacterController2D>();
+       // pumkinHead = FindObjectOfType<PumpkinHead>();
         isVulnerable = true;
     }
 
@@ -34,6 +36,7 @@ public class GhostMovement : Health
         {
 
             player.TakeDamage(GhostDamage);
+           
             if (player.transform.position.x >= transform.position.x)
             {
                 //player.velocity *= 0.1f;
@@ -55,6 +58,9 @@ public class GhostMovement : Health
     }
     void Die()
     {
+        Debug.Log(pumkinHead.health);
+        pumkinHead.health += GhostDamage;
+        Debug.Log(pumkinHead.health);
         gameObject.SetActive(false);
         transform.localPosition = Vector2.zero;
     }

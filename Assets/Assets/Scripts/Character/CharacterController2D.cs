@@ -595,10 +595,14 @@ public class CharacterController2D : Health
         //}
         while (Input.GetButton("Jump") && isJumping)
         {
-            
+
             //currentjumpAcceleration *= 0.99f;
             //currentJumpX *= 0.99f;
-            velocity += new Vector2(jumpAcceleration.x * moveInput * Time.deltaTime * 0.99f, jumpAcceleration.y * Time.deltaTime * 0.99f);
+            if (!inventory.sword.isSwordDashing)
+            {
+                velocity += new Vector2(jumpAcceleration.x * moveInput * Time.deltaTime * 0.99f, jumpAcceleration.y * Time.deltaTime * 0.99f);
+
+            }
 
             //transform.position += new Vector3(currentJumpX * moveInput * Time.deltaTime * 0.8f, currentjumpAcceleration * Time.deltaTime * 0.8f, 0);
             if (transform.position.y >= Destination)

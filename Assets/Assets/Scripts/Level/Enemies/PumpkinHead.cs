@@ -7,6 +7,7 @@ public class PumpkinHead : Health
     public Vector2 velocity;
     public float speed;
     public float DistanceForTele;
+    public float fullHp;
     //private Animator animator;
     public LayerMask playerMask;
     public float timeSinceStateStart = 0f;
@@ -27,6 +28,7 @@ public class PumpkinHead : Health
     public float delayForSummon;
     public float delayForBackTele;
     public float DelayFromPatrolToAttack;
+    public bool SecondBossPhaseActive;
 
     IEnumerator AttackState()
      {
@@ -95,6 +97,8 @@ public class PumpkinHead : Health
             transform.position = teleportPosArray[Random.Range(0, 5)];
             yield return new WaitForSeconds(delayForSummon);
             Instantiate(Ghost, transform.position,Quaternion.identity);
+            GhostMovement ghostref = Ghost.GetComponent<GhostMovement>();
+            ghostref.pumkinHead = this;
             state = State.Patrol;
             shouldSwapState = true;
         }
@@ -112,13 +116,16 @@ public class PumpkinHead : Health
     {
         shouldSwapState = true;
         isVulnerable = true;
-
+        fullHp = health;
     }
     void Update()
      {
-       
 
 
+        if (health <= fullHp * 0.5f)
+        {
+            SecondBossPhaseActive = true;
+        }
         //StartCoroutine(AttackState(), PatrolState(), DieState())
         StateCheck();
          WhenHit();
@@ -147,6 +154,7 @@ public class PumpkinHead : Health
 
         }
         }
+       
     }
     void WhenHit()
     {
