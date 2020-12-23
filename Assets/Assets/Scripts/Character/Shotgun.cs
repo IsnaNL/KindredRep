@@ -14,13 +14,14 @@ public class Shotgun : Weapon
     public bool canShotGunBlast;
     public Vector2 shotgunBlastForce;
     public bool IsShotgunKnockback;
+    //public bool isAiming;
   //  public Vector2 ShotgunBlastVelocity;
    // public float blastTargetWaitTime;
   //  public float blastCurrentWaitTime;
     // Start is called before the first frame update
     public override void Attack()
     {
-        GetAimAngleForShotgun();
+       
         // base.Attack();
         if (Input.GetKeyDown(attack))
         {
@@ -42,6 +43,7 @@ public class Shotgun : Weapon
             runningCooldown += Time.deltaTime;
 
         }
+        GetAimAngleForShotgun();
     }
     void ShotgunShot()
     {
@@ -183,14 +185,15 @@ public class Shotgun : Weapon
         }
         */
 
+       
 
-
-        if (player.moveInput == 0 && player.verInput == 0f)
+        if (player.moveInput == 0 && player.verInput == 0f && !player.isFalling && !player.isJumping)
         {
-            if (player.islookingright)
+            if (player.islookingright && player.IsGrounded)
             {
                 ShotDir = Vector2.right;
                 player.animator.SetTrigger("G3");
+              //  isAiming = false;
             }
             else
             {
@@ -199,20 +202,18 @@ public class Shotgun : Weapon
                 ShotDir = Vector2.left;
 
             }
-            if (player.isFalling)
-            {
-                player.animator.SetTrigger("F3");
-
-            }
-            if (player.isJumping)
-            {
-                player.animator.SetTrigger("J3");
-            }
+        }else if (player.moveInput == 0 && player.verInput == 0f && player.isFalling && !player.isJumping)
+        {
+            player.animator.SetTrigger("F3");
+        }
+        else if (player.moveInput == 0 && player.verInput == 0f && !player.isFalling && player.isJumping)
+        {
+            player.animator.SetTrigger("J3");
         }
         else if (player.moveInput == 0 && player.verInput == 1)
         {
             ShotDir = Vector2.up;
-            player.animator.SetTrigger("G1");
+            //  isAiming = false;
 
             if (player.isFalling)
             {
@@ -224,11 +225,16 @@ public class Shotgun : Weapon
                 player.animator.SetTrigger("J1");
 
             }
+            if (player.IsGrounded)
+            {
+                player.animator.SetTrigger("G1");
+
+            }
         }
         else if (player.moveInput == 0 && player.verInput == -1)
         {
             ShotDir = Vector2.down;
-            player.animator.SetTrigger("G5");
+            // isAiming = false;
 
             if (player.isFalling)
             {
@@ -238,13 +244,20 @@ public class Shotgun : Weapon
             if (player.isJumping)
             {
                 player.animator.SetTrigger("J5");
+
+            }
+            if (player.IsGrounded) {
+                player.animator.SetTrigger("G5");
 
             }
         }
         else if (player.moveInput == 1 && player.verInput == 0)
         {
             ShotDir = Vector2.right;
-            player.animator.SetTrigger("G3");
+            
+               
+            // player.velocity *= aimDrag;
+          //  isAiming = false;
 
             if (player.isFalling)
             {
@@ -255,78 +268,36 @@ public class Shotgun : Weapon
             {
                 player.animator.SetTrigger("J3");
 
+            }
+            if (player.IsGrounded)
+            {
+                player.animator.SetTrigger("G3");
             }
         }
         else if (player.moveInput == 1 && player.verInput == 1)
         {
-            ShotDir = new Vector2(0.5f, 0.5f);
-            player.animator.SetTrigger("G2");
-
+            ShotDir = Vector2.up;
+                
+            // player.velocity *= aimDrag;
+           // isAiming = true;
             if (player.isFalling)
             {
-                player.animator.SetTrigger("F2");
+                player.animator.SetTrigger("F1");
 
             }
             if (player.isJumping)
             {
-                player.animator.SetTrigger("J2");
+                player.animator.SetTrigger("J1");
 
             }
+            if (player.IsGrounded)
+            { player.animator.SetTrigger("G1"); }
         }
         else if (player.moveInput == 1 && player.verInput == -1)
         {
-            ShotDir = new Vector2(0.5f, -0.5f);
-            player.animator.SetTrigger("G4");
-
-            if (player.isFalling)
-            {
-                player.animator.SetTrigger("F4");
-
-            }
-            if (player.isJumping)
-            {
-                player.animator.SetTrigger("J4");
-
-            }
-
-        }
-        else if (player.moveInput == -1 && player.verInput == 0)
-        {
-            ShotDir = Vector2.left;
-            player.animator.SetTrigger("G3");
-
-            if (player.isFalling)
-            {
-                player.animator.SetTrigger("F3");
-
-            }
-            if (player.isJumping)
-            {
-                player.animator.SetTrigger("J3");
-
-            }
-        }
-        else if (player.moveInput == -1 && player.verInput == 1)
-        {
-
-            ShotDir = new Vector2(-0.5f, 0.5f);
-            player.animator.SetTrigger("G2");
-            if (player.isFalling)
-            {
-                player.animator.SetTrigger("F2");
-
-            }
-            if (player.isJumping)
-            {
-                player.animator.SetTrigger("J2");
-
-            }
-        }
-        else if (player.moveInput == -1 && player.verInput == -1)
-        {
             ShotDir = Vector2.down;
-            player.animator.SetTrigger("G5");
-
+            //player.velocity *= aimDrag;
+          //  isAiming = true;
             if (player.isFalling)
             {
                 player.animator.SetTrigger("F5");
@@ -337,7 +308,75 @@ public class Shotgun : Weapon
                 player.animator.SetTrigger("J5");
 
             }
+            if (player.IsGrounded)
+            {
+                player.animator.SetTrigger("G5");
+            }
+              
 
+        }
+        else if (player.moveInput == -1 && player.verInput == 0)
+        {
+            ShotDir = Vector2.left;
+            //player.velocity *= aimDrag;
+           // isAiming = false;
+
+            if (player.isFalling)
+            {
+                player.animator.SetTrigger("F3");
+
+            }
+            if (player.isJumping)
+            {
+                player.animator.SetTrigger("J3");
+
+            }
+            if (player.IsGrounded)
+            {
+                player.animator.SetTrigger("G3");
+            }
+        }
+        else if (player.moveInput == -1 && player.verInput == 1)
+        {
+
+            ShotDir = Vector2.up;
+            if (player.IsGrounded)
+            {
+                player.animator.SetTrigger("G1");
+            }
+            //player.velocity *= aimDrag;
+          //  isAiming = true;
+            if (player.isFalling)
+            {
+                player.animator.SetTrigger("F1");
+
+            }
+            if (player.isJumping)
+            {
+                player.animator.SetTrigger("J1");
+
+            }
+        }
+        else if (player.moveInput == -1 && player.verInput == -1)
+        {
+            ShotDir = Vector2.down;
+          
+            // player.velocity *= aimDrag;
+         //   isAiming = true;
+            if (player.isFalling)
+            {
+                player.animator.SetTrigger("F5");
+
+            }
+            if (player.isJumping)
+            {
+                player.animator.SetTrigger("J5");
+
+            }
+            if (player.IsGrounded)
+            {
+                player.animator.SetTrigger("G5");
+            }
         }
 
         //if (MouseYDelta >= 0.6f)

@@ -19,7 +19,7 @@ public class JetSword : Weapon
     public bool dashRight;
 
     public float dashCooldown;
-
+    RaycastHit2D des;
     public override void Init()
     {
         canDash = true;
@@ -89,11 +89,25 @@ public class JetSword : Weapon
         }
         if (Input.GetKeyDown(mobilityAbility) && canDash)
         {
-         
+
             //StartCoroutine(TrailTime());
-           // dashVelocity.x = player.velocity.x;
+            // dashVelocity.x = player.velocity.x;
             //dashVelocity.y = player.velocity.y;
-            
+            if (player.islookingright)
+            {
+                //  transform.rotation = Quaternion.Euler(0, 0, 0);
+                 des = Physics2D.CircleCast(transform.position, 0.2f,Vector2.right,10f, player.groundLayerMask);
+               // Debug.DrawRay(transform.position, Vector2.right *10);
+
+            }
+            else
+            {
+
+                // transform.rotation = Quaternion.Euler(0, 180, 0);
+                 des = Physics2D.CircleCast(transform.position, 0.2f, Vector2.left, 10f, player.groundLayerMask);
+
+
+            }
             player.rb.velocity = new Vector3(0, 0, 0);
             player.velocity = Vector2.zero;
             player.gravityScale = 0;
@@ -125,6 +139,9 @@ public class JetSword : Weapon
         
         if (isSwordDashing)
         {
+            player.velocity.y = 0;
+            player.rb.velocity = Vector2.zero;
+           
             /*  if (islookingright)
               {
                   RaycastHit2D destination = Physics2D.Raycast(transform.position, Vector2.right, groundLayerMask);
@@ -150,8 +167,17 @@ public class JetSword : Weapon
                 if (dashRight)
                 {
                    // RaycastHit2D destination = Physics2D.Raycast(player.transform.position, Vector2.right, 100f, player.groundLayerMask);
-
-                   // if (player.transform.position.x >= destination.point.x)
+                   if(transform.position.x <= des.point.x - 0.4f)
+                    {
+                        player.velocity.x += dashForce * Time.deltaTime;
+                    }
+                    else
+                    {
+                        player.velocity.x = 0;
+                        MidDashCurrentTime = 0f;
+                        player.gravityScale = 25;
+                        isSwordDashing = false;
+                    } 
                    // {
                    //     player.velocity.x = 0f;
                 //        player.gravityScale = 25;
@@ -160,7 +186,7 @@ public class JetSword : Weapon
                //     }
                   //  else
                  //   {
-                        player.velocity.x += dashForce * Time.deltaTime;
+                       
                   //  }
                     //WallCheckDir = 1;
                     //rb.AddForce(new Vector2(dashForce*Time.deltaTime , 0),ForceMode2D.Force);
@@ -168,33 +194,40 @@ public class JetSword : Weapon
                 else
                 {
                     //rb.AddForce(new Vector2(-dashForce*Time.deltaTime, 0),ForceMode2D.Force);
-                  //  RaycastHit2D destination = Physics2D.Raycast(player.transform.position, Vector2.left, 100f, player.groundLayerMask);
+                    //  RaycastHit2D destination = Physics2D.Raycast(player.transform.position, Vector2.left, 100f, player.groundLayerMask);
 
-                  //  if (player.transform.position.x <= destination.point.x)
-                 //   {
-                  //      player.velocity.x *= 0.15f;
-                 //player.gravityScale = 25;
-                  //      isSwordDashing = false;
-                   //     MidDashCurrentTime = 0f;
-                    
-                    
-                    
-                        //dashVelocity.x -= dashForce * Time.deltaTime;
+                    //  if (player.transform.position.x <= destination.point.x)
+                    //   {
+                    //      player.velocity.x *= 0.15f;
+                    //player.gravityScale = 25;
+                    //      isSwordDashing = false;
+                    //     MidDashCurrentTime = 0f;
+
+
+
+                    if (transform.position.x >= des.point.x + 0.4f)
+                    {
                         player.velocity.x -= dashForce * Time.deltaTime;
+                    }else
+                    {
+                        player.velocity.x = 0;
+                        MidDashCurrentTime = 0f;
+                        player.gravityScale = 25;
+                        isSwordDashing = false;
+                    }
 
-                       
 
 
-                    
+
                     //WallCheckDir = -1;
                 }
             }
             else
             {
                 player.velocity.x = 0;
-                isSwordDashing = false;
                 MidDashCurrentTime = 0f;
                 player.gravityScale = 25;
+                isSwordDashing = false;
 
             }
 
@@ -202,7 +235,7 @@ public class JetSword : Weapon
 
             //Collider2D wallCheck = Physics2D.OverlapCircle(transform.position, dashWallCheckRange, groundLayerMask);
             MidDashCurrentTime += Time.deltaTime;
-            if (MidDashCurrentTime >= dashTargetLengthTime || player.TopWallCheck || player.BottomWallCheck)/*||transform.position.x >= checkForWallRight.point.x || transform.position.x <= checkForWallLeft.point.x*/
+            if (MidDashCurrentTime >= dashTargetLengthTime )/*||transform.position.x >= checkForWallRight.point.x || transform.position.x <= checkForWallLeft.point.x*/
             {
                 //Debug.Log(wallCheck.gameObject.name);
                 Debug.Log("DashTimeDone");

@@ -24,15 +24,15 @@ public class CharacterController2D : Health
 
    
     
-    public int groundLayer;
    // private TrailRenderer trail;
+    //public float MouseYDelta;
+    public int groundLayer;
     private Vector2 currentScale;
     private int coinLayer;
     public RaycastHit2D BottomWallCheck;
     public RaycastHit2D TopWallCheck;
     private float savedGravityScale;
     private WeaponAnimatorController animationControllerSwapper;
-    //public float MouseYDelta;
     public bool isJumping;
     public float moveInput;
     public float shrinkTime;
@@ -52,9 +52,18 @@ public class CharacterController2D : Health
     public Rigidbody2D rb;
     public float verInput;
     public bool isFalling;
+    //private float runAnimSpeed;
+    //private float counter;
+    public float secondMaxAccelrationModifier;
+    public float secondMaxSpeedModifier;
+
+    //public float runAnimAcceleration;
+
+
+    // private bool oneStep;
     //private SpriteRenderer sr;
     //public float dashWallCheckRange;
-  //  public float DeltaCap;
+    //  public float DeltaCap;
     //public Vector2 shrinkSize;
 
 
@@ -74,9 +83,9 @@ public class CharacterController2D : Health
     //private BoxCollider2D boxCollider;
     //private Vector2 savedvelocity;
     //private float currentVelocityY;
-   // private Vector2 saveMouseDir;
+    // private Vector2 saveMouseDir;
     //private Vector2 mousePos;
-   // private float mouseDeltaCounter;
+    // private float mouseDeltaCounter;
 
 
     public override void Start()
@@ -91,15 +100,15 @@ public class CharacterController2D : Health
         coinLayer = 14;
         IsGrounded = false;
         animationControllerSwapper = GetComponentInChildren<WeaponAnimatorController>();
-       // trail = GetComponent<TrailRenderer>();
         rb = GetComponent<Rigidbody2D>();
-       // sr = GetComponentInChildren<SpriteRenderer>();
         islookingright = true;
         currentScale = new Vector2(transform.localScale.x, transform.localScale.y);
         savedGravityScale = gravityScale;
         inventory = GetComponentInChildren<Inventory>();
         inventory.Init();
         animationControllerSwapper.Init();
+       // trail = GetComponent<TrailRenderer>();
+       // sr = GetComponentInChildren<SpriteRenderer>();
     }
     private void Update()
     {
@@ -129,16 +138,16 @@ public class CharacterController2D : Health
         float deceleration = IsGrounded ? groundDeceleration : 0;
         moveInput = Input.GetAxisRaw("Horizontal");
         verInput = Input.GetAxisRaw("Vertical");
-      
-        //Debug.Log(mouseDirNormalized);
-        // velocity.x = Mathf.MoveTowards(velocity.x, speed * moveInput, acceleration * Time.deltaTime);
         HorizontalMovement(acceleration, deceleration);
         HitImpact();
         GetInputJumpMethod();
+        CheckFlip();
+      
+        //Debug.Log(mouseDirNormalized);
+        // velocity.x = Mathf.MoveTowards(velocity.x, speed * moveInput, acceleration * Time.deltaTime);
       //  GetInputSetCoditionsForSwordDash();
       //  GetInputSetConditionsForShotgunBlast();
        // GetInputSetConditionsForPickaxeClawing();
-        CheckFlip();
        
         //animator.SetFloat("MouseDir", MouseYDelta);
         //else
@@ -187,6 +196,7 @@ public class CharacterController2D : Health
             {
                 isFalling = true;
                 animator.SetBool("IsFalling", true);
+                isJumping = false;
                 animator.SetBool("Idle", false);
                 
             }
@@ -199,7 +209,7 @@ public class CharacterController2D : Health
         //    velocity = Vector2.ClampMagnitude(velocity, maxMagnitude);
         //}
     }
-    void FixedUpdate()
+   private void FixedUpdate()
     {
         CeilingCheck();
         WallCol();
@@ -225,19 +235,33 @@ public class CharacterController2D : Health
     {
         if (moveInput != 0)
         {
-            animator.SetBool("Idle", false);
+           animator.SetBool("Idle", false);
 
-            if (IsGrounded)
+           animator.SetBool("IsRunning", IsGrounded);
+
+            // if (velocity.x != speed * moveInput)
+            // {
+            //    counter += Time.deltaTime;
+
+            //  }
+
+
+            // runAnimSpeed = 0.1f;
+            //  runAnimSpeed = Mathf.MoveTowards(runAnimSpeed, 1, runAnimAcceleration * Time.deltaTime);
+            // animator.speed = Mathf.MoveTowards(, 1, runAnimAcceleration * Time.deltaTime);
+            animator.speed =  Mathf.Abs(velocity.x) / speed * secondMaxSpeedModifier;
+
+
+            if (!inventory.sword.isSwordDashing)
             {
-                animator.SetBool("IsRunning", true);
+                if (inventory.shotgun.enabled && verInput != 0)
+                {
+                    StopPlayer(deceleration);
+                    return;
+                }
 
+                MovePlayer(acceleration);
             }
-            else
-            {
-                animator.SetBool("IsRunning", false);
-            }
-
-            velocity.x = Mathf.MoveTowards(velocity.x, speed * moveInput, acceleration * Time.deltaTime);
             if (velocity.x >= speed * 0.5f && IsGrounded || velocity.x <= -speed * 0.5f && IsGrounded)
             {
 
@@ -271,22 +295,39 @@ public class CharacterController2D : Health
         else
         {
             //animator.SetBool("IsMoving", false);
-           velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.deltaTime);
-         /*  if(velocity.x >= 0)
-            {
-                velocity.x -= deceleration * Time.deltaTime;
-                
-            }
-           if(velocity.x < 0)
-            {
-                velocity = 0;
-            }*/
+            //counter = 0;
+            StopPlayer(deceleration);
+            /*  if(velocity.x >= 0)
+               {
+                   velocity.x -= deceleration * Time.deltaTime;
+
+               }
+              if(velocity.x < 0)
+               {
+                   velocity = 0;
+               }*/
             //animator.SetBool("IsMoving", false);
             animator.SetBool("IsRunning", false);
-            animator.SetBool("Idle",true);
+            animator.speed = 1;
+            animator.SetBool("Idle", true);
         }
     }
-   
+
+    private void StopPlayer(float deceleration)
+    {
+        velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.deltaTime);
+    }
+
+    private void MovePlayer(float acceleration)
+    {
+        velocity.x = Mathf.MoveTowards(velocity.x, speed * moveInput, acceleration * Time.deltaTime);
+        if (velocity.x == speed * moveInput)
+        {
+            velocity.x = Mathf.MoveTowards(velocity.x, speed *secondMaxSpeedModifier * moveInput, acceleration * secondMaxAccelrationModifier * Time.deltaTime);
+
+        }
+    }
+
     private void GetInputJumpMethod()
     {
         if (Input.GetButtonDown("Jump"))
@@ -294,6 +335,7 @@ public class CharacterController2D : Health
             if (IsGrounded)
             {
 
+                StartCoroutine("JumpCoroutine");
                 //if (islookingright)
                 //{
                 //    velocity.x += 1;
@@ -313,7 +355,6 @@ public class CharacterController2D : Health
                 //}
                 //StartCoroutine("JumpCoroutine");
 
-                StartCoroutine("JumpCoroutine");
                 //StartCoroutine(TrailTime());
                 //AudioManager.a_Instance.AlixJumpAudio();
 
@@ -332,6 +373,62 @@ public class CharacterController2D : Health
         }
     }
 
+    private IEnumerator JumpCoroutine()
+    {
+
+        //if (!IsGrounded)
+        //{
+
+        //    yield return null;
+        //}
+
+
+        isJumping = true;
+        animator.SetBool("IsJumping", true);
+        animator.SetTrigger("JumpAnim");
+
+        //float startingpos = transform.position.y;
+        float Destination = transform.position.y + jumpHeight.y;
+       /// float currentjumpAccelerationY = jumpAcceleration.y;
+       // float currentjumpAccelerationX = jumpAcceleration.x;
+       // Vector2 currentvelocity = velocity;
+        velocity.y = 5;
+        //if (islookingright)
+        //{
+        //    JumpXBoost = 1;
+        //}
+        //else
+        //{
+        //    JumpXBoost = -1;
+        //}
+        while (Input.GetButton("Jump") && isJumping)
+        {
+
+            //currentjumpAcceleration *= 0.99f;
+            //currentJumpX *= 0.99f;
+            if (!inventory.sword.isSwordDashing)
+            {
+                velocity += new Vector2(jumpAcceleration.x * moveInput * Time.deltaTime * 0.99f, jumpAcceleration.y * Time.deltaTime * 0.99f);
+
+            }
+
+            //transform.position += new Vector3(currentJumpX * moveInput * Time.deltaTime * 0.8f, currentjumpAcceleration * Time.deltaTime * 0.8f, 0);
+            if (transform.position.y >= Destination)
+            {
+                animator.SetBool("IsJumping", false);
+                
+
+                //  animator.SetBool("IsFalling", true);
+
+                velocity *= 0.99f;
+                isJumping = false;
+
+
+            }
+            yield return null;
+        }
+
+    }
   
    
     private void WallCol()
@@ -565,62 +662,6 @@ public class CharacterController2D : Health
         yield return new WaitForSeconds(1f);
         trail.enabled = false;
     }*/
-    private IEnumerator JumpCoroutine()
-    {
-
-        //if (!IsGrounded)
-        //{
-
-        //    yield return null;
-        //}
-
-
-        isJumping = true;
-        animator.SetBool("IsJumping", true);
-        animator.SetTrigger("JumpAnim");
-
-        //float startingpos = transform.position.y;
-        float Destination = transform.position.y + jumpHeight.y;
-       /// float currentjumpAccelerationY = jumpAcceleration.y;
-       // float currentjumpAccelerationX = jumpAcceleration.x;
-       // Vector2 currentvelocity = velocity;
-        velocity.y = 5;
-        //if (islookingright)
-        //{
-        //    JumpXBoost = 1;
-        //}
-        //else
-        //{
-        //    JumpXBoost = -1;
-        //}
-        while (Input.GetButton("Jump") && isJumping)
-        {
-
-            //currentjumpAcceleration *= 0.99f;
-            //currentJumpX *= 0.99f;
-            if (!inventory.sword.isSwordDashing)
-            {
-                velocity += new Vector2(jumpAcceleration.x * moveInput * Time.deltaTime * 0.99f, jumpAcceleration.y * Time.deltaTime * 0.99f);
-
-            }
-
-            //transform.position += new Vector3(currentJumpX * moveInput * Time.deltaTime * 0.8f, currentjumpAcceleration * Time.deltaTime * 0.8f, 0);
-            if (transform.position.y >= Destination)
-            {
-                animator.SetBool("IsJumping", false);
-                
-
-                //  animator.SetBool("IsFalling", true);
-
-                velocity *= 0.99f;
-                isJumping = false;
-
-
-            }
-            yield return null;
-        }
-
-    }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

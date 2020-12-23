@@ -7,12 +7,13 @@ public class Benny : Health
 {
     public CharacterController2D player;
     private SpriteRenderer SR;
-    private bool isGrounded;
+    public bool isGrounded;
     public LayerMask GroundLayerMask;
     public int GroundLayerInt;
     public LayerMask playerLayerMask;
     public int playerLayerInt;
     public float RangeToPeek;
+    //private bool TriggerLandingAnimationBool;
     Rigidbody2D RB2D;
     public float JumpForce;
     public int Direction;
@@ -21,19 +22,22 @@ public class Benny : Health
     public Vector2 jumpAcceleration;
     public Vector2 HitForce;
     public float KnockBackAfterHittingPlayer;
-    //public Vector2 velocity;
+    public Vector2 velocity;
     public float GravityScale;
     public bool IsAttacking;
     public float startingJumpAccelerationX;
     public int damage;
     public Slider healthBar;
-    public float GroundCheckDistanceForLanding;
+    //public float GroundCheckDistanceForLanding;
     public Collider2D bodyCollider;
+    public Collider2D GroundCheckCollider;
     public int groundCheckLayer;
     public int EnemyLayer;
     private int groundTriggerCount;
-
-
+    RaycastHit2D checkForGround;
+    public bool isJumping;
+    RaycastHit2D landingDesCheck;
+    private float landingYDes;
 
 
 
@@ -51,7 +55,20 @@ public class Benny : Health
     // Update is called once per frame
     void Update()
     {
+        //velocity *= 0.999f * Time.deltaTime; ;//smoother
+       
+        if (!isGrounded && isJumping)
+        {
+            velocity.y -= GravityScale * Time.deltaTime;
+        }
+        else
+        {
+           // velocity.y = 0;
+        }
         healthBar.value = health;
+       
+        
+        //Debug.Log(isGrounded);
         //if (!isGrounded)
         //{
         //    velocity.y -= GravityScale * Time.deltaTime;
@@ -84,8 +101,8 @@ public class Benny : Health
 
 
         }
-        
 
+       
         //transform.Translate(velocity * Time.deltaTime);
     }
 
@@ -98,15 +115,16 @@ public class Benny : Health
 
             if (player.transform.position.x >= transform.position.x)
             {
-                RB2D.velocity = Vector2.zero;
-                RB2D.AddForce(new Vector2(-HitForce.x, HitForce.y), ForceMode2D.Impulse);
+                velocity = Vector2.zero;
+                velocity = new Vector2(-HitForce.x, HitForce.y);
 
             }
             else
             {
                 RB2D.velocity = Vector2.zero;
 
-                RB2D.AddForce(HitForce, ForceMode2D.Impulse);
+                velocity = new Vector2(HitForce.x, HitForce.y);
+
 
             }
             isVulnerable = false;
@@ -119,7 +137,29 @@ public class Benny : Health
     {
         WhenHit();
         CheckPeekCondition();
+        checkForGround = Physics2D.CircleCast(new Vector2(transform.position.x, transform.position.y - 0.5f), 0.1f, Vector2.down, 0.1f, GroundLayerMask);
+        landingDesCheck = Physics2D.Raycast(transform.position, Vector2.down, 10, GroundLayerMask);
+        if (velocity.y < 0)
+        {
+            //Debug.DrawRay()
+            // GroundCheckCollider.enabled = true;
+            if (checkForGround && isJumping)
+            {
+                isJumping = false;
+                velocity.x = 0;
+                animator.SetTrigger("Land");
+            }
+            if (landingDesCheck)
+            {
+                landingYDes = landingDesCheck.point.y + 0.1f;
+               if(transform.position.y <= landingYDes)
+                {
+                    velocity *= 0.1f;
+                }
 
+            }
+        }
+        transform.Translate(velocity * Time.fixedDeltaTime);
         // CheckAttackCondition();
       //  if (/*IsAttacking &&*/ RB2D.velocity.y < 0)  
       //  {
@@ -130,20 +170,29 @@ public class Benny : Health
 
 
     }
+   
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        
+
         groundTriggerCount++;
         if (groundTriggerCount == 1)
         {
+           
             if (collision.gameObject.layer == GroundLayerInt)
             {
+
+
+              //  animator.SetTrigger("Land");
+
                 isGrounded = true;
-                //velocity *= 0.5f;
                 IsAttacking = false;
                 isVulnerable = false;
                 bodyCollider.gameObject.layer = defaultLayer;
-                animator.SetTrigger("Land");
                 RB2D.velocity = Vector2.zero;
+                velocity = Vector2.zero;
+                
+                //velocity *= 0.5f;
                 //animator.SetTrigger("BackToIdle");
 
             }
@@ -164,25 +213,23 @@ public class Benny : Health
             if (IsAttacking)
             { 
                 player.TakeDamage(damage);
-              
+
                 if (player.transform.position.x >= transform.position.x)
                 {
-                    //player.velocity *= 0.1f;
-                    player.velocity += new Vector2(player.hitKnockBack.x, player.hitKnockBack.y);
-                    RB2D.AddForce(new Vector2(-KnockBackAfterHittingPlayer,1), ForceMode2D.Impulse);
-                   
+                    velocity = new Vector2(-HitForce.x, HitForce.y) * 0.2f;//benny
+                    player.velocity = new Vector2(HitForce.x, HitForce.y);
+
                 }
                 else
                 {
-                    //player.velocity *= 0.1f;
-                    player.velocity += new Vector2(-player.hitKnockBack.x, player.hitKnockBack.y);
-                    RB2D.AddForce(new Vector2(KnockBackAfterHittingPlayer, 1), ForceMode2D.Impulse);
-                   
+                    velocity = new Vector2(HitForce.x, HitForce.y) * 0.2f;//benny
+
+                    player.velocity = new Vector2(-HitForce.x, HitForce.y);
 
 
                 }
                 AudioManager.a_Instance.BennyAttackAudio();
-               // IsAttacking = false;
+                IsAttacking = false;
             }
           
         }
@@ -259,13 +306,30 @@ public class Benny : Health
  
     public IEnumerator JumpCoRou()
     {
-     
-        
+        isJumping = true;
+     //   Vector2 savedjumpacc = jumpAcceleration;
+       // GroundCheckCollider.enabled = false;
+        //RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(Direction, 0), 1, GroundLayerMask);
+       // if (hit)
+       // {
+         //   jumpAcceleration = new Vector2(0, 10);
+          //  jumpAcceleration.y = savedjumpacc * 2;
+       // }
+       // else
+       // {
+         //   jumpAcceleration = savedjumpacc;
+           // jumpAcceleration.y = savedjumpacc;
+      //  }
+
         isVulnerable = true;
         bodyCollider.gameObject.layer = EnemyLayer;
-        RB2D.AddForce(jumpAcceleration, ForceMode2D.Impulse);
+        
+        velocity = new Vector2(jumpAcceleration.x,jumpAcceleration.y);
         IsAttacking = true;
         yield return null;
+       // isGrounded = false;
+        
+        // RB2D.AddForce(jumpAcceleration, ForceMode2D.Impulse);
         //yield return new WaitForSeconds(0.5f);
         //isAccelerating = true;
         //float Destination = transform.position.y + JumpForce;
@@ -287,11 +351,20 @@ public class Benny : Health
         //}
 
     }
+   public void setGroundfromAnimator()
+    {
+        if (checkForGround)
+        {
+            isJumping = false;
+            velocity.x = 0;
+            animator.SetTrigger("Land");
+        }
+    }
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, RangeToPeek);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawRay(transform.position, Vector2.down * GroundCheckDistanceForLanding);
+      //  Gizmos.color = Color.red;
+      // Gizmos.DrawWireSphere(transform.position,0.1f);
+        Gizmos.color = Color.yellow;
+        //Gizmos.DrawRay(new Vector2(transform.position.x,transform.position.y -0.5f), Vector2.down *0.2f);
     }
 }
