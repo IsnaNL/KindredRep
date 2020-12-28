@@ -35,17 +35,14 @@ public class Benny : Health
     private int groundTriggerCount;
     public bool isJumping;
     private float landingYDes;
-    private bool peakTrigger;
     private bool IdleAudioTrigger;
     public float RangeForIdleAudio;
 
 
     public void Init()
     {
-      //  player = FindObjectOfType<CharacterController2D>();
         SR = GetComponent<SpriteRenderer>();
         RB2D = GetComponent<Rigidbody2D>();
-        //velocity = new Vector2(0, 0);
         startingJumpAccelerationX = jumpAcceleration.x;
         isVulnerable = false;
     }
@@ -53,8 +50,6 @@ public class Benny : Health
    
     void Update()
     {
-        
-
         if (!isGrounded && isJumping)
         {
             velocity.y -= GravityScale * Time.deltaTime;
@@ -81,34 +76,23 @@ public class Benny : Health
         }
         healthBar.value = health;
        
-        
-    
-        if (!IsAttacking)
+        if (IsAttacking)
         {
 
-
-
-
+        }
+        else
+        {
             if (player.transform.position.x >= transform.position.x)
             {
                 SR.flipX = true;
                 Direction = 1;
-
             }
             else
             {
                 SR.flipX = false;
                 Direction = -1;
-
-
-
             }
-
-
         }
-      
-       
-        
     }
 
     private void WhenHit()
@@ -158,7 +142,7 @@ public class Benny : Health
             }
             if (landingDesCheck)
             {
-                landingYDes = landingDesCheck.point.y + 0.1f;
+                landingYDes = landingDesCheck.point.y + 0.1f; // small revision in place
                if(transform.position.y <= landingYDes)
                 {
                     velocity *= 0.1f;
@@ -187,7 +171,6 @@ public class Benny : Health
              
 
                 isGrounded = true;
-                peakTrigger = true;
                 IsAttacking = false;
                 isVulnerable = false;
                 bodyCollider.gameObject.layer = defaultLayer;
@@ -204,7 +187,6 @@ public class Benny : Health
         groundTriggerCount--;
         if (groundTriggerCount == 0)
         {
-            peakTrigger = false;
             isGrounded = false;
         }
     }
@@ -252,41 +234,23 @@ public class Benny : Health
   
     public void CheckPeekCondition()
     {
-      
-        
         RaycastHit2D hit = Physics2D.CircleCast(transform.position, RangeToPeek, Vector2.up, 0.1f, playerLayerMask);
-        if (hit && peakTrigger)
-         {
-           
-            
-                PeekExecute();
-            
-         
-            peakTrigger = false;
-
+        if (hit)
+        {
+            animator.SetTrigger("PeekTrigger");
         }
-         else
-         {
-           animator.SetTrigger("BackToIdle");
-           
-
-         }
-       
-
-      
+        else
+        {
+            animator.SetTrigger("BackToIdle");
+        }
     }
-  
-    public void PeekExecute()
+    public void PlayPeakSound()
     {
-        
-        animator.SetTrigger("PeekTrigger");
         AudioManager.a_Instance.BennyPeekAudio();
     }
     public void setBackToIdle()//called by animator in the end of the land animation
     {
         animator.SetTrigger("BackToIdle");
-        
-        
     }
 
     public void CheckAttackCondition() //called by animator
@@ -294,12 +258,11 @@ public class Benny : Health
         RaycastHit2D hit = Physics2D.CircleCast(transform.position, RangeToPeek, Vector2.up, 0.1f, playerLayerMask);
         if (hit)
         {
-           
             AttackExecute();
         }
         else
         {
-        animator.SetTrigger("BackToIdle");
+            animator.SetTrigger("BackToIdle");
         }
     }
     public void AttackExecute()
