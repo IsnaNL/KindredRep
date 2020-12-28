@@ -46,41 +46,9 @@ public class CharacterController2D : Health
     public float secondMaxAccelrationModifier;
     public float secondMaxSpeedModifier;
 
-    //public float runAnimAcceleration;
-
-
-    // private bool oneStep;
-    //private SpriteRenderer sr;
-    //public float dashWallCheckRange;
-    //  public float DeltaCap;
-    //public Vector2 shrinkSize;
-
-
-    //private float playerToMousePosAngle;
-    //private Vector2 mouseDir;
-
-
-
-
-    //public BoxCollider2D groundCheckCollider;
-    //public float afterBlastVelocityX;
-    //public float knockBackOverTargetTime;
-    //private float knockBackOverTime;
-    //private GroundCheck groundcheck;
-    //public float afterBlastVelocityY;
-    //private bool ShotBlastAirForce;
-    //private BoxCollider2D boxCollider;
-    //private Vector2 savedvelocity;
-    //private float currentVelocityY;
-    // private Vector2 saveMouseDir;
-    //private Vector2 mousePos;
-    // private float mouseDeltaCounter;
-
-
     public override void Start()
     {
         base.Start();
-       
     }
     public void Init()
     {
@@ -211,7 +179,7 @@ public class CharacterController2D : Health
     {
         if (Input.GetButtonDown("Jump"))
         {
-            if (IsGrounded)
+            if (IsGrounded && canMove)
             {
 
                 StartCoroutine("JumpCoroutine");

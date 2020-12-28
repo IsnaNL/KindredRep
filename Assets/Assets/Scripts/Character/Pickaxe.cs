@@ -10,6 +10,8 @@ public class Pickaxe : Weapon
     public bool isPickaxeClawed;
     public Vector2 pickaxeJump;
     public float pickaxeRange;
+
+    public float takeControlDur;
   
    public override void GetInput()
     {
@@ -20,7 +22,6 @@ public class Pickaxe : Weapon
             if(!isPickaxeClawing)
             {
                 isPickaxeClawing = true;
-                
             }
             if (isPickaxeClawed)
             {
@@ -89,9 +90,6 @@ public class Pickaxe : Weapon
                 }
                 isPickaxeClawed = false;
             }
-
-           
-           
         }
     }
     public override void Attack()
@@ -100,10 +98,14 @@ public class Pickaxe : Weapon
         {
             player.animator.SetTrigger("PickaxeAttack");
             Debug.Log("Pickaxe Attack");
-            
+            StartCoroutine(TakePlayerControl(takeControlDur));
         }
     }
-   
+    protected override IEnumerator TakePlayerControl(float time)
+    {
+        StartCoroutine(base.TakePlayerControl(time));
+        yield break;
+    }
     void OnDisable()
     {
         player.canMove = true;

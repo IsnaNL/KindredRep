@@ -16595,6 +16595,10 @@ PrefabInstance:
       propertyPath: pickaxeRange
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 464099667, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
+      propertyPath: takeControlDur
+      value: 1.2
+      objectReference: {fileID: 0}
     - target: {fileID: 464099669, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
       propertyPath: FireBoostFromShotGunParitcals
       value: 
