@@ -160,7 +160,9 @@ public class PumpkinHead : Health
     {
         if (isHit)
         {
-            EffectsManager.e_Instance.BloodHitEffect(transform);
+            EffectsManager.e_Instance.BloodHitEffect(transform.position);
+            EffectsManager.e_Instance.HitEffect(transform.position);
+
             isHit = false;
         }
     }

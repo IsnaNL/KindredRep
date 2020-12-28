@@ -184,7 +184,9 @@ public class Enemy : Health
                     velocity += new Vector2(hitKnockBack * Time.deltaTime, 0f);
 
                 }
-                EffectsManager.e_Instance.BloodHitEffect(transform);
+                EffectsManager.e_Instance.BloodHitEffect(transform.position);
+                EffectsManager.e_Instance.HitEffect(transform.position);
+
                 //velocity.x *= 0.1f;
                 isHit = false;
             }

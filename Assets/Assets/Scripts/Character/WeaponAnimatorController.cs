@@ -33,7 +33,7 @@ public class WeaponAnimatorController : MonoBehaviour
         if (player.inventory.weaponCheck == 2)
         {
             player.animator.runtimeAnimatorController = weaponAnimationControllers[2];
-            sr.sprite = DefaultSpriteRendererSprites[0];
+            sr.sprite = DefaultSpriteRendererSprites[2];
 
         }
     }

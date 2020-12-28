@@ -575,34 +575,35 @@ MonoBehaviour:
   isHit: 0
   isVulnerable: 0
   player: {fileID: 0}
-  isGrounded: 0
   GroundLayerMask:
     serializedVersion: 2
     m_Bits: 256
-  GroundLayerInt: 8
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 1024
+  velocity: {x: 0, y: 0}
+  jumpAcceleration: {x: 5, y: 6}
+  HitForce: {x: 6, y: 1}
+  healthBar: {fileID: 8093370558755750489}
+  bodyCollider: {fileID: 1841599004081842184}
+  GroundCheckCollider: {fileID: 6747397641203047648}
+  groundCheckLayer: 11
+  isGrounded: 0
+  GroundLayerInt: 8
   playerLayerInt: 10
   RangeToPeek: 5
   JumpForce: 1
   Direction: 0
   defaultLayer: 0
   isAccelerating: 0
-  jumpAcceleration: {x: 5, y: 6}
-  HitForce: {x: 6, y: 1}
   KnockBackAfterHittingPlayer: 2
-  velocity: {x: 0, y: 0}
   GravityScale: 15
   IsAttacking: 0
   startingJumpAccelerationX: 6
   damage: 12
-  healthBar: {fileID: 8093370558755750489}
-  GroundCheckDistanceForLanding: 0.6
-  bodyCollider: {fileID: 6747397641203047648}
-  GroundCheckCollider: {fileID: 6747397641203047648}
-  groundCheckLayer: 11
   EnemyLayer: 9
+  isJumping: 0
+  RangeForIdleAudio: 10
 --- !u!50 &6747397642060985173
 Rigidbody2D:
   serializedVersion: 4

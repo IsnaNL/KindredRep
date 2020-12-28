@@ -8,6 +8,8 @@ public  class Inventory : MonoBehaviour
     public Pickaxe pickaxe;
     public Shotgun shotgun;
     public JetSword sword;
+    public KeyCode next = KeyCode.F;
+    public KeyCode previous = KeyCode.D;
   //public CharacterController2D player;
 
 
@@ -30,11 +32,11 @@ public  class Inventory : MonoBehaviour
     private void SwapWeapon()
     {
        
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(previous))
         {
             weaponCheck--;
         }
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(next))
         {
             weaponCheck++;
         }
@@ -70,7 +72,7 @@ public  class Inventory : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(previous) || Input.GetKeyDown(next))
         {
             SwapWeapon();
         }
