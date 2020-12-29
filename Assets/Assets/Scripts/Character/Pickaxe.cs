@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Pickaxe : Weapon
-{
-
-  
+{ 
     public bool isPickaxeClawing = false;
     public bool isPickaxeClawed;
     public Vector2 pickaxeJump;
@@ -18,7 +16,6 @@ public class Pickaxe : Weapon
         if (Input.GetKeyDown(mobilityAbility))
         {
 
-            //isClawing = true;
             if(!isPickaxeClawing)
             {
                 isPickaxeClawing = true;
@@ -53,12 +50,6 @@ public class Pickaxe : Weapon
             isPickaxeClawed = checkforwall;
 
             isPickaxeClawing = false;
-
-    
-
-
-
-
 
 
         }

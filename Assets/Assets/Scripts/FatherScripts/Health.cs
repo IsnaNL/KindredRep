@@ -8,12 +8,8 @@ abstract public class Health : MonoBehaviour
     public Animator animator;
     public bool isHit;
     public bool isVulnerable;
-   // public bool hit;
-    //public int hitDamage;
-    
    virtual public void Start()
     {
-       // Debug.Log("AbstractHealthInit");
         isVulnerable = true;
     }
 
@@ -25,11 +21,9 @@ abstract public class Health : MonoBehaviour
         {
             health -= damage;
             Debug.Log(this.gameObject.name + "takendamage" + "health" + "  " + health);
-            // animator.SetTrigger("Hit");
-            //hitDamage = 0;
             isHit = true;
           
-            // StartCoroutine(HITSLOWTIME());
+ 
 
         }
 
@@ -40,11 +34,4 @@ abstract public class Health : MonoBehaviour
 
     }
    
-  /*  public IEnumerator HITSLOWTIME()
-    {
-        Time.timeScale = 0.3f;
-        yield return new WaitForSeconds(0.1f);
-        Time.timeScale = 1f;
-
-    }*/
 }

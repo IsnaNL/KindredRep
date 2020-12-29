@@ -14,27 +14,10 @@ public class AudioManager : MonoBehaviour
     public List<AudioClip> PickaxeClips;
     public List<AudioClip> AmbianceClips;
     public List<AudioClip> MenuClips;
-
-
-
-
     void Start()
     {
         a_Instance = this;
     }
-
-    //public  AudioManager ReturnInstance()
-    //{
-    //    if (a_Instance == null)
-    //    {
-    //        a_Instance = new AudioManager();
-    //    }
-    //    return a_Instance;
-    //}
-
-
-
-
     public void AlyxJumpAudio()
     {
       audioSource.PlayOneShot(Alixclips[2]);
@@ -47,7 +30,6 @@ public class AudioManager : MonoBehaviour
     {
         audioSource.PlayOneShot(Alixclips[3]);
     }
-
     public void AlyxJetSwordAttackAudio()
     {
         
@@ -98,7 +80,6 @@ public class AudioManager : MonoBehaviour
         audioSource.PlayOneShot(BennyClips[3]);
 
     }
-    
     public void BennyHurtAudio()
     {
         audioSource.PlayOneShot(BennyClips[4]);

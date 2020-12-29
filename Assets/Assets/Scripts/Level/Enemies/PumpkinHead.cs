@@ -8,7 +8,6 @@ public class PumpkinHead : Health
     public float speed;
     public float DistanceForTele;
     public float fullHp;
-    //private Animator animator;
     public LayerMask playerMask;
     public float timeSinceStateStart = 0f;
     public float timeBetweenTele = 5f;
@@ -33,7 +32,7 @@ public class PumpkinHead : Health
     IEnumerator AttackState()
      {
         shouldSwapState = false;
-        //State = Attack
+     
         while (state == State.Attack)
          {
            
@@ -57,15 +56,14 @@ public class PumpkinHead : Health
                 animator.SetTrigger("AttackTrigger");
             }
 
-            //actions
-          //yield return null; 
+        
             state = State.Summon;
             shouldSwapState = true;
 
-            // shouldSwapState = true;
+         
 
         }
-        // NextState();
+        
     }
 
      IEnumerator PatrolState()
@@ -109,7 +107,7 @@ public class PumpkinHead : Health
          while (state == State.Die)
          {
             yield return null;
-            //state = State.Patrol;
+           
         }
     }
     public override void Start()
@@ -126,14 +124,9 @@ public class PumpkinHead : Health
         {
             SecondBossPhaseActive = true;
         }
-        //StartCoroutine(AttackState(), PatrolState(), DieState())
+
         StateCheck();
          WhenHit();
-       // if (Input.GetKeyDown(KeyCode.Space))
-       // {
-       //NextState();
-       //     Debug.Log(state.ToString());
-       //  }
     }
     void StateCheck() {
         if (shouldSwapState) { 
@@ -170,14 +163,6 @@ public class PumpkinHead : Health
     {
         Gizmos.DrawWireSphere(transform.position, DistanceForTele);
     }
-    /* void NextState()
-     {
-         string methodName = state.ToString() + "State";
-         System.Reflection.MethodInfo info =
-             GetType().GetMethod(methodName,
-                                 System.Reflection.BindingFlags.NonPublic |
-                                 System.Reflection.BindingFlags.Instance);
-         StartCoroutine((IEnumerator)info.Invoke(this, null));
-     }*/
+   
 
 }

@@ -45,15 +45,6 @@ public class Enemy : Health
     public Slider healthBar;
     public float hitKnockBack;
 
-
-
-
-
-
-
-
-    // public bool Jump;
-
     public void Init()
     {
         velocity = Vector2.zero;
@@ -65,7 +56,6 @@ public class Enemy : Health
         maxX = transform.position.x + moveAmount;
         moveDis = 0f;
         Debug.Log("enemyinit e");
-        //animator = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
         sr = GetComponentInChildren<SpriteRenderer>();
         Direction = -1;
@@ -187,7 +177,7 @@ public class Enemy : Health
                 EffectsManager.e_Instance.BloodHitEffect(transform.position);
                 EffectsManager.e_Instance.HitEffect(transform.position);
 
-                //velocity.x *= 0.1f;
+               
                 isHit = false;
             }
 
@@ -320,13 +310,12 @@ public class Enemy : Health
         Gizmos.DrawRay(transform.position, new Vector3(Direction * ViewRange, 0, 0));
         Gizmos.color = Color.yellow;
         Gizmos.DrawRay(transform.position, new Vector3(Direction * wallCheckRange, 0, 0));
-        //Gizmos.DrawWireSphere(new Vector3(transform.position.x + Direction * 0.6f, transform.position.y - 1), 0.2f);
         Gizmos.DrawRay(new Vector2(transform.position.x + Direction * 0.3f, transform.position.y), platformCheckAngle);
         Gizmos.DrawWireSphere(new Vector3(minx, transform.position.y, transform.position.z), 0.3f);
         Gizmos.DrawWireSphere(new Vector3(maxX, transform.position.y, transform.position.z), 0.3f);
         Gizmos.DrawWireSphere(new Vector3(transform.position.x, -GroundCheckRange, transform.position.z), groundCheckRadius);
         Gizmos.color = Color.blue;
-        Gizmos.DrawRay(transform.position /*+ new Vector3(Direction * 0.25f,0,0)*/, new Vector3(Direction * JumpTimingDistance, 0, 0));
+        Gizmos.DrawRay(transform.position, new Vector3(Direction * JumpTimingDistance, 0, 0));
         
     }
     public IEnumerator JumpCoRou()
@@ -335,7 +324,6 @@ public class Enemy : Health
         isAccelerating = true;
         JumpCountingTime = 0;
         transform.position = new Vector2(transform.position.x, transform.position.y + 0.05f);
-        //float startingpos = transform.position.y;
         float Destination = transform.position.y + JumpForce;
         float negDestination = transform.position.y - 0.01f;
         float currentjumpAccelerationY = jumpAcceleration.y;
@@ -343,10 +331,8 @@ public class Enemy : Health
     
         while (isAccelerating)
         {
-            //currentjumpAcceleration *= 0.99f;
-            //currentJumpX *= 0.99f;
+    
             velocity += new Vector2(currentjumpAccelerationX * Direction * Time.deltaTime, currentjumpAccelerationY * Time.deltaTime);
-            //transform.position += new Vector3(currentJumpX * moveInput * Time.deltaTime * 0.8f, currentjumpAcceleration * Time.deltaTime * 0.8f, 0);
             if (transform.position.y >= Destination || transform.position.y < negDestination)
             {
                 velocity.y *= 0.5f;

@@ -10,7 +10,7 @@ public  class Inventory : MonoBehaviour
     public JetSword sword;
     public KeyCode next = KeyCode.F;
     public KeyCode previous = KeyCode.D;
-  //public CharacterController2D player;
+ 
 
 
     public void Init()
@@ -23,10 +23,7 @@ public  class Inventory : MonoBehaviour
         pickaxe = GetComponentInChildren<Pickaxe>();
         weaponList.Add(pickaxe);
         GetCurrentWeapon(weaponCheck);
-       // foreach (Weapon w in weaponList)
-   //     {
-          //  w.Init();
-      //  }
+   
     }
 
     private void SwapWeapon()
@@ -40,7 +37,7 @@ public  class Inventory : MonoBehaviour
         {
             weaponCheck++;
         }
-        //  if (Input.GetKeyDown(KeyCode.C))
+       
         if (weaponCheck < 0)
         {
             weaponCheck = weaponList.Count-1;
@@ -51,7 +48,7 @@ public  class Inventory : MonoBehaviour
         }
        
 
-      // }
+     
         
             GetCurrentWeapon(weaponCheck);
 

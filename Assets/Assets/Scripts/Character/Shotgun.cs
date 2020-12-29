@@ -14,11 +14,6 @@ public class Shotgun : Weapon
     public bool canShotGunBlast;
     public Vector2 shotgunBlastForce;
     public bool IsShotgunKnockback;
-    //public bool isAiming;
-  //  public Vector2 ShotgunBlastVelocity;
-   // public float blastTargetWaitTime;
-  //  public float blastCurrentWaitTime;
-    // Start is called before the first frame update
     public override void Attack()
     {
        
@@ -28,12 +23,7 @@ public class Shotgun : Weapon
             if (runningCooldown >= Cooldown)
             {
 
-
-                //shotGunParticals.transform.position = player.transform.position;
-
                 ShotgunShot();
-
-                // Instantiate(shotgunBullet, transform.position, transform.rotation);
                 runningCooldown = 0;
 
             }
@@ -66,11 +56,6 @@ public class Shotgun : Weapon
     {
         if (Input.GetKeyDown(mobilityAbility) && canShotGunBlast)
         {
-            //  rb.velocity = new Vector3(0, 0, 0);
-            //saveMouseDir = mouseDirNormalized;
-            //Debug.Log("ShotGUnBLAsT");
-            //ShotgunBlastVelocity.x = velocity.x;
-            //ShotgunBlastVelocity.y = velocity.y;
             FireBoostFromShotGunParitcals.transform.position = transform.position;
             FireBoostFromShotGunParitcals.Play();
             MobilityAbilityCoolDownCurrentTime = 0f;
@@ -98,94 +83,15 @@ public class Shotgun : Weapon
 
         if (IsShotgunKnockback)
         {
-            // rb.gravityScale = 0.7f;
-            // trail.enabled = false;
-
-            //ShotgunBlastVelocity.y = transform.position.y;
-         //   blastCurrentWaitTime += Time.deltaTime;
-            //knockBackOverTime += Time.deltaTime;
-           // {
-
-                //Debug.Log(IsGrounded + "IsGrounded");
-             //   blastCurrentWaitTime = 0f;
-                
-
-              // player.velocity = ShotgunBlastVelocity;
-
-
-
-
-                // rb.gravityScale = 1.5f;
-                //if (ShotgunBlastVelocity.x >= 0)
-                //{
-                //    velocity.x += afterBlastVelocityX;
-                //    Debug.Log(velocity.x);
-                //}
-                //else
-                //{
-                //    velocity.x += -afterBlastVelocityX;
-                //    Debug.Log(velocity.x);
-                //}
-                //knockBackOverTime >= knockBackOverTargetTime 
-                /*IsGrounded &&*/
-                /* knockBackOverTime >= knockBackOverTargetTime ||*/
-                //knockBackOverTime = 0f;
-          //  }
-
-            //velocity = ShotgunBlastVelocity;
 
 
             player.velocity = -ShotDir * shotgunBlastForce;
             IsShotgunKnockback = false;
 
-
-
-
-
-            // animator.SetBool("IsFalling", true);
-            //if (IsGrounded)
-            //{
-            //    ShotgunBlastVelocity.x = -mouseDir.x * ShotBlastForceX;
-            //    ShotgunBlastVelocity.y = -mouseDir.y * ShotBlastForceY;
-            //}
-            //else
-            //{
-            //    ShotgunBlastVelocity.x = -mouseDir.x * ShotBlastForceX;
-            //    ShotgunBlastVelocity.y = -mouseDir.y * ShotBlastForceY;
-            //}
-            //if (IsGrounded)
-            // {
-            //   rb.AddForce(ShotgunBlastVelocity * -mouseDir * Time.fixedDeltaTime, ForceMode2D.Impulse);
-            // }
-            // else
-            // {
-
-            //     //rb.AddForce(ShotBlastAirForce * -mouseDir * Time.fixedDeltaTime, ForceMode2D.Impulse);
-            // }
         }
     }
     void GetAimAngleForShotgun()//on a scale of -1 to 1 divided by 5
     {
-
-        /*
-        mouseDeltaCounter += MouseYDelta;
-        mouseDeltaCounter *= 0.99f;
-
-
-        if (mouseDeltaCounter > DeltaCap)
-        {
-            animator.SetTrigger("AngleUp");
-            mouseDeltaCounter = 0;
-        }
-        else if (mouseDeltaCounter < -DeltaCap)
-        {
-            animator.SetTrigger("AngleDown");
-
-            mouseDeltaCounter = 0;
-        }
-        */
-
-       
 
         if (player.moveInput == 0 && player.verInput == 0f && !player.isFalling && !player.isJumping)
         {
@@ -193,7 +99,7 @@ public class Shotgun : Weapon
             {
                 ShotDir = Vector2.right;
                 player.animator.SetTrigger("G3");
-              //  isAiming = false;
+
             }
             else
             {
@@ -213,8 +119,7 @@ public class Shotgun : Weapon
         else if (player.moveInput == 0 && player.verInput == 1)
         {
             ShotDir = Vector2.up;
-            //  isAiming = false;
-
+       
             if (player.isFalling)
             {
                 player.animator.SetTrigger("F1");
@@ -234,8 +139,7 @@ public class Shotgun : Weapon
         else if (player.moveInput == 0 && player.verInput == -1)
         {
             ShotDir = Vector2.down;
-            // isAiming = false;
-
+        
             if (player.isFalling)
             {
                 player.animator.SetTrigger("F5");
@@ -256,8 +160,7 @@ public class Shotgun : Weapon
             ShotDir = Vector2.right;
             
                
-            // player.velocity *= aimDrag;
-          //  isAiming = false;
+        
 
             if (player.isFalling)
             {
@@ -277,9 +180,7 @@ public class Shotgun : Weapon
         else if (player.moveInput == 1 && player.verInput == 1)
         {
             ShotDir = Vector2.up;
-                
-            // player.velocity *= aimDrag;
-           // isAiming = true;
+         
             if (player.isFalling)
             {
                 player.animator.SetTrigger("F1");
@@ -296,8 +197,7 @@ public class Shotgun : Weapon
         else if (player.moveInput == 1 && player.verInput == -1)
         {
             ShotDir = Vector2.down;
-            //player.velocity *= aimDrag;
-          //  isAiming = true;
+      
             if (player.isFalling)
             {
                 player.animator.SetTrigger("F5");
@@ -318,8 +218,7 @@ public class Shotgun : Weapon
         else if (player.moveInput == -1 && player.verInput == 0)
         {
             ShotDir = Vector2.left;
-            //player.velocity *= aimDrag;
-           // isAiming = false;
+       
 
             if (player.isFalling)
             {
@@ -344,8 +243,7 @@ public class Shotgun : Weapon
             {
                 player.animator.SetTrigger("G1");
             }
-            //player.velocity *= aimDrag;
-          //  isAiming = true;
+         
             if (player.isFalling)
             {
                 player.animator.SetTrigger("F1");
@@ -361,8 +259,7 @@ public class Shotgun : Weapon
         {
             ShotDir = Vector2.down;
           
-            // player.velocity *= aimDrag;
-         //   isAiming = true;
+         
             if (player.isFalling)
             {
                 player.animator.SetTrigger("F5");
@@ -378,52 +275,6 @@ public class Shotgun : Weapon
                 player.animator.SetTrigger("G5");
             }
         }
-
-        //if (MouseYDelta >= 0.6f)
-        //{
-        //    ShotgunShotDir = Vector2.up;
-        //}
-        //if (MouseYDelta >= 0.2f && MouseYDelta <= 0.6)
-        //{
-        //    if (islookingright)
-        //    {
-        //        ShotgunShotDir = new Vector2(1, 0.7f);
-        //    }
-        //    else
-        //    {
-        //        ShotgunShotDir = new Vector2(-1, 0.7f);
-        //    }
-        //}
-        //if (MouseYDelta >= -0.2f && MouseYDelta <= 0.2)
-        //{
-        //    if (islookingright)
-        //    {
-        //        ShotgunShotDir = Vector2.right;
-        //    }
-        //    else
-        //    {
-        //        ShotgunShotDir = Vector2.left;
-        //    }
-        //}
-        //if (MouseYDelta >= -0.6f && MouseYDelta <= -0.2)
-        //{
-        //    if (islookingright)
-        //    {
-        //        ShotgunShotDir = new Vector2(1, -0.7f);
-        //    }
-        //    else
-        //    {
-        //        ShotgunShotDir = new Vector2(-1, -0.7f);
-        //    }
-        //}
-        //if (MouseYDelta <= -0.6f)
-        //{
-        //    ShotgunShotDir = Vector2.down;
-        //}
-
-
-
-
 
     }
 }

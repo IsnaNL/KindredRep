@@ -96,7 +96,7 @@ public class CharacterController2D : Health
         }
     
     }
-   private void FixedUpdate()
+    private void FixedUpdate()
     {
         CeilingCheck();
         WallCol();
@@ -190,29 +190,18 @@ public class CharacterController2D : Health
     }
     private IEnumerator JumpCoroutine()
     {
-
-    
-
-
         isJumping = true;
         animator.SetBool("IsJumping", true);
-        animator.SetTrigger("JumpAnim");
-
-       
-        float Destination = transform.position.y + jumpHeight.y;
-       
-       velocity.y = 4;
-     
+        animator.SetTrigger("JumpAnim");   
+        float Destination = transform.position.y + jumpHeight.y; 
+        velocity.y = 4;
         while (Input.GetButton("Jump") && isJumping)
         {
-
             if (!inventory.sword.isSwordDashing)
             {
                 velocity += new Vector2(jumpAcceleration.x * moveInput * Time.deltaTime * 0.99f, jumpAcceleration.y * Time.deltaTime * 0.99f);
 
-            }
-
-          
+            }   
             if (transform.position.y >= Destination)
             {
                 animator.SetBool("IsJumping", false);
@@ -221,24 +210,18 @@ public class CharacterController2D : Health
             }
             yield return null;
         }
-
     }
     private void WallCol()
     {
         if (islookingright)
-        {
-            //  transform.rotation = Quaternion.Euler(0, 0, 0);
+        {  
             BottomWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.5f), Vector2.right, 0.5f, groundLayerMask);
             TopWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 0.25f), Vector2.right, 0.5f, groundLayerMask);
-           
         }
         else
-        {
-
-            // transform.rotation = Quaternion.Euler(0, 180, 0);
+        {         
             BottomWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.5f), Vector2.left, 0.5f, groundLayerMask);
-            TopWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 0.25f), Vector2.left, 0.5f, groundLayerMask);
-            
+            TopWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 0.25f), Vector2.left, 0.5f, groundLayerMask);        
         }
         if (TopWallCheck && BottomWallCheck)
         {
@@ -247,7 +230,6 @@ public class CharacterController2D : Health
     }
     void CheckFlip()
     {
-     
         if (moveInput > 0)
         {
             islookingright = true;
@@ -257,24 +239,18 @@ public class CharacterController2D : Health
         {
             islookingright = false;
             Flip();
-
-        } 
-        
+        }   
     }
     public void Flip()
     {
-
         if (islookingright)
         {
-          
             BottomWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.5f), Vector2.right, 0.5f, groundLayerMask);
             TopWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 0.25f), Vector2.right, 0.5f, groundLayerMask);
             transform.localScale = new Vector3(currentScale.x, currentScale.y, 1);
         }
         else
         {
-
-          
             BottomWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.5f), Vector2.left, 0.5f, groundLayerMask);
             TopWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 0.25f), Vector2.left, 0.5f, groundLayerMask);
             transform.localScale = new Vector3(-currentScale.x, currentScale.y, 1);
@@ -297,7 +273,6 @@ public class CharacterController2D : Health
         RaycastHit2D hit = Physics2D.CircleCast(transform.position, 0.3f, Vector2.up, ceilingCheckDis, groundLayerMask);
         if (hit)
         {
-
             StopCoroutine("JumpCoroutine");
             isFalling = true;
             inventory.shotgun.IsShotgunKnockback = false;
@@ -305,14 +280,11 @@ public class CharacterController2D : Health
             {
                 velocity.y = 0;
             }
-
-            //velocity.x *= 0.9f;
             Debug.Log("Ceilinghit");
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
-    {
-        
+    {     
         if (collision.gameObject.layer == groundLayer)
         {
             animator.SetTrigger("Land");
@@ -337,28 +309,21 @@ public class CharacterController2D : Health
         {
             Destroy(collision.gameObject, 0.3f);
         }
-
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        //if (collision.gameObject.layer != groundLayerMask || collision == null)
         if (collision.gameObject.layer == groundLayer)
         {
             groundTriggerCount--;
             if (groundTriggerCount == 0)
             {
-                gravityScale = savedGravityScale;
-               // animator.SetBool("Idle", false);
-                //Invoke("SetIsGroundedTofalse",0.1f);
+                gravityScale = savedGravityScale;        
                 IsGrounded = false;
                 animator.SetBool("Idle", false);
-                //Debug.Log("NOTGrounded" + IsGrounded);
+            
             }
         }
-        //    if (collision.gameObject.layer == enemyLayer)
-        //    {
-        //        collision.GetComponent<Enemy>().TakeDamage(weapon.damage);
-        //    }
+      
     }
     private void OnDrawGizmosSelected()
     {
