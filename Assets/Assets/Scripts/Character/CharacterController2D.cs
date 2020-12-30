@@ -8,26 +8,22 @@ public class CharacterController2D : Health
     float speed = 9;
     [SerializeField, Tooltip("Acceleration while grounded.")]
     float walkAcceleration = 75;
-
     [SerializeField, Tooltip("Acceleration while in the air.")]
     float airAcceleration = 30;
-
     [SerializeField, Tooltip("Deceleration applied when character is grounded and not attempting to move.")]
     float groundDeceleration = 70;
-
     [SerializeField, Tooltip("Max height the character will jump regardless of gravity")]
     Vector2 jumpHeight;
     public int groundLayer;
     private Vector2 currentScale;
     private int coinLayer;
-    public RaycastHit2D BottomWallCheck;
+    public RaycastHit2D FrontWallCheck;
     public RaycastHit2D TopWallCheck;
     private float savedGravityScale;
     private WeaponAnimatorController animationControllerSwapper;
     public bool canMove;
     public bool isJumping;
     public float moveInput;
-    public float shrinkTime;
     public float maxMagnitude;
     public bool islookingright;
     public Vector2 velocity;
@@ -45,8 +41,7 @@ public class CharacterController2D : Health
     public bool isFalling;
     public float secondMaxAccelrationModifier;
     public float secondMaxSpeedModifier;
-   
-
+    private float dirAxis = 1;
     public override void Start()
     {
         base.Start();
@@ -74,29 +69,41 @@ public class CharacterController2D : Health
         float deceleration = IsGrounded ? groundDeceleration : 0;
         moveInput = canMove ? Input.GetAxisRaw("Horizontal") : 0;
         verInput = canMove ? Input.GetAxisRaw("Vertical") : 0;
+        dirAxis = (velocity.x >= 0f) ? 1f : -1f;
+        CheckFlip();
         HorizontalMovement(acceleration, deceleration);
         HitImpact();
         GetInputJumpMethod();
-        CheckFlip();
         if (!IsGrounded && !inventory.pickaxe.isPickaxeClawed)//gravity
         {
-            if (velocity.y >= -10)
-            {
-                velocity.y -= gravityScale * Time.deltaTime;
-
-            }
-           if (velocity.y < 0)
-            {
-                isFalling = true;
-                animator.SetBool("IsFalling", true);
-                isJumping = false;
-                animator.SetBool("Idle", false);
-                
-            }
+            SetGravity();
+            SetFalling();
 
         }
-    
+
     }
+
+    private void SetFalling()
+    {
+        if (velocity.y < -2f)
+        {
+            isFalling = true;
+            animator.SetBool("IsFalling", true);
+            isJumping = false;
+            animator.SetBool("Idle", false);
+
+        }
+    }
+
+    private void SetGravity()
+    {
+        if (velocity.y >= -10)
+        {
+            velocity.y -= gravityScale * Time.deltaTime;
+
+        }
+    }
+
     private void FixedUpdate()
     {
         CeilingCheck();
@@ -108,42 +115,32 @@ public class CharacterController2D : Health
     {
         if (moveInput != 0)
         {
-           animator.SetBool("Idle", false);
+            animator.SetBool("Idle", false);
 
-           animator.SetBool("IsRunning", IsGrounded);
-            animator.speed =  Mathf.Abs(velocity.x) / speed * secondMaxSpeedModifier;
+            animator.SetBool("IsRunning", IsGrounded);
+            animator.speed = Mathf.Abs(velocity.x) / speed * secondMaxSpeedModifier;
 
             if (!inventory.sword.isSwordDashing)
             {
-                if (inventory.shotgun.enabled && verInput != 0)
-                {
-                    StopPlayer(deceleration);
-                    return;
-                }
-
                 MovePlayer(acceleration);
-            }
-            if (velocity.x >= speed * 0.5f && IsGrounded || velocity.x <= -speed * 0.5f && IsGrounded)
-            {
 
-                if (!TopWallCheck && BottomWallCheck)
-                {
-                    velocity.y = 5.1f;
-                }
+
 
             }
-            else
+            if (inventory.shotgun.enabled && verInput != 0)
             {
-                animator.SetBool("IsRunning", false);
+                StopPlayer(deceleration);
 
             }
-            if(moveInput == 1)
+            SmallLedgeInteraction();
+            if (moveInput == 1)
             {
-                if(velocity.x < 0)
+                if (velocity.x < 0)
                 {
                     velocity.x += 1;
                 }
-            }else if (moveInput == -1)
+            }
+            else if (moveInput == -1)
             {
                 if (velocity.x > 0)
                 {
@@ -163,6 +160,8 @@ public class CharacterController2D : Health
             animator.SetBool("Idle", true);
         }
     }
+
+
     private void StopPlayer(float deceleration)
     {
         velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.deltaTime);
@@ -198,11 +197,12 @@ public class CharacterController2D : Health
         velocity.y = 4;
         while (Input.GetButton("Jump") && isJumping)
         {
-            if (!inventory.sword.isSwordDashing)
+            if (inventory.sword.isSwordDashing)
             {
-                velocity += new Vector2(jumpAcceleration.x * moveInput * Time.deltaTime * 0.99f, jumpAcceleration.y * Time.deltaTime * 0.99f);
 
-            }   
+                Destination = transform.position.y;
+            }
+            velocity += new Vector2(jumpAcceleration.x * moveInput * Time.deltaTime * 0.99f, jumpAcceleration.y * Time.deltaTime * 0.99f);
             if (transform.position.y >= Destination)
             {
                 animator.SetBool("IsJumping", false);
@@ -215,23 +215,15 @@ public class CharacterController2D : Health
     private void WallCol()
     {
 
-        if (islookingright)
-        {
+        FrontWallCheck = Physics2D.CircleCast(new Vector2(transform.position.x + (0.2f * dirAxis), transform.position.y), 0.3f, Vector2.right * dirAxis, 0, groundLayerMask);
+        TopWallCheck = Physics2D.Raycast(new Vector2(transform.position.x , transform.position.y+0.4f), Vector2.right * dirAxis, 0.6f, groundLayerMask);
 
-            BottomWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.5f), Vector2.right, 0.5f, groundLayerMask);
-            TopWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 0.25f), Vector2.right, 0.5f, groundLayerMask);
-        }
-       else
+        if (FrontWallCheck && TopWallCheck)
         {
-            BottomWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.5f), Vector2.left, 0.5f, groundLayerMask);
-            TopWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 0.25f), Vector2.left, 0.5f, groundLayerMask);
+            velocity.x *= 0f;
         }
-    
-        if (TopWallCheck && BottomWallCheck)
-        {
-            velocity.x = 0f;
-        }
-        
+       
+
     }
     void CheckFlip()
     {
@@ -244,10 +236,12 @@ public class CharacterController2D : Health
         {
             islookingright = false;
             Flip();
-        }   
+        }
+       
     }
     public void Flip()
     {
+        
         if (islookingright)
         {
             
@@ -284,6 +278,24 @@ public class CharacterController2D : Health
                 velocity.y = 0;
             }
             Debug.Log("Ceilinghit");
+        }
+    }
+    private void SmallLedgeInteraction()
+    {
+        if (velocity.x >= speed * 0.5f && IsGrounded || velocity.x <= -speed * 0.5f && IsGrounded)
+        {
+
+            if (!TopWallCheck && FrontWallCheck)
+            {
+                velocity.y = 5.1f;
+            }
+
+        }
+        else 
+        {
+            
+            animator.SetBool("IsRunning", false);
+
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -330,29 +342,19 @@ public class CharacterController2D : Health
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-       // Gizmos.DrawWireSphere(weapon.transform.position, ClawRange);
+      
+     
+
+        Gizmos.DrawRay(new Vector2(transform.position.x, transform.position.y + 0.4f), Vector2.right * dirAxis * 0.6f);
+        Gizmos.DrawWireSphere(new Vector2(transform.position.x + (0.2f * dirAxis), transform.position.y), 0.3f);
+
+
+
         Gizmos.color = Color.yellow;
-        //Gizmos.DrawWireSphere(transform.position, dashWallCheckRange);
-
-        if (islookingright)
-        {
-            Gizmos.DrawRay(new Vector2(transform.position.x, transform.position.y + 0.25f), Vector2.right * 0.5f);
-            Gizmos.DrawRay(new Vector2(transform.position.x, transform.position.y - 0.5f), Vector2.right * 0.5f);
-        }else
-        {
-            Gizmos.DrawRay(new Vector2(transform.position.x, transform.position.y + 0.25f), Vector2.left * 0.5f);
-            Gizmos.DrawRay(new Vector2(transform.position.x, transform.position.y - 0.5f), Vector2.left * 0.5f);
-        }
-            
-         
-
-        
 
         Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, ceilingCheckDis, 0));
         Gizmos.DrawWireSphere(transform.position + new Vector3(0, ceilingCheckDis, 0), 0.35f);
         Gizmos.color = Color.blue;
-        //Gizmos.DrawWireSphere(transform.position, enemyCheckRange);
+    
     }
 }
-
-

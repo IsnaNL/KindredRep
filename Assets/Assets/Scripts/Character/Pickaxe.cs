@@ -1,11 +1,10 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Pickaxe : Weapon
 { 
     public bool isPickaxeClawing = false;
-    public bool isPickaxeClawed;
+    public bool isPickaxeClawed = false;
     public Vector2 pickaxeJump;
     public float pickaxeRange;
 
@@ -13,7 +12,7 @@ public class Pickaxe : Weapon
   
    public override void GetInput()
     {
-        if (Input.GetKeyDown(mobilityAbility))
+        if (Input.GetKeyDown(mobilityAbility) && !player.IsGrounded)
         {
 
             if(!isPickaxeClawing)
@@ -28,6 +27,7 @@ public class Pickaxe : Weapon
         if (isPickaxeClawing)
         {
             this.MobilityAbility();
+            player.animator.SetTrigger("Clawing");
         }
     }
     public override void MobilityAbility()
@@ -35,6 +35,7 @@ public class Pickaxe : Weapon
         Vector2 dir;
         if (isPickaxeClawing)
         {
+           
             if (player.islookingright)
             {
                 dir = Vector2.right;
@@ -45,28 +46,35 @@ public class Pickaxe : Weapon
 
             }
 
-            RaycastHit2D checkforwall = Physics2D.CircleCast(new Vector2(transform.position.x,transform.position.y), pickaxeRange, dir, 0.2f,player.groundLayerMask);
+            RaycastHit2D checkforwall = Physics2D.CircleCast(new Vector2(transform.position.x,transform.position.y), pickaxeRange, dir, 0.22f,player.groundLayerMask);
 
             isPickaxeClawed = checkforwall;
-
             isPickaxeClawing = false;
+          //  StartCoroutine( SetClawingFalse());
+
 
 
         }
         if (isPickaxeClawed)
         {
-          
+            player.animator.SetBool("Clawed",true);
             player.IsGrounded = false;
             player.velocity = Vector2.zero;
             player.rb.velocity = Vector2.zero;
             player.canMove = false;
-           
-           
-            if (Input.GetButtonDown("Jump"))
+            isPickaxeClawing = false;
+          
+
+            
+                if (Input.GetButtonDown("Jump"))
             {
+                player.canMove = true;
+                player.animator.SetBool("Clawed", false);
+                player.animator.SetTrigger("WallJump");
+                isPickaxeClawed = false;
                 player.islookingright = !player.islookingright;
                 player.Flip();
-                player.canMove = true;
+                
 
                 if (player.islookingright)
                 {
@@ -79,10 +87,24 @@ public class Pickaxe : Weapon
 
                    
                 }
-                isPickaxeClawed = false;
+              
+              
+            }
+            else
+            {
+            
             }
         }
     }
+    IEnumerator SetClawingFalse() 
+    {
+
+
+        yield return new WaitForSeconds(0.5f);
+        isPickaxeClawing = false;
+
+    }
+    
     public override void Attack()
     {
         if (Input.GetKeyDown(attack))

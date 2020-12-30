@@ -7,7 +7,6 @@ public class Shotgun : Weapon
     public float bulletSpeed;
     public Vector2 ShotDir;
     public GameObject shotgunBullet;
-   // public ParticleSystem shotGunParticals;
     public float MobilityAbilityCoolDown;
     public ParticleSystem FireBoostFromShotGunParitcals;
     public float MobilityAbilityCoolDownCurrentTime;
@@ -162,28 +161,28 @@ public class Shotgun : Weapon
         }
         else if (player.moveInput == 0 && player.verInput == 1)
         {
-          
+            ShotDir = Vector2.up;
 
-            
+
             if (player.isFalling)
             {
                
                 player.animator.SetTrigger("F1");
-                ShotDir = Vector2.up;
+               
 
             }
             if (player.isJumping)
             {
                
                 player.animator.SetTrigger("J1");
-                ShotDir = Vector2.up;
+                
 
             }
             if (player.IsGrounded)
             {
                
                 player.animator.SetTrigger("G1");
-                ShotDir = Vector2.zero;
+               
 
             }
         }
@@ -234,22 +233,22 @@ public class Shotgun : Weapon
         }
         else if (player.moveInput == 1 && player.verInput == 1)
         {
-            
-         
+            ShotDir = Vector2.up;
+
             if (player.isFalling)
             {
                 player.animator.SetTrigger("F1");
-                ShotDir = Vector2.up;
+                
             }
             if (player.isJumping)
             {
                 player.animator.SetTrigger("J1");
-                ShotDir = Vector2.up;
+                
             }
             if (player.IsGrounded)
             {
 
-                ShotDir = Vector2.zero;
+               
                 player.animator.SetTrigger("G1"); 
             }
         }

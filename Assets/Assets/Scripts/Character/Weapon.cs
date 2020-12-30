@@ -22,11 +22,15 @@ public abstract class Weapon : MonoBehaviour
     void Update()
     {
               
-      Attack();
-      MobilityAbility();
       GetInput();
+      Attack();
+    
 
 
+    }
+    void FixedUpdate()
+    {
+        MobilityAbility();
     }
     public abstract void Attack();
     public abstract void MobilityAbility();
