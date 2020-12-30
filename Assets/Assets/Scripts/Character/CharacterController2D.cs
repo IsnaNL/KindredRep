@@ -45,6 +45,7 @@ public class CharacterController2D : Health
     public bool isFalling;
     public float secondMaxAccelrationModifier;
     public float secondMaxSpeedModifier;
+   
 
     public override void Start()
     {
@@ -213,20 +214,24 @@ public class CharacterController2D : Health
     }
     private void WallCol()
     {
+
         if (islookingright)
-        {  
+        {
+
             BottomWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.5f), Vector2.right, 0.5f, groundLayerMask);
             TopWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 0.25f), Vector2.right, 0.5f, groundLayerMask);
         }
-        else
-        {         
+       else
+        {
             BottomWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.5f), Vector2.left, 0.5f, groundLayerMask);
-            TopWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 0.25f), Vector2.left, 0.5f, groundLayerMask);        
+            TopWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 0.25f), Vector2.left, 0.5f, groundLayerMask);
         }
+    
         if (TopWallCheck && BottomWallCheck)
         {
             velocity.x = 0f;
         }
+        
     }
     void CheckFlip()
     {
@@ -245,14 +250,12 @@ public class CharacterController2D : Health
     {
         if (islookingright)
         {
-            BottomWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.5f), Vector2.right, 0.5f, groundLayerMask);
-            TopWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 0.25f), Vector2.right, 0.5f, groundLayerMask);
+            
             transform.localScale = new Vector3(currentScale.x, currentScale.y, 1);
         }
         else
         {
-            BottomWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 0.5f), Vector2.left, 0.5f, groundLayerMask);
-            TopWallCheck = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 0.25f), Vector2.left, 0.5f, groundLayerMask);
+           
             transform.localScale = new Vector3(-currentScale.x, currentScale.y, 1);
         }
       
@@ -297,7 +300,6 @@ public class CharacterController2D : Health
                 rb.velocity = new Vector3(0, 0, 0); 
                 velocity.y = 0;
                 animator.SetBool("IsFalling", false);
-                animator.SetBool("IsJumping", false);
                 isJumping = false;
                 isFalling = false;
                 StopCoroutine("JumpCoroutine");
@@ -331,18 +333,20 @@ public class CharacterController2D : Health
        // Gizmos.DrawWireSphere(weapon.transform.position, ClawRange);
         Gizmos.color = Color.yellow;
         //Gizmos.DrawWireSphere(transform.position, dashWallCheckRange);
+
         if (islookingright)
         {
             Gizmos.DrawRay(new Vector2(transform.position.x, transform.position.y + 0.25f), Vector2.right * 0.5f);
             Gizmos.DrawRay(new Vector2(transform.position.x, transform.position.y - 0.5f), Vector2.right * 0.5f);
-
-        }
-        else
+        }else
         {
             Gizmos.DrawRay(new Vector2(transform.position.x, transform.position.y + 0.25f), Vector2.left * 0.5f);
             Gizmos.DrawRay(new Vector2(transform.position.x, transform.position.y - 0.5f), Vector2.left * 0.5f);
-
         }
+            
+         
+
+        
 
         Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, ceilingCheckDis, 0));
         Gizmos.DrawWireSphere(transform.position + new Vector3(0, ceilingCheckDis, 0), 0.35f);

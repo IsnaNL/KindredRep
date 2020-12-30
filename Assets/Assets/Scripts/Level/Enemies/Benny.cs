@@ -21,7 +21,7 @@ public class Benny : Health
     public bool isGrounded;
     public int GroundLayerInt;
     public int playerLayerInt;
-    public float RangeToPeek;
+    public float RangeToAttack;
     public float JumpForce;
     public int Direction;
     public int defaultLayer;
@@ -234,8 +234,11 @@ public class Benny : Health
   
     public void CheckPeekCondition()
     {
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, RangeToPeek, Vector2.up, 0.1f, playerLayerMask);
-        if (hit)
+        Vector2 dir = new Vector2(player.transform.position.x - transform.position.x, player.transform.transform.position.y - transform.transform.position.y).normalized;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position,dir,3); 
+     
+
+        if (hit.transform == player.transform)
         {
             animator.SetTrigger("PeekTrigger");
         }
@@ -248,15 +251,16 @@ public class Benny : Health
     {
         AudioManager.a_Instance.BennyPeekAudio();
     }
-    public void setBackToIdle()//called by animator in the end of the land animation
+    public void SetBackToIdle()//called by animator in the end of the land animation
     {
         animator.SetTrigger("BackToIdle");
     }
 
     public void CheckAttackCondition() //called by animator
     {
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, RangeToPeek, Vector2.up, 0.1f, playerLayerMask);
-        if (hit)
+        Vector2 dir = new Vector2(player.transform.position.x - transform.position.x, player.transform.transform.position.y - transform.transform.position.y).normalized;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, 3);
+        if (hit.transform == player.transform)
         {
             AttackExecute();
         }
@@ -294,7 +298,7 @@ public class Benny : Health
         yield return null;
        
     }
-   public void setGroundfromAnimator()
+   public void SetGroundfromAnimator()
     {
         if (checkForGround)
         {
@@ -304,5 +308,5 @@ public class Benny : Health
            
         }
     }
-    
+  
 }
