@@ -21,7 +21,7 @@ public class Shotgun : Weapon
         {
             if (runningCooldown >= Cooldown)
             {
-
+             
                 ShotgunShot();
                 runningCooldown = 0;
 
@@ -41,6 +41,7 @@ public class Shotgun : Weapon
 
 
         GameObject bulletInstance = Instantiate(shotgunBullet, weaponCollider.position, Quaternion.identity);
+        player.animator.SetTrigger("Shoot");
        
         if(bulletInstance != null)
         {
@@ -104,7 +105,7 @@ public class Shotgun : Weapon
     void GetAimAngleForShotgun()
     {
 
-        if (player.moveInput == 0 && player.verInput == 0f && !player.isFalling && !player.isJumping)
+        if (player.moveInput == 0 && player.verInput == 0 && !player.isFalling && !player.isJumping)
         {
            
             if (player.islookingright && player.IsGrounded)
@@ -120,7 +121,7 @@ public class Shotgun : Weapon
 
             }
         }
-        else if (player.moveInput == 0 && player.verInput == 0f && player.isFalling && !player.isJumping)
+        else if (player.moveInput == 0 && player.verInput == 0 && player.isFalling && !player.isJumping)
         {
            
           
@@ -139,7 +140,7 @@ public class Shotgun : Weapon
 
             }
         }
-        else if (player.moveInput == 0 && player.verInput == 0f && !player.isFalling && player.isJumping)
+        else if (player.moveInput == 0 && player.verInput == 0 && !player.isFalling && player.isJumping)
         {
            
            
@@ -147,13 +148,9 @@ public class Shotgun : Weapon
             {
                 ShotDir = Vector2.right;
 
-
             }
             else
             {
-
-
-
                 ShotDir = Vector2.left;
 
             }
@@ -212,23 +209,6 @@ public class Shotgun : Weapon
         {
             ShotDir = Vector2.right;
             
-
-
-
-            if (player.isFalling)
-            {
-                player.animator.SetTrigger("F3");
-
-            }
-            if (player.isJumping)
-            {
-                player.animator.SetTrigger("J3");
-
-            }
-            if (player.IsGrounded)
-            {
-                player.animator.SetTrigger("G3");
-            }
         }
         else if (player.moveInput == 1 && player.verInput == 1)
         {
