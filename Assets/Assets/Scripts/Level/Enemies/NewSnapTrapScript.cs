@@ -70,19 +70,23 @@ public class NewSnapTrapScript : Health
     }
     public void FreezeCharacter()
     {
-        player.transform.position = new Vector2(transform.position.x, transform.position.y - 0.5f);
-        player.velocity = Vector2.zero;
+        player.transform.position = new Vector2(transform.position.x, player.transform.position.y);
+        //player.velocity = Vector2.zero;
         //player.animator.speed = 0;
         player.TakeDamage(damage);
-        player.enabled = false;
+        player.canMove = false;
         player.rb.velocity = Vector2.zero;
+        player.enabled = false;
 
     }
     public void UnfreezeCharacter()
     {
+
         player.enabled = true;
-       //player.animator.speed = 1;
-      
+        player.canMove = true;
+
+        //player.animator.speed = 1;
+
 
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -95,6 +99,7 @@ public class NewSnapTrapScript : Health
        
 
     }
+   
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

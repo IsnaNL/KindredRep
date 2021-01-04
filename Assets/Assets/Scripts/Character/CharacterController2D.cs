@@ -224,7 +224,7 @@ public class CharacterController2D : Health
     {
 
         FrontWallCheck = Physics2D.CircleCast(new Vector2(transform.position.x + (0.2f * dirAxis), transform.position.y), 0.3f, Vector2.right * dirAxis, 0, groundLayerMask);
-        TopWallCheck = Physics2D.Raycast(new Vector2(transform.position.x , transform.position.y+0.4f), Vector2.right * dirAxis, 0.6f, groundLayerMask);
+        TopWallCheck = Physics2D.Raycast(new Vector2(transform.position.x , transform.position.y+0.2f), Vector2.right * dirAxis, 0.6f, groundLayerMask);
 
         if (FrontWallCheck && TopWallCheck)
         {

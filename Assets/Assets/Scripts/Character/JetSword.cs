@@ -68,21 +68,12 @@ public class JetSword : Weapon
         {
             axis = player.islookingright ? 1 : -1;
             des = Physics2D.CircleCast(player.transform.position, 0.1f, Vector2.right * axis, maxLength, player.groundLayerMask) ;
-            //des.point.x = Mathf.Abs(des.point.x);
-            /* if(dis >= maxLength)
-             {
-             dis = maxLength * axis;
-
-             }
-              
-         */
+           
             if(des.transform == null)
             {
                 des.point = new Vector2(transform.position.x + (maxLength * axis), transform.position.y);
             }
-           
-            //startingPos = player.transform.position.x;
-            // dashRight = player.islookingright;
+
             player.rb.velocity = new Vector3(0, 0, 0);
             player.velocity = Vector2.zero;
             player.gravityScale = 0;
@@ -92,15 +83,20 @@ public class JetSword : Weapon
             isSwordDashing = true;
             StartCoroutine(TakePlayerControl(0.5f));
             canDash = false;
+           
 
 
+        }
+        if (isSwordDashing)
+        {
+            this.MobilityAbility();
         }
 
     }
     public override void MobilityAbility()
     {
-        if (isSwordDashing)
-        {
+       
+        
            
             player.velocity.y = 0;
             player.rb.velocity = Vector2.zero;
@@ -138,7 +134,7 @@ public class JetSword : Weapon
             
            
             
-        }
+        
     }
     IEnumerator SlashAnimation()
     {

@@ -93,6 +93,7 @@ public class Benny : Health
                 Direction = -1;
             }
         }
+        
     }
 
     private void WhenHit()
@@ -130,7 +131,7 @@ public class Benny : Health
         CheckPeekCondition();
 
         checkForGround = Physics2D.CircleCast(new Vector2(transform.position.x, transform.position.y - 0.5f), 0.1f, Vector2.down, 0.1f, GroundLayerMask);
-        landingDesCheck = Physics2D.Raycast(transform.position, Vector2.down, 10, GroundLayerMask);
+        landingDesCheck = Physics2D.CircleCast(transform.position, 0.1f, Vector2.down,10, GroundLayerMask);
         if (velocity.y < 0)
         {
             if (checkForGround && isJumping)
@@ -140,15 +141,22 @@ public class Benny : Health
                 velocity.x = 0;
                 animator.SetTrigger("Land");
             }
-            if (landingDesCheck)
+            
+        }
+        if (landingDesCheck)
+        {
+            landingYDes = landingDesCheck.point.y ; // small revision in place
+            if (transform.position.y <= landingYDes)
             {
-                landingYDes = landingDesCheck.point.y + 0.1f; // small revision in place
-               if(transform.position.y <= landingYDes)
-                {
-                    velocity *= 0.1f;
-                }
-
+                isGrounded = true;
+                IsAttacking = false;
+                isVulnerable = false;
+                bodyCollider.gameObject.layer = defaultLayer;
+                RB2D.velocity = Vector2.zero;
+                velocity = Vector2.zero;
+                // RB2D.velocity = Vector2.zero;
             }
+
         }
         transform.Translate(velocity * Time.fixedDeltaTime);
 
@@ -251,7 +259,7 @@ public class Benny : Health
     {
         AudioManager.a_Instance.BennyPeekAudio();
     }
-    public void SetBackToIdle()//called by animator in the end of the land animation
+    public void SetBackToIdle()
     {
         animator.SetTrigger("BackToIdle");
     }

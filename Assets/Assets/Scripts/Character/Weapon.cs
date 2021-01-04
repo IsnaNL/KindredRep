@@ -12,6 +12,8 @@ public abstract class Weapon : MonoBehaviour
     public CharacterController2D player;
     protected KeyCode attack = KeyCode.Z;
     protected KeyCode mobilityAbility = KeyCode.X;
+   // public bool ShouldAlwaysCallMobilityAbility;
+
 
     public virtual void Init()
     {
@@ -30,7 +32,10 @@ public abstract class Weapon : MonoBehaviour
     }
     void FixedUpdate()
     {
-        MobilityAbility();
+      
+           // MobilityAbility();
+        
+       
     }
     public abstract void Attack();
     public abstract void MobilityAbility();

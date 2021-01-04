@@ -87,14 +87,6 @@ public class Shotgun : Weapon
         if (IsShotgunKnockback)
         {
 
-          //  RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left, 0.5f, player.groundLayerMask);
-          //  Debug.DrawRay(transform.position, Vector2.left * 0.5f);
-            {
-              //  if (hit)
-              //  {
-               //     player.velocity = 0.75f;
-               // }
-            }
             player.velocity += -ShotDir * shotgunBlastForce;
             IsShotgunKnockback = false;
            
