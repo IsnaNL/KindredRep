@@ -101,7 +101,7 @@ public class Shotgun : Weapon
         }
 
     }
-    void GetAimAngleForShotgun()//on a scale of -1 to 1 divided by 5
+    void GetAimAngleForShotgun()
     {
 
         if (player.moveInput == 0 && player.verInput == 0f && !player.isFalling && !player.isJumping)
@@ -110,21 +110,20 @@ public class Shotgun : Weapon
             if (player.islookingright && player.IsGrounded)
             {
                 ShotDir = Vector2.right;
-                player.animator.SetTrigger("G3");
+              
                
             }
             else
             {
-                player.animator.SetTrigger("G3");
-                
-
+               
                 ShotDir = Vector2.left;
 
             }
-        }else if (player.moveInput == 0 && player.verInput == 0f && player.isFalling && !player.isJumping)
+        }
+        else if (player.moveInput == 0 && player.verInput == 0f && player.isFalling && !player.isJumping)
         {
            
-            player.animator.SetTrigger("F3");
+          
             if (player.islookingright)
             {
                 ShotDir = Vector2.right;
@@ -143,7 +142,7 @@ public class Shotgun : Weapon
         else if (player.moveInput == 0 && player.verInput == 0f && !player.isFalling && player.isJumping)
         {
            
-            player.animator.SetTrigger("J3");
+           
             if (player.islookingright)
             {
                 ShotDir = Vector2.right;
@@ -276,20 +275,6 @@ public class Shotgun : Weapon
         {
             ShotDir = Vector2.left;
 
-            if (player.isFalling)
-            {
-                player.animator.SetTrigger("F3");
-
-            }
-            if (player.isJumping)
-            {
-                player.animator.SetTrigger("J3");
-
-            }
-            if (player.IsGrounded)
-            {
-                player.animator.SetTrigger("G3");
-            }
         }
         else if (player.moveInput == -1 && player.verInput == 1)
         {

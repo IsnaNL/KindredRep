@@ -20,7 +20,6 @@ public class PumpkinHead : Health
         Patrol,
         Die,
     }
-
     public State state;
     public bool shouldSwapState;
     public float delayForAttack;
@@ -28,7 +27,6 @@ public class PumpkinHead : Health
     public float delayForBackTele;
     public float DelayFromPatrolToAttack;
     public bool SecondBossPhaseActive;
-
     IEnumerator AttackState()
      {
         shouldSwapState = false;
@@ -65,8 +63,7 @@ public class PumpkinHead : Health
         }
         
     }
-
-     IEnumerator PatrolState()
+    IEnumerator PatrolState()
      {
         
             shouldSwapState = false;
@@ -82,8 +79,6 @@ public class PumpkinHead : Health
 
 
         }
-
-        //NextState();
     }
     IEnumerator SummonState()
     {
@@ -108,7 +103,7 @@ public class PumpkinHead : Health
          {
             yield return null;
            
-        }
+         }
     }
     public override void Start()
     {
@@ -118,13 +113,10 @@ public class PumpkinHead : Health
     }
     void Update()
      {
-
-
         if (health <= fullHp * 0.5f)
         {
             SecondBossPhaseActive = true;
         }
-
         StateCheck();
          WhenHit();
     }

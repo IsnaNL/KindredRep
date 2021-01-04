@@ -41,6 +41,7 @@ public class CharacterController2D : Health
     public bool isFalling;
     public float secondMaxAccelrationModifier;
     public float secondMaxSpeedModifier;
+    public float JumpDelaytime;
     private float dirAxis = 1;
     public override void Start()
     {
@@ -85,7 +86,7 @@ public class CharacterController2D : Health
 
     private void SetFalling()
     {
-        if (velocity.y < -2f)
+        if (velocity.y < 0f)
         {
             isFalling = true;
             animator.SetBool("IsFalling", true);
@@ -190,13 +191,20 @@ public class CharacterController2D : Health
     }
     private IEnumerator JumpCoroutine()
     {
+        float startVel = velocity.x;
+        animator.speed = 1;
+        canMove = false;
+       // animator.SetBool("IsJumping", true);
+        animator.SetTrigger("JumpAnim");
+        yield return new WaitForSeconds(JumpDelaytime);
+        canMove = true;
+        velocity.x = startVel;
         isJumping = true;
-        animator.SetBool("IsJumping", true);
-        animator.SetTrigger("JumpAnim");   
         float Destination = transform.position.y + jumpHeight.y; 
-        velocity.y = 4;
+        velocity.y = 8;
         while (Input.GetButton("Jump") && isJumping)
         {
+
             if (inventory.sword.isSwordDashing)
             {
 
@@ -205,7 +213,7 @@ public class CharacterController2D : Health
             velocity += new Vector2(jumpAcceleration.x * moveInput * Time.deltaTime * 0.99f, jumpAcceleration.y * Time.deltaTime * 0.99f);
             if (transform.position.y >= Destination)
             {
-                animator.SetBool("IsJumping", false);
+               //animator.SetBool("IsJumping", false);
                 velocity *= 0.99f;
                 isJumping = false;
             }
@@ -272,6 +280,7 @@ public class CharacterController2D : Health
         {
             StopCoroutine("JumpCoroutine");
             isFalling = true;
+            animator.SetBool("IsFalling", true);
             inventory.shotgun.IsShotgunKnockback = false;
             if (velocity.y >= 0)
             {
@@ -279,6 +288,7 @@ public class CharacterController2D : Health
             }
             Debug.Log("Ceilinghit");
         }
+        
     }
     private void SmallLedgeInteraction()
     {
