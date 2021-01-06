@@ -56,7 +56,9 @@ public class Benny : Health
         }
         else
         {
-           
+         
+
+          
             if (Vector2.Distance(transform.position, player.transform.position) <= RangeForIdleAudio)
             {
                 if (!IdleAudioTrigger)
@@ -73,6 +75,8 @@ public class Benny : Health
                     IdleAudioTrigger = false;
                 
             }
+            
+           
         }
         healthBar.value = health;
        

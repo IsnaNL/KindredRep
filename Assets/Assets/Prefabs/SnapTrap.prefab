@@ -182,10 +182,11 @@ MonoBehaviour:
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 1024
-  RangeToTrigger: 1.7
+  RangeToTrigger: 1
+  hitColldier: {fileID: 6071323934992092431}
   damage: 10
   delayBetweenTriggers: 0
-  SnapTrapTriggerConditionDelay: 1
+  SnapTrapTriggerConditionDelay: 3
   canTrigger: 0
 --- !u!50 &1939944067
 Rigidbody2D:
@@ -246,7 +247,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6071323934992092429}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -263,5 +264,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 0.2}
+  m_Size: {x: 1.2, y: 0.2}
   m_EdgeRadius: 0
