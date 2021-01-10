@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Prefab: {fileID: 6062554871924872579, guid: 5a4a89c3596d8e5469cb54fba1176b28,
     type: 3}
   colorEqIntensity: 1
-  intensityModifier: 1
+  intensityModifier: 0.8
 --- !u!198 &6686437946627435817
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -617,7 +617,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 1000
+    maxNumParticles: 10
     size3D: 0
     rotation3D: 0
     gravityModifier:
