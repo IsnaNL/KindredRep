@@ -134,7 +134,7 @@ public class Benny : Health
         WhenHit();
         CheckPeekCondition();
 
-        checkForGround = Physics2D.CircleCast(new Vector2(transform.position.x, transform.position.y - 0.5f), 0.1f, Vector2.down, 0.1f, GroundLayerMask);
+        checkForGround = Physics2D.CircleCast(new Vector2(transform.position.x, transform.position.y - 0.2f), 0.1f, Vector2.down, 0.3f, GroundLayerMask);
         landingDesCheck = Physics2D.CircleCast(transform.position, 0.1f, Vector2.down,10, GroundLayerMask);
         if (velocity.y < 0)
         {

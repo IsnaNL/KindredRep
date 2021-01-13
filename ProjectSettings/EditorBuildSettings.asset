@@ -6,17 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Assets/Scenes/MainMenu.unity
-    guid: e38d88fab3bc043448f5f4aab7030dde
-  - enabled: 1
-    path: Assets/Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
-    path: Assets/Assets/Scenes/CombatTest.unity
-    guid: 3768fa7415a847d4fafaa9e2ca0aba9e
-  - enabled: 1
-    path: Assets/Assets/Scenes/MovementTest.unity
-    guid: bcb027ad7843bfb4598a5f83585133c3
+    path: Assets/Assets/Scenes/Root_Valley1.unity
+    guid: 6eb34520e4c27d14f8264fd8a5487446
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 29e0aa0446ff7464ba71c66ad1ec42fc,
       type: 2}

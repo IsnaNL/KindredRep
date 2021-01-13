@@ -37,19 +37,22 @@ public class Pickaxe : Weapon
             }
             else
             {
+                player.animator.SetTrigger("Clawing");
                 isClawing = true;
             }
     
-            if (isClawing)
-            {
-
-                player.animator.SetTrigger("Clawing");
-                CheckForWall();
-                
-                this.MobilityAbility();
-                
-            }
+          
            
+        }
+
+        if (isClawing)
+        {
+
+         
+            CheckForWall();
+
+            this.MobilityAbility();
+
         }
         if (Input.GetButtonDown("Jump"))
         {
@@ -73,8 +76,6 @@ public class Pickaxe : Weapon
 
 
                 }
-               
-                // StopCoroutine("ClawedRoutine");
             }
         }
 
@@ -83,25 +84,9 @@ public class Pickaxe : Weapon
   
     public override void MobilityAbility()
     {
-
-
-
-
-
-      
-
-
-
-        //  StartCoroutine( SetClawingFalse());
-
-
-
-
         if (isPickaxeClawed)
         {
-
-           StartCoroutine(ClawedRoutine());
-          
+            StartCoroutine( ClawedRoutine());
         }
        
     }
@@ -110,18 +95,17 @@ public class Pickaxe : Weapon
     {
        
         player.animator.speed = 1;
-
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
         if (player.islookingright)
         {
-            player.transform.position = new Vector2(curPlayerPos.x - 0.4f, player.transform.position.y);
+            player.transform.position = new Vector3(curPlayerPos.x -0.25f ,curPlayerPos.y);
         }
         else
         {
-            player.transform.position = new Vector2(curPlayerPos.x + 0.4f, player.transform.position.y);
+            player.transform.position = new Vector3(curPlayerPos.x +0.25f, curPlayerPos.y);
         }
 
-
+        isClawing = false;
         player.canMove = false;
         player.IsGrounded = false;
         player.animator.SetBool("Clawed", true);
@@ -129,6 +113,7 @@ public class Pickaxe : Weapon
         player.rb.velocity = Vector2.zero;
         player.gravityScale = 0;
 
+     
 
 
 
@@ -155,14 +140,18 @@ public class Pickaxe : Weapon
         {
             dir = Vector2.left;
         }
-        
 
-        
-        RaycastHit2D checkforwall = Physics2D.CircleCast(new Vector2(transform.position.x, transform.position.y), pickaxeRange, dir, 0.55f, player.groundLayerMask);
-        isPickaxeClawed = checkforwall;
-        curPlayerPos = player.transform.position;
-        isClawing = false;
 
+        if (isClawing)
+        {
+            isClawing = !isPickaxeClawed;
+            RaycastHit2D checkforwall = Physics2D.CircleCast(new Vector2(transform.position.x, transform.position.y), pickaxeRange, dir, 0.6f, player.groundLayerMask);
+            isPickaxeClawed =  checkforwall;
+            curPlayerPos = player.transform.position;
+          
+        }
+
+     
     }
 
 
@@ -178,7 +167,13 @@ public class Pickaxe : Weapon
     {
         player.canMove = true;
         isPickaxeClawed = false;
-       
+        player.gravityScale = 25;
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(transform.position, Vector2.right * 0.6f);
+        Gizmos.DrawWireSphere(new Vector3(transform.position.x + 0.6f,transform.position.y), pickaxeRange);
     }
 }
 
