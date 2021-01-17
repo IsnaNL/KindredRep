@@ -34,11 +34,11 @@ namespace UnityEngine.Experimental.Rendering.Universal
         void LateUpdate()
         {
 
+            UpdateLists();
             while (m_Instances.Count < count)
             {
                 CreateAndAddToLists(); // needs refactoring
             }
-            UpdateLists();
         }
         private void CreateAndAddToLists()
         {
