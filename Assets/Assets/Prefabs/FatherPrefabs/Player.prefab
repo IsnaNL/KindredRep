@@ -239,6 +239,8 @@ MonoBehaviour:
   pickaxe: {fileID: 0}
   shotgun: {fileID: 0}
   sword: {fileID: 0}
+  next: 102
+  previous: 100
 --- !u!1 &2187893807733490673
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,9 +294,8 @@ MonoBehaviour:
   player: {fileID: 2187893808038624325}
   isSwordDashing: 0
   canDash: 1
-  MidDashCurrentTime: 0
+  maxLength: 0
   dashForce: 100
-  dashTargetLengthTime: 0.25
   dashwaitTime: 0
   dashRight: 0
   dashCooldown: 0.8
@@ -315,11 +316,13 @@ MonoBehaviour:
   Cooldown: 0.5
   weaponCollider: {fileID: 1763441707}
   player: {fileID: 2187893808038624325}
-  isPickaxeClawing: 0
   isPickaxeClawed: 0
+  isClawing: 0
   pickaxeJump: {x: 5, y: 10}
   pickaxeRange: 1
-  shouldFlip: 0
+  pickaxeCD: 0
+  pickaxeRunningCD: 0
+  takeControlDur: 0
 --- !u!114 &464099669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -634,10 +637,9 @@ MonoBehaviour:
   groundDeceleration: 45
   jumpHeight: {x: 0, y: 2.5}
   groundLayer: 8
+  canMove: 0
   isJumping: 0
   moveInput: 0
-  shrinkTime: 10
-  JumpXBoost: 1.5
   maxMagnitude: 8
   islookingright: 1
   velocity: {x: 0, y: 0}
@@ -657,6 +659,9 @@ MonoBehaviour:
   rb: {fileID: 0}
   verInput: 0
   isFalling: 0
+  secondMaxAccelrationModifier: 0
+  secondMaxSpeedModifier: 0
+  JumpDelaytime: 0
 --- !u!1 &2187893809089136335
 GameObject:
   m_ObjectHideFlags: 0

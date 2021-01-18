@@ -8,14 +8,15 @@ public  class Inventory : MonoBehaviour
     public Pickaxe pickaxe;
     public Shotgun shotgun;
     public JetSword sword;
-    public KeyCode next = KeyCode.F;
-    public KeyCode previous = KeyCode.D;
- 
-
-
+    public KeyCode Sword = KeyCode.Q;
+    public KeyCode Shotgun = KeyCode.W;
+    public KeyCode Pickaxe = KeyCode.E;
     public void Init()
     {
-        weaponList.Clear();
+           Sword = KeyCode.Q;
+           Shotgun = KeyCode.W;
+           Pickaxe = KeyCode.E;
+    weaponList.Clear();
         sword = GetComponentInChildren<JetSword>();
         weaponList.Add(sword);
         shotgun = GetComponentInChildren<Shotgun>();
@@ -23,40 +24,45 @@ public  class Inventory : MonoBehaviour
         pickaxe = GetComponentInChildren<Pickaxe>();
         weaponList.Add(pickaxe);
         GetCurrentWeapon(weaponCheck);
-   
     }
 
     private void SwapWeapon()
     {
-       
-        if (Input.GetKeyDown(previous))
+
+        /* if (Input.GetKeyDown(previous))
+         {
+             weaponCheck--;
+         }
+         if (Input.GetKeyDown(next))
+         {
+             weaponCheck++;
+         }
+        */
+        if (Input.GetKeyDown(Sword))
         {
-            weaponCheck--;
+            weaponCheck = 0;
         }
-        if (Input.GetKeyDown(next))
+        else if (Input.GetKeyDown(Shotgun))
         {
-            weaponCheck++;
+            weaponCheck = 1;
+
         }
-       
+        else if (Input.GetKeyDown(Pickaxe))
+        {
+            weaponCheck = 2;
+        }
         if (weaponCheck < 0)
         {
             weaponCheck = weaponList.Count-1;
         }
-        if (weaponCheck > weaponList.Count-1)
+        else if (weaponCheck > weaponList.Count-1)
         {
             weaponCheck = 0;
-        }
-       
-
-     
-        
+        }             
             GetCurrentWeapon(weaponCheck);
-
     }
     void GetCurrentWeapon(int weaponIndex)
-    {
-      
-        
+    {   
         foreach (Weapon w in weaponList)
         {
             w.enabled = false;
@@ -64,12 +70,11 @@ public  class Inventory : MonoBehaviour
             {
                 w.enabled = true;
             }
-          
         }
     }
     void Update()
     {
-        if (Input.GetKeyDown(previous) || Input.GetKeyDown(next))
+        if (Input.GetKeyDown(Sword) || Input.GetKeyDown(Shotgun) || Input.GetKeyDown(Pickaxe))
         {
             SwapWeapon();
         }

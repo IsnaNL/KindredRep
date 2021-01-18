@@ -83,7 +83,6 @@ public class CharacterController2D : Health
         }
 
     }
-
     private void SetFalling()
     {
         if (velocity.y < 0f)
@@ -95,7 +94,6 @@ public class CharacterController2D : Health
 
         }
     }
-
     private void SetGravity()
     {
         if (velocity.y >= -10)
@@ -104,7 +102,6 @@ public class CharacterController2D : Health
 
         }
     }
-
     private void FixedUpdate()
     {
         CeilingCheck();
@@ -155,14 +152,11 @@ public class CharacterController2D : Health
         {
          
             StopPlayer(deceleration);
-          
             animator.SetBool("IsRunning", false);
             animator.speed = 1;
             animator.SetBool("Idle", true);
         }
     }
-
-
     private void StopPlayer(float deceleration)
     {
         velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.deltaTime);
@@ -182,11 +176,8 @@ public class CharacterController2D : Health
         {
             if (IsGrounded && canMove)
             {
-
                 StartCoroutine("JumpCoroutine");
-             
             }
-        
         }
     }
     private IEnumerator JumpCoroutine()
@@ -194,7 +185,6 @@ public class CharacterController2D : Health
         float startVel = velocity.x;
         animator.speed = 1;
         canMove = false;
-       // animator.SetBool("IsJumping", true);
         animator.SetTrigger("JumpAnim");
         yield return new WaitForSeconds(JumpDelaytime);
         canMove = true;
@@ -212,8 +202,7 @@ public class CharacterController2D : Health
             }
             velocity += new Vector2(jumpAcceleration.x * moveInput * Time.deltaTime * 0.99f, jumpAcceleration.y * Time.deltaTime * 0.99f);
             if (transform.position.y >= Destination)
-            {
-               //animator.SetBool("IsJumping", false);
+            {           
                 velocity *= 0.99f;
                 isJumping = false;
             }
@@ -222,16 +211,12 @@ public class CharacterController2D : Health
     }
     private void WallCol()
     {
-
         FrontWallCheck = Physics2D.CircleCast(new Vector2(transform.position.x + (0.2f * dirAxis), transform.position.y), 0.3f, Vector2.right * dirAxis, 0, groundLayerMask);
         TopWallCheck = Physics2D.Raycast(new Vector2(transform.position.x , transform.position.y+0.2f), Vector2.right * dirAxis, 0.6f, groundLayerMask);
-
         if (FrontWallCheck && TopWallCheck)
         {
             velocity.x *= 0f;
-        }
-       
-
+        }     
     }
     void CheckFlip()
     {
@@ -317,6 +302,7 @@ public class CharacterController2D : Health
             if (groundTriggerCount == 1)
             {
                 IsGrounded = true;
+                canMove = true;
                 animator.speed = 1;
                 gravityScale = 0f;
                 rb.velocity = new Vector3(0, 0, 0); 
@@ -325,6 +311,8 @@ public class CharacterController2D : Health
                 isJumping = false;
                 isFalling = false;
                 StopCoroutine("JumpCoroutine");
+                inventory.pickaxe.isClawing = false;
+                animator.SetBool("WallJump", false);
 
 
             }

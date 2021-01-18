@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public List<TrapCol> trapsList;
     public CharacterController2D Player;
     public JetSword weaponInit;
-    public CameraFollow PlayerCam;
+    public CameraFollow PlayerFollow;
     public LevelGenerator levelgenerator;
   
     //public EffectsManager effects_Instance;
@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
             t.Init();
         }
       
-        PlayerCam.Init();
+        PlayerFollow.Init();
 
         Time.timeScale = 1f;
     }

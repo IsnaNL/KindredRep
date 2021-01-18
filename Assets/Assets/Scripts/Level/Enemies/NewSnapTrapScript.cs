@@ -19,7 +19,7 @@ public class NewSnapTrapScript : Health
 
 
 
-    // Start is called before the first frame update
+    
     public void Init()
     {
         delayBetweenTriggers = SnapTrapTriggerConditionDelay;
@@ -36,8 +36,6 @@ public class NewSnapTrapScript : Health
         else
         {
             canTrigger = true;
-            
-
         }
     }
     public void CheckForTrapTriggerCondition()
@@ -50,8 +48,6 @@ public class NewSnapTrapScript : Health
                 delayBetweenTriggers = 0;
                 player = hit.transform.GetComponent<CharacterController2D>();
                 ExecuteSnapTrap();
-
-
             }
             else
             {
@@ -62,23 +58,16 @@ public class NewSnapTrapScript : Health
     }
     public void ExecuteSnapTrap()
     {
-        animator.SetTrigger("SnapTrapTrigger");
-       
-
-    }
-    // Update is called once per frame
-   
+        animator.SetTrigger("SnapTrapTrigger");   
+    }  
    
     public void BackToIdle()
     {
-        animator.SetTrigger("BackToIdle");
-       // Invoke("ResetDelay", 1.5f); 
+        animator.SetTrigger("BackToIdle");     
     }
     void ResetDelay()
     {
-        delayBetweenTriggers = 0;
-      //  hitColldier.enabled = true;
-
+        delayBetweenTriggers = 0;   
     }
     public void FreezeCharacter()
     {
@@ -88,11 +77,6 @@ public class NewSnapTrapScript : Health
         player.canMove = false;
         player.rb.velocity = Vector2.zero;
         player.velocity = Vector2.zero;
-       
-        //player.velocity = Vector2.zero;
-        //player.enabled = false;
-       
-
     }
     public void UnfreezeCharacter()
     {
@@ -103,11 +87,6 @@ public class NewSnapTrapScript : Health
             player.TakeDamage(damage);
         }
         playerCaught = false;
-        //player.velocity = new Vector2(-2,2);
-        //player.enabled = true;
-        //player.animator.speed = 1;
-
-
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -117,12 +96,8 @@ public class NewSnapTrapScript : Health
             {
                 FreezeCharacter();
                 canHit = false;
-            }
-           
-
-        }
-       
-
+            }          
+        }  
     }
    
     private void OnDrawGizmos()

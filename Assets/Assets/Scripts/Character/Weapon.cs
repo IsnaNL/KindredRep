@@ -10,11 +10,9 @@ public abstract class Weapon : MonoBehaviour
     public float Cooldown;
     public Transform weaponCollider;
     public CharacterController2D player;
-    protected KeyCode attack = KeyCode.Z;
-    protected KeyCode mobilityAbility = KeyCode.X;
-   // public bool ShouldAlwaysCallMobilityAbility;
-
-
+    protected KeyCode attack = KeyCode.D;
+    protected KeyCode mobilityAbility = KeyCode.F;
+   
     public virtual void Init()
     {
         Debug.Log("weaponinited");
@@ -23,20 +21,9 @@ public abstract class Weapon : MonoBehaviour
 
     void Update()
     {
-              
-      GetInput();
-      Attack();
-    
-
-
-    }
-    void FixedUpdate()
-    {
-      
-           // MobilityAbility();
-        
-       
-    }
+        GetInput();
+        Attack();
+   }
     public abstract void Attack();
     public abstract void MobilityAbility();
     public abstract void GetInput();

@@ -7,18 +7,14 @@ public class JetSword : Weapon
     public bool isSwordDashing;
     public bool canDash;
     public float maxLength;
-   
-
     public float dashForce;
-
     float axis;
- 
     public float dashwaitTime;
-
     public bool dashRight;
     RaycastHit2D des;
     public float dashCooldown;
     float startingPos;
+    public float afterDashVel;
     public override void Init()
     {
         canDash = true;
@@ -96,14 +92,10 @@ public class JetSword : Weapon
     public override void MobilityAbility()
     {
        
-        
-           
+                 
             player.velocity.y = 0;
             player.rb.velocity = Vector2.zero;
-            float cur = Mathf.MoveTowards(player.transform.position.x, des.point.x, dashForce *0.1f);
-           
-            
-            
+            float cur = Mathf.MoveTowards(player.transform.position.x, des.point.x, dashForce *0.1f);          
            if(axis == 1)
             {
                 if (transform.position.x <= des.point.x - 0.75f)
@@ -112,7 +104,7 @@ public class JetSword : Weapon
                 }
                 else
                 {
-                    player.velocity.x = 0;
+                    player.velocity.x = afterDashVel;
                     player.gravityScale = 25;
                     isSwordDashing = false;
                 }
@@ -125,7 +117,7 @@ public class JetSword : Weapon
                 }
                 else
                 {
-                    player.velocity.x = 0;
+                    player.velocity.x = -afterDashVel;
                     player.gravityScale = 25;
                     isSwordDashing = false;
                 }
