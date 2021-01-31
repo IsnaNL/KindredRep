@@ -48,43 +48,11 @@ public class Benny : Health
     }
 
    
-    void Update()
+    void LateUpdate()
     {
-        if (!isGrounded && isJumping)
-        {
-            velocity.y -= GravityScale * Time.deltaTime;
-        }
-        else
-        {
-         
-
-          
-            if (Vector2.Distance(transform.position, player.transform.position) <= RangeForIdleAudio)
-            {
-                if (!IdleAudioTrigger)
-                {
-                    Debug.Log(Vector2.Distance(transform.position, player.transform.position));
-                    AudioManager.a_Instance.BennyIdleAudio();
-                    IdleAudioTrigger = true;
-                }
-               
-            }else
-            {
-               
-                    
-                    IdleAudioTrigger = false;
-                
-            }
-            
-           
-        }
+        animator.SetBool("IsLand", !isJumping);
         healthBar.value = health;
-       
-        if (IsAttacking)
-        {
-
-        }
-        else
+        if (!IsAttacking)
         {
             if (player.transform.position.x >= transform.position.x)
             {
@@ -102,8 +70,7 @@ public class Benny : Health
 
     private void WhenHit()
     {
-        if (isHit)
-        {
+        
             EffectsManager.e_Instance.BloodHitEffect(transform.position);
             EffectsManager.e_Instance.HitEffect(transform.position);
 
@@ -111,86 +78,73 @@ public class Benny : Health
             {
                 velocity = Vector2.zero;
                 velocity = new Vector2(-HitForce.x, HitForce.y);
-
             }
             else
             {
-                RB2D.velocity = Vector2.zero;
-
                 velocity = new Vector2(HitForce.x, HitForce.y);
-
-
             }
             isVulnerable = false;
             AudioManager.a_Instance.BennyHurtAudio();
             isHit = false;
-
-        }
-
     }
 
      void FixedUpdate()
     {
-        WhenHit();
-        CheckPeekCondition();
-
-        checkForGround = Physics2D.CircleCast(new Vector2(transform.position.x, transform.position.y - 0.2f), 0.1f, Vector2.down, 0.3f, GroundLayerMask);
-        landingDesCheck = Physics2D.CircleCast(transform.position, 0.1f, Vector2.down,10, GroundLayerMask);
-        if (velocity.y < 0)
+        if (isHit)
         {
-            if (checkForGround && isJumping)
-            {
-
-                isJumping = false;
-                velocity.x = 0;
-                animator.SetTrigger("Land");
-            }
-            
+          WhenHit();
         }
-        if (landingDesCheck)
+        CheckPeekCondition();
+        
+        if (isJumping)
+
         {
-            landingYDes = landingDesCheck.point.y ; // small revision in place
-            if (transform.position.y <= landingYDes)
+            velocity.y -= GravityScale * Time.deltaTime;
+          /*  checkForGround = Physics2D.CircleCast(new Vector2(transform.position.x, transform.position.y - 0.2f), 0.1f, Vector2.down, 0.3f, GroundLayerMask);
+            if (checkForGround)
             {
                 isGrounded = true;
                 IsAttacking = false;
                 isVulnerable = false;
-                bodyCollider.gameObject.layer = defaultLayer;
-                RB2D.velocity = Vector2.zero;
+                isJumping = false;
                 velocity = Vector2.zero;
-                // RB2D.velocity = Vector2.zero;
+                bodyCollider.gameObject.layer = defaultLayer;
+            
             }
-
+          */
         }
-        transform.Translate(velocity * Time.fixedDeltaTime);
+        else
+        {
+            if (Vector2.Distance(transform.position, player.transform.position) <= RangeForIdleAudio)
+            {
+                if (!IdleAudioTrigger)
+                {
+                    AudioManager.a_Instance.BennyIdleAudio();
+                    IdleAudioTrigger = true;
+                }
+            }
+            else
+            {
 
+                IdleAudioTrigger = false;
+            }
+        }
+        transform.position += new Vector3(velocity.x, velocity.y, 0) * Time.fixedDeltaTime;
+     }
 
-
-    }
-   
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
-
         groundTriggerCount++;
         if (groundTriggerCount == 1)
         {
-           
             if (collision.gameObject.layer == GroundLayerInt)
             {
-
-
-             
-
+                isJumping = false;         
                 isGrounded = true;
                 IsAttacking = false;
                 isVulnerable = false;
                 bodyCollider.gameObject.layer = defaultLayer;
-                RB2D.velocity = Vector2.zero;
                 velocity = Vector2.zero;
-                
-               
-
             }
         }
     }
@@ -214,33 +168,16 @@ public class Benny : Health
                 {
                     velocity = new Vector2(-HitForce.x, HitForce.y) * 0.2f;//benny
                     player.velocity = new Vector2(HitForce.x, HitForce.y);
-
                 }
                 else
                 {
                     velocity = new Vector2(HitForce.x, HitForce.y) * 0.2f;//benny
-
                     player.velocity = new Vector2(-HitForce.x, HitForce.y);
-
-
                 }
                 AudioManager.a_Instance.BennyAttackAudio();
                 IsAttacking = false;
             }
-            else
-            {
-
-               
-                  
-                 //   player.velocity = new Vector2(player.velocity.x, 5);
-
-               
-            }
-          
-        }
-        if(collision.gameObject.layer == GroundLayerInt && !isGrounded)
-        {
-            RB2D.velocity = Vector2.zero;
+           
         }
     }
   
@@ -248,8 +185,6 @@ public class Benny : Health
     {
         Vector2 dir = new Vector2(player.transform.position.x - transform.position.x, player.transform.transform.position.y - transform.transform.position.y).normalized;
         RaycastHit2D hit = Physics2D.Raycast(transform.position,dir,3); 
-     
-
         if (hit.transform == player.transform)
         {
             animator.SetTrigger("PeekTrigger");
@@ -274,51 +209,38 @@ public class Benny : Health
         RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, 3);
         if (hit.transform == player.transform)
         {
-            AttackExecute();
+            AttackExecute(dir);
         }
-        else
-        {
-            animator.SetTrigger("BackToIdle");
-        }
+
     }
-    public void AttackExecute()
+    public void AttackExecute(Vector2 dir)
     {
-        if (Direction == 1)
+        jumpAcceleration.x = startingJumpAccelerationX * dir.x;
+       /* if (Direction == 1)
         {
             jumpAcceleration.x = startingJumpAccelerationX;
         }
         else
         {
             jumpAcceleration.x = -startingJumpAccelerationX;
-        }
+        }*/
         animator.SetTrigger("AttackTrigger");
-        AudioManager.a_Instance.BennyJumpAudio();
-        StartCoroutine((JumpCoRou()));
+        StartCoroutine((AttackJumpCoRou()));
     }
-   
  
-    public IEnumerator JumpCoRou()
+    public IEnumerator AttackJumpCoRou()
     {
-        isJumping = true;
-     
-
+        AudioManager.a_Instance.BennyJumpAudio();
         isVulnerable = true;
         bodyCollider.gameObject.layer = EnemyLayer;
-        
         velocity = new Vector2(jumpAcceleration.x,jumpAcceleration.y);
         IsAttacking = true;
-        yield return null;
-       
+        GroundCheckCollider.enabled = false;
+        isJumping = true;
+        yield return new WaitForSeconds(0.1f);  //let benny exit ground
+        GroundCheckCollider.enabled = true;
+      
     }
-   public void SetGroundfromAnimator()
-    {
-        if (checkForGround)
-        {
-            isJumping = false;
-            velocity.x = 0;
-            animator.SetTrigger("Land");
-           
-        }
-    }
+ 
   
 }
