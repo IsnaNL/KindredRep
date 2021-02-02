@@ -5,9 +5,10 @@ using UnityEngine;
 public class RevealArea : MonoBehaviour
 {
     bool isRevealed;
-    Sprite[] spritesToReveal;
+    Animator anim;
     void Start()
     {
+        anim = GetComponent<Animator>();
         isRevealed = false;
     }
 
@@ -15,24 +16,16 @@ public class RevealArea : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            StartCoroutine(Revealcoro());
+            isRevealed = true;
+            anim.SetBool("Revealed", isRevealed);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            StartCoroutine(Hidecoro());
+            isRevealed = false;
+            anim.SetBool("Revealed", isRevealed);
         }
-    }
-
-
-    private IEnumerator Revealcoro()
-    {
-        yield return null;
-    }
-    private IEnumerator Hidecoro()
-    {
-        yield return null;
     }
 }
