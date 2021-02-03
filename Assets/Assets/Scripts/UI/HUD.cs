@@ -7,51 +7,42 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
-    public Sprite[] heartSprites;
-    public Sprite[] weaponSprites;
-    public Image HeartUI;
-    public Image WeaponUI;
-    public CharacterController2D player;
-    public Inventory inventory;
-    private int playerHealthUITranslation;
-    private int weaponNumberUiTranslation;
-    public Slider hpSlider;
-    // Start is called before the first frame update
-  
+    private CharacterController2D playerRef;
+    
+    [Header("Refs")]
+    public Image[] InventoryItems;
+    [SerializeField] private Image fill;
+    public GameObject[] BigWeapons;
+    [Space]
+    [Header("Params")]
+    [SerializeField] private float InventoryChangeSpeed;
+    [SerializeField] private float FillLerpSpeed;
 
-    // Update is called once per frame
+    private void Start()
+    {
+        playerRef = FindObjectOfType<CharacterController2D>();
+    }
     void Update()
     {
-     
-        if(player.health >= 80)
+        fill.fillAmount = Mathf.MoveTowards(fill.fillAmount, playerRef.health * 0.01f, Time.deltaTime * FillLerpSpeed);
+        for (int i = 0; i < InventoryItems.Length; i++)
         {
-            playerHealthUITranslation = 0;
-        }else if(player.health >= 60)
-        {
-            playerHealthUITranslation = 1;
-        }else if (player.health >= 40)
-        {
-            playerHealthUITranslation = 2;
-        }else if (player.health >= 20)
-        {
-            playerHealthUITranslation = 3;
-        }else
-        {
-            playerHealthUITranslation = 4;
-            SceneManager.LoadScene(0);
+                InventoryItems[i].color = new Color(1f, 1f, 1f, Mathf.MoveTowards(InventoryItems[i].color.a,
+                    playerRef.inventory.weaponCheck == i ? 1 : 0, Time.deltaTime * InventoryChangeSpeed));
         }
-        if (inventory.weaponCheck == 0)
+    }
+    public void setWeapon(int currWeapon)
+    {
+        for (int i = 0; i < BigWeapons.Length; i++)
         {
-            weaponNumberUiTranslation = 0;
-        }else if (inventory.weaponCheck == 1)
-        {
-            weaponNumberUiTranslation = 1;
-        }else if (inventory.weaponCheck == 2)
-        {
-            weaponNumberUiTranslation = 2;
+            if (currWeapon == i)
+            {
+                BigWeapons[i].SetActive(true);
+            }
+            else
+            {
+                BigWeapons[i].SetActive(false);
+            }
         }
-        WeaponUI.sprite = weaponSprites[weaponNumberUiTranslation];
-        HeartUI.sprite = heartSprites[playerHealthUITranslation];
-        hpSlider.value = player.health;
     }
 }

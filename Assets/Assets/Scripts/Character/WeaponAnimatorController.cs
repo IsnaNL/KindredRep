@@ -8,15 +8,17 @@ public class WeaponAnimatorController : MonoBehaviour
     public List<Sprite> DefaultSpriteRendererSprites;
     public CharacterController2D player;
     private SpriteRenderer sr;
+    private HUD hud;
     public void Init()
     {
-      
+        hud = FindObjectOfType<HUD>();
         sr = GetComponent<SpriteRenderer>();
     }
    public void SetWeapon(int weaponNum)
     {
         player.animator.runtimeAnimatorController = weaponAnimationControllers[weaponNum];
         sr.sprite = DefaultSpriteRendererSprites[weaponNum];
+        hud.setWeapon(weaponNum);
     }
 
   

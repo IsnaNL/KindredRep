@@ -24,13 +24,20 @@ public class CameraFollow : MonoBehaviour
         }
         if(player.verInput < 0)
         {
+            if (transform.localPosition.x < 0)
+            {
+                transform.localPosition = Vector3.zero;
+            }
             transform.localPosition = new Vector3(transform.localPosition.x, Mathf.MoveTowards(transform.localPosition.y, -lookDownAmount, Time.deltaTime* lookSpeed));
-          
+
         }
         else if(player.verInput > 0)
         {
+            if (transform.localPosition.x > 0)
+            {
+                transform.localPosition = Vector3.zero;
+            }
             transform.localPosition = new Vector3(transform.localPosition.x, Mathf.MoveTowards(transform.localPosition.y, lookUpAmount, Time.deltaTime * lookSpeed));
-
         }
         else
         {
