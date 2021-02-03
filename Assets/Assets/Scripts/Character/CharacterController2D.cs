@@ -84,6 +84,13 @@ public class CharacterController2D : Health
         }
 
     }
+    private void FixedUpdate()
+    {
+        CeilingCheck();
+        WallCol();
+        transform.Translate(velocity * Time.fixedDeltaTime);
+        
+    }
     private void SetFalling()
     {
         if (velocity.y < 0f)
@@ -102,13 +109,6 @@ public class CharacterController2D : Health
         {
             velocity.y -= gravityScale * Time.deltaTime;
         }
-    }
-    private void FixedUpdate()
-    {
-        CeilingCheck();
-        WallCol();
-        transform.Translate(velocity * Time.fixedDeltaTime);
-        
     }
     private void HorizontalMovement(float acceleration, float deceleration)
     {
@@ -291,6 +291,7 @@ public class CharacterController2D : Health
             {
                 animator.SetBool("IsRunning", true);
                 transform.position = new Vector2(FrontWallCheck.point.x,FrontWallCheck.point.y +0.5f);
+               // velocity.y = 8;
             }
 
         }

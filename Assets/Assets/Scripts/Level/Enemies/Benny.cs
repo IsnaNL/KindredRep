@@ -42,8 +42,6 @@ public class Benny : Health
         startingJumpAccelerationX = jumpAcceleration.x;
         isVulnerable = false;
     }
-
-   
     void LateUpdate()
     {
         animator.SetBool("IsLand", !isJumping);

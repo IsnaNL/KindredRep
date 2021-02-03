@@ -147,44 +147,13 @@ public class JetSword : Weapon
         StartCoroutine(base.TakePlayerControl(time));
         yield break;
     }
-        /* if (dashRight)
-         {
-             if (transform.position.x <= des.point.x - 1f)
-             {
-
-             }
-             else
-             {
-                 player.velocity.x = 0;
-                 player.gravityScale = 25;
-                 isSwordDashing = false;
-             }
-         }
-         else
-         {
-             if (transform.position.x >= des.point.x + 1f)
-             {
-                 player.velocity.x -= dashForce * Time.deltaTime;
-             }else
-             {
-                 player.velocity.x = 0;
-                 player.gravityScale = 25;
-                 isSwordDashing = false;
-             }
-         }
-     */
-
-        /* if (!player.FrontWallCheck)
-         {
-         else
-         {
-             player.velocity.x = 0;  
-             player.gravityScale = 25;
-             isSwordDashing = false;
-
-         }
-       */
-
+    private void OnDisable()
+    {
+        isSwordDashing = false;
+        canDash = false;
+        player.gravityScale = 25;
+        player.canMove = true;
+    }
 
 
 }
