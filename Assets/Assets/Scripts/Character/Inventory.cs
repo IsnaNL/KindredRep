@@ -14,10 +14,11 @@ public  class Inventory : MonoBehaviour
     public KeyCode Pickaxe = KeyCode.E;
     public void Init()
     {
-           Sword = KeyCode.Q;
-           Shotgun = KeyCode.W;
-           Pickaxe = KeyCode.E;
-    weaponList.Clear();
+       
+        Sword = KeyCode.Q;
+        Shotgun = KeyCode.W;
+        Pickaxe = KeyCode.E;
+        weaponList.Clear();
         sword = GetComponentInChildren<JetSword>();
         weaponList.Add(sword);
         shotgun = GetComponentInChildren<Shotgun>();
@@ -25,6 +26,7 @@ public  class Inventory : MonoBehaviour
         pickaxe = GetComponentInChildren<Pickaxe>();
         weaponList.Add(pickaxe);
         enableCurrentWeapon(weaponCheck);
+        WAC.SetWeapon(weaponCheck);
     }
 
     private void SwapWeapon()

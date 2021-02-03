@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
         BennyList.AddRange(FindObjectsOfType<Benny>());
         trapsList.AddRange(FindObjectsOfType<TrapCol>());
         weaponInit.Init();
+        PlayerFollow.Init();
 
         //print(BennyList.Count);
         foreach (Benny b in BennyList)
@@ -42,7 +43,6 @@ public class GameManager : MonoBehaviour
             t.Init();
         }
       
-        PlayerFollow.Init();
 
         Time.timeScale = 1f;
     }

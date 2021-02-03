@@ -58,10 +58,10 @@ public class CharacterController2D : Health
         islookingright = true;
         currentScale = new Vector2(transform.localScale.x, transform.localScale.y);
         savedGravityScale = gravityScale;
-        inventory = GetComponentInChildren<Inventory>();
-        inventory.Init();
         animationControllerSwapper.Init();
         animationControllerSwapper.player = this;
+        inventory = GetComponentInChildren<Inventory>();
+        inventory.Init();
         canMove = true;
       
     }
@@ -86,7 +86,7 @@ public class CharacterController2D : Health
     }
     private void SetFalling()
     {
-        if (velocity.y < -0.5f)
+        if (velocity.y < 0f && FrontWallCheck)
         {
             isFalling = true;
             isJumping = false;
@@ -101,7 +101,6 @@ public class CharacterController2D : Health
         if (velocity.y >= -10)
         {
             velocity.y -= gravityScale * Time.deltaTime;
-
         }
     }
     private void FixedUpdate()
@@ -262,7 +261,6 @@ public class CharacterController2D : Health
             EffectsManager.e_Instance.HitEffect(transform.position);
             AudioManager.a_Instance.AlyxHitAudio();
             isHit = false;
-
         }
     }
     void CeilingCheck()
@@ -289,8 +287,8 @@ public class CharacterController2D : Health
 
             if (!TopWallCheck && FrontWallCheck)
             {
-               // velocity.y = 5f;
-                transform.position = new Vector2(transform.position.x, transform.position.y + 0.1f);
+                animator.SetBool("IsRunning", true);
+                transform.position = new Vector3(transform.position.x, transform.position.y + 0.16f);
             }
 
         }

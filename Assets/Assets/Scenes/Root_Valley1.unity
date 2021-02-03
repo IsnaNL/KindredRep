@@ -76400,7 +76400,11 @@ PrefabInstance:
     - target: {fileID: 799295094, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 4d23c6d286810a241a5fe0e6d11a540e, type: 2}
+      objectReference: {fileID: 9100000, guid: fd7429aea6bfc364d96c28dce78a2488, type: 2}
+    - target: {fileID: 799295095, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 2135256000}
     - target: {fileID: 1763441708, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
       propertyPath: m_Radius
       value: 0.5
