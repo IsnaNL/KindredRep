@@ -85,11 +85,12 @@ public class CharacterController2D : Health
     }
     private void SetFalling()
     {
-        if (velocity.y < 0f)
+        if (velocity.y < -0.5f)
         {
             isFalling = true;
-            animator.SetBool("IsFalling", true);
             isJumping = false;
+            animator.SetBool("IsFalling", true);
+            animator.SetBool("IsRunning", false);
             animator.SetBool("Idle", false);
 
         }
@@ -332,7 +333,8 @@ public class CharacterController2D : Health
                 gravityScale = savedGravityScale;        
                 IsGrounded = false;
                 animator.SetBool("Idle", false);
-            
+                animator.SetBool("IsRunning", false);
+
             }
         }
       
