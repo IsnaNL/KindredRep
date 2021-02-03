@@ -5,6 +5,7 @@ public  class Inventory : MonoBehaviour
 {
     public int weaponCheck = 0;
     public List<Weapon> weaponList = new List<Weapon>();
+    public WeaponAnimatorController WAC;
     public Pickaxe pickaxe;
     public Shotgun shotgun;
     public JetSword sword;
@@ -23,21 +24,13 @@ public  class Inventory : MonoBehaviour
         weaponList.Add(shotgun);
         pickaxe = GetComponentInChildren<Pickaxe>();
         weaponList.Add(pickaxe);
-        GetCurrentWeapon(weaponCheck);
+        enableCurrentWeapon(weaponCheck);
     }
 
     private void SwapWeapon()
     {
 
-        /* if (Input.GetKeyDown(previous))
-         {
-             weaponCheck--;
-         }
-         if (Input.GetKeyDown(next))
-         {
-             weaponCheck++;
-         }
-        */
+     
         if (Input.GetKeyDown(Sword))
         {
             weaponCheck = 0;
@@ -59,9 +52,10 @@ public  class Inventory : MonoBehaviour
         {
             weaponCheck = 0;
         }             
-            GetCurrentWeapon(weaponCheck);
+            enableCurrentWeapon(weaponCheck);
+            WAC.SetWeapon(weaponCheck);
     }
-    void GetCurrentWeapon(int weaponIndex)
+    void enableCurrentWeapon(int weaponIndex)
     {   
         foreach (Weapon w in weaponList)
         {
@@ -69,6 +63,7 @@ public  class Inventory : MonoBehaviour
             if (weaponList.IndexOf(w) == weaponIndex)
             {
                 w.enabled = true;
+             
             }
         }
     }

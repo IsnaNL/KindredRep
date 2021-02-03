@@ -61,6 +61,7 @@ public class CharacterController2D : Health
         inventory = GetComponentInChildren<Inventory>();
         inventory.Init();
         animationControllerSwapper.Init();
+        animationControllerSwapper.player = this;
         canMove = true;
       
     }
@@ -114,13 +115,9 @@ public class CharacterController2D : Health
     {
         if (moveInput != 0 && IsGrounded)
         {
-            animator.SetBool("Idle", false);
-          
-           
-                animator.SetBool("IsRunning", true);
-
-
-
+            animator.SetBool("Idle", false); 
+            animator.SetBool("IsRunning", true);
+            animator.speed = Mathf.Abs(velocity.x) / speed * secondMaxSpeedModifier;
         }
         else
         {
@@ -128,30 +125,22 @@ public class CharacterController2D : Health
             animator.SetBool("IsRunning", false);
             animator.SetBool("Idle", true);
         }
-     
         if(moveInput!= 0)
         {
-            animator.speed = Mathf.Abs(velocity.x) / speed * secondMaxSpeedModifier;
-
             if (!inventory.sword.isSwordDashing)
             {
                 MovePlayer(acceleration);
-
-
-
             }
             if (inventory.shotgun.enabled && verInput != 0)
             {
                 StopPlayer(deceleration);
-
             }
             SmallLedgeInteraction();
             Turn();
         }
         else
         {
-            StopPlayer(deceleration);  
-          
+            StopPlayer(deceleration);
         }
     }
 
@@ -300,16 +289,14 @@ public class CharacterController2D : Health
 
             if (!TopWallCheck && FrontWallCheck)
             {
-                velocity.y = 5f; 
-               // transform.position = new Vector2(transform.position.x, transform.position.y +0.5f)
+               // velocity.y = 5f;
+                transform.position = new Vector2(transform.position.x, transform.position.y + 0.1f);
             }
 
         }
         else 
-        {
-            
+        {   
             animator.SetBool("IsRunning", false);
-
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -332,8 +319,6 @@ public class CharacterController2D : Health
                 StopCoroutine("JumpCoroutine");
                 inventory.pickaxe.isClawing = false;
                 animator.SetBool("WallJump", false);
-
-
             }
         }
         if (collision.gameObject.layer == coinLayer)
@@ -352,27 +337,17 @@ public class CharacterController2D : Health
                 IsGrounded = false;
                 animator.SetBool("Idle", false);
                 animator.SetBool("IsRunning", false);
-
             }
         }
-      
     }
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-      
-     
-
+        Gizmos.color = Color.red;  
         Gizmos.DrawRay(new Vector2(transform.position.x, transform.position.y + 0.4f), Vector2.right * dirAxis * 0.6f);
         Gizmos.DrawWireSphere(new Vector2(transform.position.x + (0.2f * dirAxis), transform.position.y), 0.3f);
-
-
-
         Gizmos.color = Color.yellow;
-
         Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, ceilingCheckDis, 0));
         Gizmos.DrawWireSphere(transform.position + new Vector3(0, ceilingCheckDis, 0), 0.35f);
         Gizmos.color = Color.blue;
-    
     }
 }
