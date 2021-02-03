@@ -18,6 +18,10 @@ public class CameraFollow : MonoBehaviour
     }
     public void FixedUpdate()
     {
+        if (!player.IsGrounded)
+        {
+            return;
+        }
         if(player.verInput < 0)
         {
             transform.localPosition = new Vector3(transform.localPosition.x, Mathf.MoveTowards(transform.localPosition.y, -lookDownAmount, Time.deltaTime* lookSpeed));
