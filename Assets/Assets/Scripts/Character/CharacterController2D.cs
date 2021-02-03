@@ -112,11 +112,25 @@ public class CharacterController2D : Health
     }
     private void HorizontalMovement(float acceleration, float deceleration)
     {
-        if (moveInput != 0)
+        if (moveInput != 0 && IsGrounded)
         {
             animator.SetBool("Idle", false);
+          
+           
+                animator.SetBool("IsRunning", true);
 
-            animator.SetBool("IsRunning", IsGrounded);
+
+
+        }
+        else
+        {
+            animator.speed = 1;
+            animator.SetBool("IsRunning", false);
+            animator.SetBool("Idle", true);
+        }
+     
+        if(moveInput!= 0)
+        {
             animator.speed = Mathf.Abs(velocity.x) / speed * secondMaxSpeedModifier;
 
             if (!inventory.sword.isSwordDashing)
@@ -132,32 +146,35 @@ public class CharacterController2D : Health
 
             }
             SmallLedgeInteraction();
-            if (moveInput == 1)
-            {
-                if (velocity.x < 0)
-                {
-                    velocity.x += 1;
-                }
-            }
-            else if (moveInput == -1)
-            {
-                if (velocity.x > 0)
-                {
-                    velocity.x -= 1;
-
-                }
-
-            }
+            Turn();
         }
         else
         {
-         
-            StopPlayer(deceleration);
-            animator.SetBool("IsRunning", false);
-            animator.speed = 1;
-            animator.SetBool("Idle", true);
+            StopPlayer(deceleration);  
+          
         }
     }
+
+    private void Turn()
+    {
+        if (moveInput == 1)
+        {
+            if (velocity.x < 0)
+            {
+                velocity.x += 1;
+            }
+        }
+        else if (moveInput == -1)
+        {
+            if (velocity.x > 0)
+            {
+                velocity.x -= 1;
+
+            }
+
+        }
+    }
+
     private void StopPlayer(float deceleration)
     {
         velocity.x = Mathf.MoveTowards(velocity.x, 0, deceleration * Time.deltaTime);
@@ -283,7 +300,7 @@ public class CharacterController2D : Health
 
             if (!TopWallCheck && FrontWallCheck)
             {
-                velocity.y = 5.1f; 
+                velocity.y = 5f; 
                // transform.position = new Vector2(transform.position.x, transform.position.y +0.5f)
             }
 
