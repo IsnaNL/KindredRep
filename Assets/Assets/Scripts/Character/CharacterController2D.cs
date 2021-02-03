@@ -307,18 +307,18 @@ public class CharacterController2D : Health
             groundTriggerCount++;
             if (groundTriggerCount == 1)
             {
+                StopCoroutine("JumpCoroutine");
                 IsGrounded = true;
                 canMove = true;
                 animator.speed = 1;
                 gravityScale = 0f;
                 rb.velocity = new Vector3(0, 0, 0); 
                 velocity.y = 0;
-                animator.SetBool("IsFalling", false);
                 isJumping = false;
                 isFalling = false;
-                StopCoroutine("JumpCoroutine");
                 inventory.pickaxe.isClawing = false;
                 animator.SetBool("WallJump", false);
+                animator.SetBool("IsFalling", false);
             }
         }
         if (collision.gameObject.layer == coinLayer)

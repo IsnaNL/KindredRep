@@ -61,7 +61,6 @@ public class Benny : Health
                 Direction = -1;
             }
         }
-        
     }
 
     private void WhenHit()
@@ -109,7 +108,6 @@ public class Benny : Health
             }
             else
             {
-
                 IdleAudioTrigger = false;
             }
         }
@@ -200,14 +198,7 @@ public class Benny : Health
     public void AttackExecute(Vector2 dir)
     {
         jumpAcceleration.x = startingJumpAccelerationX * dir.x;
-       /* if (Direction == 1)
-        {
-            jumpAcceleration.x = startingJumpAccelerationX;
-        }
-        else
-        {
-            jumpAcceleration.x = -startingJumpAccelerationX;
-        }*/
+
         animator.SetTrigger("AttackTrigger");
         StartCoroutine((AttackJumpCoRou()));
     }
@@ -221,7 +212,7 @@ public class Benny : Health
         IsAttacking = true;
         GroundCheckCollider.enabled = false;
         isJumping = true;
-        yield return new WaitForSeconds(0.1f);  //let benny exit ground
+        yield return new WaitForSeconds(0.1f);  
         GroundCheckCollider.enabled = true;
       
     }
