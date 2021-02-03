@@ -86,7 +86,7 @@ public class CharacterController2D : Health
     }
     private void SetFalling()
     {
-        if (velocity.y < 0f && !FrontWallCheck)
+        if (velocity.y < 0f)
         {
             isFalling = true;
             isJumping = false;
@@ -217,12 +217,14 @@ public class CharacterController2D : Health
     }
     private void WallCol()
     {
-        FrontWallCheck = Physics2D.CircleCast(new Vector2(transform.position.x + (0.2f * dirAxis), transform.position.y), 0.3f, Vector2.right * dirAxis, 0, groundLayerMask);
         TopWallCheck = Physics2D.Raycast(new Vector2(transform.position.x , transform.position.y+0.2f), Vector2.right * dirAxis, 0.6f, groundLayerMask);
-        if (FrontWallCheck && TopWallCheck)
+        if (TopWallCheck)
         {
             velocity.x *= 0f;
-        }     
+        }else
+        {
+            FrontWallCheck = Physics2D.Raycast(new Vector2(transform.localPosition.x + 0.4f * dirAxis,transform.localPosition.y + 0.2f), Vector2.down, 0.5f, groundLayerMask);          
+        }
     }
     void CheckFlip()
     {
@@ -288,7 +290,7 @@ public class CharacterController2D : Health
             if (!TopWallCheck && FrontWallCheck)
             {
                 animator.SetBool("IsRunning", true);
-                transform.position = new Vector3(transform.position.x, transform.position.y + 0.16f);
+                transform.position = new Vector2(FrontWallCheck.point.x,FrontWallCheck.point.y +0.5f);
             }
 
         }
@@ -342,6 +344,7 @@ public class CharacterController2D : Health
     {
         Gizmos.color = Color.red;  
         Gizmos.DrawRay(new Vector2(transform.position.x, transform.position.y + 0.4f), Vector2.right * dirAxis * 0.6f);
+        Gizmos.DrawRay(new Vector2(transform.localPosition.x + 0.6f * dirAxis, transform.localPosition.y + 0.2f), Vector2.down);
         Gizmos.DrawWireSphere(new Vector2(transform.position.x + (0.2f * dirAxis), transform.position.y), 0.3f);
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, ceilingCheckDis, 0));
