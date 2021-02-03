@@ -90,7 +90,7 @@ public class NewSnapTrapScript : Health
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject == player.gameObject)
+        if (collision.CompareTag("Player"))
         {
             if (canHit)
             {

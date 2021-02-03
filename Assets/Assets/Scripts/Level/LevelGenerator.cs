@@ -9,7 +9,7 @@ public class LevelGenerator : MonoBehaviour
     // Start is called before the first frame update
     public void Init()
     {
-        Debug.Log(" LevelGeneratorinited");
+        Debug.Log("LevelGeneratorinited");
         GenerateLevel();
     }
 
