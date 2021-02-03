@@ -86,7 +86,7 @@ public class CharacterController2D : Health
     }
     private void SetFalling()
     {
-        if (velocity.y < 0f && FrontWallCheck)
+        if (velocity.y < 0f && !FrontWallCheck)
         {
             isFalling = true;
             isJumping = false;
