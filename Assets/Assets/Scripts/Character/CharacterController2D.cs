@@ -283,7 +283,8 @@ public class CharacterController2D : Health
 
             if (!TopWallCheck && FrontWallCheck)
             {
-                velocity.y = 5.1f;
+                velocity.y = 5.1f; 
+               // transform.position = new Vector2(transform.position.x, transform.position.y +0.5f)
             }
 
         }

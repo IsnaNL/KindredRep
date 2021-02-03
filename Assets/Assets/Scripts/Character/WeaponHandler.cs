@@ -21,7 +21,7 @@ public class WeaponHandler : MonoBehaviour
         }
         if (collision.gameObject.layer == trapLayer)
         {
-            collision.GetComponent<NewSnapTrapScript>().TakeDamage(damage);   
+            collision.GetComponentInParent<NewSnapTrapScript>().TakeDamage(damage);   
             
 
         }

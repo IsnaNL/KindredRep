@@ -6,11 +6,8 @@ public class Benny : Health
 {
     public CharacterController2D player;
     private SpriteRenderer SR;
-    RaycastHit2D checkForGround;
-    RaycastHit2D landingDesCheck;
     public LayerMask GroundLayerMask;
     public LayerMask playerLayerMask;
-    Rigidbody2D RB2D;
     public Vector2 velocity;
     public Vector2 jumpAcceleration;
     public Vector2 HitForce;
@@ -41,8 +38,7 @@ public class Benny : Health
 
     public void Init()
     {
-        SR = GetComponent<SpriteRenderer>();
-        RB2D = GetComponent<Rigidbody2D>();
+        SR = GetComponent<SpriteRenderer>();  
         startingJumpAccelerationX = jumpAcceleration.x;
         isVulnerable = false;
     }
@@ -96,22 +92,10 @@ public class Benny : Health
         }
         CheckPeekCondition();
         
-        if (isJumping)
+        if (!isGrounded)
 
         {
             velocity.y -= GravityScale * Time.deltaTime;
-          /*  checkForGround = Physics2D.CircleCast(new Vector2(transform.position.x, transform.position.y - 0.2f), 0.1f, Vector2.down, 0.3f, GroundLayerMask);
-            if (checkForGround)
-            {
-                isGrounded = true;
-                IsAttacking = false;
-                isVulnerable = false;
-                isJumping = false;
-                velocity = Vector2.zero;
-                bodyCollider.gameObject.layer = defaultLayer;
-            
-            }
-          */
         }
         else
         {
