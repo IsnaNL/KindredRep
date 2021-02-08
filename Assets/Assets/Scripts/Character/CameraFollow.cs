@@ -9,7 +9,7 @@ public class CameraFollow : MonoBehaviour
     public float lookUpAmount;
     public float lookDownAmount;
     public float lookSpeed;
-
+    private float verInputTimer;
     public void Init()
     {
         Debug.Log("caminit");
@@ -22,7 +22,13 @@ public class CameraFollow : MonoBehaviour
         {
             return;
         }
-        if(player.verInput < 0)
+
+        if (Mathf.Abs(player.verInput) > 0)
+        {
+            verInputTimer = 0;
+        }
+
+        if (player.verInput < 0)
         {
             if (transform.localPosition.x < 0)
             {
@@ -31,6 +37,16 @@ public class CameraFollow : MonoBehaviour
             transform.localPosition = new Vector3(transform.localPosition.x, Mathf.MoveTowards(transform.localPosition.y, -lookDownAmount, Time.deltaTime* lookSpeed));
 
         }
+        if (player.verInput < 0)
+        {
+            if (transform.localPosition.x < 0)
+            {
+                transform.localPosition = Vector3.zero;
+            }
+            transform.localPosition = new Vector3(transform.localPosition.x, Mathf.MoveTowards(transform.localPosition.y, -lookDownAmount, Time.deltaTime * lookSpeed));
+
+        }
+
         else if(player.verInput > 0)
         {
             if (transform.localPosition.x > 0)
