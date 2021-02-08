@@ -69,8 +69,17 @@ public class CharacterController2D : Health
     {  
         float acceleration = IsGrounded ? walkAcceleration : airAcceleration;
         float deceleration = IsGrounded ? groundDeceleration : 0;
-        moveInput = canMove ? Input.GetAxisRaw("Horizontal") : 0;
-        verInput = canMove ? Input.GetAxisRaw("Vertical") : 0;
+        if (inventory.swapKeyMapping)
+        {
+            moveInput = canMove ? Input.GetAxisRaw("Horizontal") : 0;
+            verInput = canMove ? Input.GetAxisRaw("Vertical") : 0;
+        }
+        else
+        {
+            moveInput = canMove ? Input.GetAxisRaw("HorizontalKeys") : 0;
+            verInput = canMove ? Input.GetAxisRaw("VerticalKeys") : 0;
+        }
+       
         dirAxis = (velocity.x >= 0f) ? 1f : -1f;
         CheckFlip();
         HorizontalMovement(acceleration, deceleration);
@@ -112,19 +121,17 @@ public class CharacterController2D : Health
     }
     private void HorizontalMovement(float acceleration, float deceleration)
     {
-        if (moveInput != 0 && IsGrounded)
+        if (moveInput != 0 && IsGrounded && !TopWallCheck && !FrontWallCheck)
         {
             animator.SetBool("Idle", false); 
             animator.SetBool("IsRunning", true);
             animator.speed = Mathf.Abs(velocity.x) / speed * secondMaxSpeedModifier;
         }
-        else
+        else if(moveInput == 0 && IsGrounded)
         {
-            animator.speed = 1;
-            animator.SetBool("IsRunning", false);
             animator.SetBool("Idle", true);
         }
-        if(moveInput!= 0)
+        if (moveInput!= 0)
         {
             if (!inventory.sword.isSwordDashing)
             {
@@ -139,6 +146,8 @@ public class CharacterController2D : Health
         }
         else
         {
+            animator.speed = 1;
+            animator.SetBool("IsRunning", false);
             StopPlayer(deceleration);
         }
     }
@@ -201,13 +210,10 @@ public class CharacterController2D : Health
         while (Input.GetButton("Jump") && isJumping)
         {
 
-            if (inventory.sword.isSwordDashing)
-            {
+          
+             velocity += new Vector2(jumpAcceleration.x * moveInput * Time.deltaTime * 0.99f, jumpAcceleration.y * Time.deltaTime * 0.99f);
 
-                Destination = transform.position.y;
-            }
-            velocity += new Vector2(jumpAcceleration.x * moveInput * Time.deltaTime * 0.99f, jumpAcceleration.y * Time.deltaTime * 0.99f);
-            if (transform.position.y >= Destination)
+            if (transform.position.y >= Destination || inventory.sword.isSwordDashing)
             {           
                 velocity *= 0.99f;
                 isJumping = false;
@@ -221,6 +227,7 @@ public class CharacterController2D : Health
         if (TopWallCheck)
         {
             velocity.x *= 0f;
+            animator.speed = 1;
         }else
         {
             FrontWallCheck = Physics2D.Raycast(new Vector2(transform.localPosition.x + 0.4f * dirAxis,transform.localPosition.y + 0.2f), Vector2.down, 0.5f, groundLayerMask);          
@@ -245,12 +252,10 @@ public class CharacterController2D : Health
         
         if (islookingright)
         {
-            
             transform.localScale = new Vector3(currentScale.x, currentScale.y, 1);
         }
         else
         {
-           
             transform.localScale = new Vector3(-currentScale.x, currentScale.y, 1);
         }
       
@@ -290,13 +295,15 @@ public class CharacterController2D : Health
             if (!TopWallCheck && FrontWallCheck)
             {
                 animator.SetBool("IsRunning", true);
-                transform.position = new Vector2(FrontWallCheck.point.x,FrontWallCheck.point.y +0.5f);
-               // velocity.y = 8;
+                animator.SetBool("IsLedgeJump", true);
+                //transform.position = new Vector2(transform.position.x + 0.2f,FrontWallCheck.point.y + 0.5f);
+                velocity  = new Vector2(0,5f);
             }
 
         }
         else 
-        {   
+        {
+
             animator.SetBool("IsRunning", false);
         }
     }
@@ -320,6 +327,8 @@ public class CharacterController2D : Health
                 inventory.pickaxe.isClawing = false;
                 animator.SetBool("WallJump", false);
                 animator.SetBool("IsFalling", false);
+                animator.SetBool("IsLedgeJump", false);
+
             }
         }
         if (collision.gameObject.layer == coinLayer)

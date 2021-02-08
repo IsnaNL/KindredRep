@@ -97,7 +97,7 @@ public class JetSword : Weapon
             player.rb.velocity = Vector2.zero;
             float cur = Mathf.MoveTowards(player.transform.position.x, des.point.x, dashForce *0.1f);          
            if(axis == 1)
-            {
+           {
                 if (transform.position.x <= des.point.x - 0.75f)
                 {
                     player.transform.position = new Vector2(cur, player.transform.position.y);
@@ -108,7 +108,7 @@ public class JetSword : Weapon
                     player.gravityScale = 25;
                     isSwordDashing = false;
                 }
-            }
+           }
             else
             {
                 if (transform.position.x >= des.point.x +0.75f)

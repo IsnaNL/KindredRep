@@ -10,8 +10,8 @@ public abstract class Weapon : MonoBehaviour
     public float Cooldown;
     public Transform weaponCollider;
     public CharacterController2D player;
-    protected KeyCode attack = KeyCode.D;
-    protected KeyCode mobilityAbility = KeyCode.F;
+    public KeyCode attack = KeyCode.D;
+    public KeyCode mobilityAbility = KeyCode.F;
    
     public virtual void Init()
     {

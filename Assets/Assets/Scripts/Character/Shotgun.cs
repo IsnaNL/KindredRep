@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class Shotgun : Weapon
 {
     public float bulletSpeed;
@@ -23,36 +22,26 @@ public class Shotgun : Weapon
         {
             if (runningCooldown >= Cooldown)
             {
-             
                 ShotgunShot();
                 runningCooldown = 0;
-
             }
         }
         if(runningCooldown < Cooldown)
         {
             runningCooldown += Time.deltaTime;
-
         }
       
     }
     void ShotgunShot()
     {
-
         AudioManager.a_Instance.AlyxShotGunShotAudio();
-
-
         GameObject bulletInstance = Instantiate(shotgunBullet, weaponCollider.position, Quaternion.identity);
         player.animator.SetTrigger("Shoot");
-       
-        if(bulletInstance != null)
+
+        if (bulletInstance != null)
         {
             bulletInstance.GetComponent<OnBulletCollision>().velocity = ShotDir * bulletSpeed;
-
         }
-
-
-
     }
     public override void GetInput()
     {
@@ -61,6 +50,7 @@ public class Shotgun : Weapon
         {
             player.velocity.y *= 0.1f;
             FireBoostFromShotGunParitcals.transform.position = transform.position;
+            FireBoostFromShotGunParitcals.transform.parent = null;
             FireBoostFromShotGunParitcals.Play();
             MobilityAbilityCoolDownCurrentTime = 0f;
             canShotGunBlast = false;
@@ -88,14 +78,15 @@ public class Shotgun : Weapon
     { 
         if (IsShotgunKnockback && blastTrigger)
         {
-            player.velocity += -ShotDir * shotgunBlastForce;  
+            player.velocity += Vector2.up * shotgunBlastForce;  
         }
 
     }
     void GetAimAngleForShotgun()
     {
         blastTrigger = true;
-
+        ShotDir = player.islookingright ? Vector2.right : Vector2.left;
+        /*
         if (player.moveInput == 0 && player.verInput == 0 && !player.isFalling && !player.isJumping)
         {
            
@@ -229,11 +220,7 @@ public class Shotgun : Weapon
 
         }
         else if (player.moveInput == -1 && player.verInput == 1)
-        {
-
-           
-          
-         
+        {     
             if (player.isFalling)
             {
                 ShotDir = Vector2.up;
@@ -266,6 +253,6 @@ public class Shotgun : Weapon
                 player.animator.SetTrigger("G5");
             }
         }
-
+        */
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 
 public class HUD : MonoBehaviour
@@ -17,6 +18,8 @@ public class HUD : MonoBehaviour
     [Header("Params")]
     [SerializeField] private float InventoryChangeSpeed;
     [SerializeField] private float FillLerpSpeed;
+    public TextMeshProUGUI keyMappingText;
+    public string[] keyMappingTexts;
 
     private void Start()
     {
@@ -30,6 +33,7 @@ public class HUD : MonoBehaviour
                 InventoryItems[i].color = new Color(1f, 1f, 1f, Mathf.MoveTowards(InventoryItems[i].color.a,
                     playerRef.inventory.weaponCheck == i ? 1 : 0, Time.deltaTime * InventoryChangeSpeed));
         }
+        setKeyMappingOnHud();
     }
     public void setWeapon(int currWeapon)
     {
@@ -43,6 +47,18 @@ public class HUD : MonoBehaviour
             {
                 BigWeapons[i].SetActive(false);
             }
+        }
+    }
+    public void setKeyMappingOnHud()
+    {
+        if (playerRef.inventory.swapKeyMapping)
+        {
+            keyMappingText.text = keyMappingTexts[0];
+        }
+        else
+        {
+            keyMappingText.text = keyMappingTexts[1];
+
         }
     }
 }

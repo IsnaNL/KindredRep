@@ -31,7 +31,6 @@ public class Benny : Health
     public int EnemyLayer;
     private int groundTriggerCount;
     public bool isJumping;
-    private float landingYDes;
     private bool IdleAudioTrigger;
     public float RangeForIdleAudio;
 

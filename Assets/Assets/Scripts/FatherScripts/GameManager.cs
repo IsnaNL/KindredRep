@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public JetSword weaponInit;
     public CameraFollow PlayerFollow;
     public LevelGenerator levelgenerator;
-  
+    
     //public EffectsManager effects_Instance;
     
     

@@ -9,15 +9,17 @@ public  class Inventory : MonoBehaviour
     public Pickaxe pickaxe;
     public Shotgun shotgun;
     public JetSword sword;
-    public KeyCode Sword = KeyCode.Q;
-    public KeyCode Shotgun = KeyCode.W;
-    public KeyCode Pickaxe = KeyCode.E;
+    public KeyCode Sword;
+    public KeyCode Shotgun;
+    public KeyCode Pickaxe;
+    public KeyCode swapKeyMappingKey = KeyCode.X;
+    public KeyCode nextWeapon;
+    public KeyCode prevWeapon;
+    public bool swapKeyMapping;
     public void Init()
     {
-       
-        Sword = KeyCode.Q;
-        Shotgun = KeyCode.W;
-        Pickaxe = KeyCode.E;
+        swapKeyMapping = false;
+        CheckKeyMapping();
         weaponList.Clear();
         sword = GetComponentInChildren<JetSword>();
         weaponList.Add(sword);
@@ -31,32 +33,79 @@ public  class Inventory : MonoBehaviour
 
     private void SwapWeapon()
     {
+        CheckKeyMapping();
+        if (!swapKeyMapping)
+        {
+            if (Input.GetKeyDown(Sword))
+            {
+                weaponCheck = 0;
+            }
+            else if (Input.GetKeyDown(Shotgun))
+            {
+                weaponCheck = 1;
 
-     
-        if (Input.GetKeyDown(Sword))
-        {
-            weaponCheck = 0;
+            }
+            else if (Input.GetKeyDown(Pickaxe))
+            {
+                weaponCheck = 2;
+            }
         }
-        else if (Input.GetKeyDown(Shotgun))
+        else
         {
-            weaponCheck = 1;
+            if (Input.GetKeyDown(nextWeapon))
+            {
+                weaponCheck++;
+            }
+            else if (Input.GetKeyDown(prevWeapon))
+            {
+                weaponCheck--;
+            }
+        }
 
-        }
-        else if (Input.GetKeyDown(Pickaxe))
-        {
-            weaponCheck = 2;
-        }
         if (weaponCheck < 0)
         {
-            weaponCheck = weaponList.Count-1;
+            weaponCheck = weaponList.Count - 1;
         }
-        else if (weaponCheck > weaponList.Count-1)
+        else if (weaponCheck > weaponList.Count - 1)
         {
             weaponCheck = 0;
-        }             
-            enableCurrentWeapon(weaponCheck);
-            WAC.SetWeapon(weaponCheck);
+        }
+        enableCurrentWeapon(weaponCheck);
+        WAC.SetWeapon(weaponCheck);
     }
+
+    private void CheckKeyMapping()
+    {
+        if (!swapKeyMapping)
+        {
+            foreach (Weapon w in weaponList)
+            {
+                w.attack = KeyCode.D;
+                w.mobilityAbility = KeyCode.F;
+
+            }
+            Sword = KeyCode.Q;
+            Shotgun = KeyCode.W;
+            Pickaxe = KeyCode.E;
+            prevWeapon = KeyCode.None;
+            nextWeapon = KeyCode.None;
+        }
+        else
+        {
+            foreach (Weapon w in weaponList)
+            {
+                w.attack = KeyCode.Mouse0;
+                w.mobilityAbility = KeyCode.Mouse1;
+
+            }
+            Sword = KeyCode.None;
+            Shotgun = KeyCode.None;
+            Pickaxe = KeyCode.None;
+            prevWeapon = KeyCode.Q;
+            nextWeapon = KeyCode.E;
+        }
+    }
+
     void enableCurrentWeapon(int weaponIndex)
     {   
         foreach (Weapon w in weaponList)
@@ -71,9 +120,15 @@ public  class Inventory : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(Sword) || Input.GetKeyDown(Shotgun) || Input.GetKeyDown(Pickaxe))
+        if (Input.GetKeyDown(Sword) || Input.GetKeyDown(Shotgun) || Input.GetKeyDown(Pickaxe) || Input.GetKeyDown(nextWeapon) || Input.GetKeyDown(prevWeapon))
         {
             SwapWeapon();
+        }
+        if (Input.GetKeyDown(swapKeyMappingKey))
+        {
+            swapKeyMapping = !swapKeyMapping;
+            CheckKeyMapping();
+           
         }
     }
 }

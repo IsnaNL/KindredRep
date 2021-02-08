@@ -444,7 +444,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1763441706}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.519, z: 0}
+  m_LocalPosition: {x: 0, y: -0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2187893807733490672}
@@ -537,6 +537,10 @@ MonoBehaviour:
   Sword: 113
   Shotgun: 119
   Pickaxe: 101
+  swapKeyMappingKey: 120
+  nextWeapon: 0
+  prevWeapon: 0
+  swapKeyMapping: 0
 --- !u!1 &2187893807733490673
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,6 +592,8 @@ MonoBehaviour:
   Cooldown: 0.5
   weaponCollider: {fileID: 1763441707}
   player: {fileID: 2187893808038624325}
+  attack: 100
+  mobilityAbility: 102
   isSwordDashing: 0
   canDash: 1
   maxLength: 3
@@ -613,6 +619,8 @@ MonoBehaviour:
   Cooldown: 0.5
   weaponCollider: {fileID: 1763441707}
   player: {fileID: 2187893808038624325}
+  attack: 100
+  mobilityAbility: 102
   isPickaxeClawed: 0
   isClawing: 0
   pickaxeJump: {x: 7, y: 11}
@@ -637,6 +645,8 @@ MonoBehaviour:
   Cooldown: 0.5
   weaponCollider: {fileID: 1763441707}
   player: {fileID: 2187893808038624325}
+  attack: 100
+  mobilityAbility: 102
   bulletSpeed: 11
   ShotDir: {x: 0, y: 0}
   shotgunBullet: {fileID: 8074422508009855967, guid: fbcf62e97eaefac4389a5f8aed52b67f,
@@ -1093,12 +1103,12 @@ PrefabInstance:
     - target: {fileID: 9154937109749009414, guid: 73f7af77620351d438eeebe68aa884fe,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.75
+      value: -0.014
       objectReference: {fileID: 0}
     - target: {fileID: 9154937109749009414, guid: 73f7af77620351d438eeebe68aa884fe,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.220001
+      value: -1.18
       objectReference: {fileID: 0}
     - target: {fileID: 9154937109749009414, guid: 73f7af77620351d438eeebe68aa884fe,
         type: 3}
@@ -1118,7 +1128,7 @@ PrefabInstance:
     - target: {fileID: 9154937109749009414, guid: 73f7af77620351d438eeebe68aa884fe,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9154937109749009414, guid: 73f7af77620351d438eeebe68aa884fe,
         type: 3}
