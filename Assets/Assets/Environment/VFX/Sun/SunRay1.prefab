@@ -68,8 +68,8 @@ MonoBehaviour:
   m_ShapeLightFalloffSize: 1.87
   m_ShapeLightFalloffOffset: {x: 0, y: 0}
   m_ShapePath:
-  - {x: -0.1, y: -170, z: 0}
-  - {x: 0.1, y: -170, z: 0}
+  - {x: -0.1, y: -30.6, z: 0}
+  - {x: 0.1, y: -30.6, z: 0}
   - {x: 0.1, y: 0, z: 0}
   - {x: -0.1, y: 0, z: 0}
 --- !u!1 &2422037155796153048
@@ -173,8 +173,8 @@ MonoBehaviour:
   m_ShapeLightFalloffSize: 1.4
   m_ShapeLightFalloffOffset: {x: 0, y: 0}
   m_ShapePath:
-  - {x: -0.1, y: -170, z: 0}
-  - {x: 0.1, y: -170, z: 0}
+  - {x: -0.1, y: -30.6, z: 0}
+  - {x: 0.1, y: -30.6, z: 0}
   - {x: 0.1, y: 0, z: 0}
   - {x: -0.1, y: 0, z: 0}
 --- !u!1 &9057487096812062393
@@ -245,7 +245,7 @@ MonoBehaviour:
   m_ShapeLightFalloffSize: 1.4
   m_ShapeLightFalloffOffset: {x: 0, y: 0}
   m_ShapePath:
-  - {x: -0.1, y: -170, z: 0}
-  - {x: 0.1, y: -170, z: 0}
+  - {x: -0.1, y: -30.6, z: 0}
+  - {x: 0.1, y: -30.6, z: 0}
   - {x: 0.1, y: 0, z: 0}
   - {x: -0.1, y: 0, z: 0}
