@@ -95,9 +95,9 @@ public class CharacterController2D : Health
     }
     private void FixedUpdate()
     {
+        rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
         CeilingCheck();
         WallCol();
-        transform.Translate(velocity * Time.fixedDeltaTime);
         
     }
     private void SetFalling()

@@ -35258,6 +35258,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6747397642060985173, guid: 3805726ce2268d14e92c51e2fc6569a8,
+        type: 3}
+      propertyPath: m_LinearDrag
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6747397642060985174, guid: 3805726ce2268d14e92c51e2fc6569a8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -36113,15 +36118,20 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6747397642060985173, guid: 3805726ce2268d14e92c51e2fc6569a8,
+        type: 3}
+      propertyPath: m_LinearDrag
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6747397642060985174, guid: 3805726ce2268d14e92c51e2fc6569a8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.67
+      value: -14.67
       objectReference: {fileID: 0}
     - target: {fileID: 6747397642060985174, guid: 3805726ce2268d14e92c51e2fc6569a8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.78
+      value: 8.28
       objectReference: {fileID: 0}
     - target: {fileID: 6747397642060985174, guid: 3805726ce2268d14e92c51e2fc6569a8,
         type: 3}
@@ -36528,7 +36538,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 13.000122, y: -211}
+  m_AnchoredPosition: {x: 13, y: -211}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &796045007
@@ -36551,7 +36561,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'KeyMapping Verson 2-
+  m_text: 'KeyMapping Version 2-
 
     weapons : Q,E(next and previous)
 
@@ -48066,7 +48076,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1109769952
 Transform:
   m_ObjectHideFlags: 0
@@ -76733,6 +76743,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 69058928, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.68185854
+      objectReference: {fileID: 0}
+    - target: {fileID: 69058928, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
+      propertyPath: m_Size.y
+      value: 0.28296757
+      objectReference: {fileID: 0}
+    - target: {fileID: 69058928, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.074884415
+      objectReference: {fileID: 0}
+    - target: {fileID: 69058928, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
+      propertyPath: m_Size.x
+      value: 0.57489777
+      objectReference: {fileID: 0}
     - target: {fileID: 799295094, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
       propertyPath: m_Controller
       value: 
@@ -76757,12 +76783,12 @@ PrefabInstance:
     - target: {fileID: 2187893808038624329, guid: 6d349fe5026649048bf2e330c163de78,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 73.2
+      value: -38.5
       objectReference: {fileID: 0}
     - target: {fileID: 2187893808038624329, guid: 6d349fe5026649048bf2e330c163de78,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.2
+      value: 20.5
       objectReference: {fileID: 0}
     - target: {fileID: 2187893808038624329, guid: 6d349fe5026649048bf2e330c163de78,
         type: 3}
@@ -80101,12 +80127,12 @@ PrefabInstance:
     - target: {fileID: 6167314605934915430, guid: ceb3299ab08269749b6526bfba367fbd,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 73.2
+      value: -38.5
       objectReference: {fileID: 0}
     - target: {fileID: 6167314605934915430, guid: ceb3299ab08269749b6526bfba367fbd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.2
+      value: 20.5
       objectReference: {fileID: 0}
     - target: {fileID: 6167314605934915430, guid: ceb3299ab08269749b6526bfba367fbd,
         type: 3}
