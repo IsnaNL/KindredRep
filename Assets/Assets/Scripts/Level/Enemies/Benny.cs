@@ -47,16 +47,8 @@ public class Benny : Health
         healthBar.value = health;
         if (!IsAttacking)
         {
-            if (player.transform.position.x >= transform.position.x)
-            {
-                SR.flipX = true;
-                Direction = 1;
-            }
-            else
-            {
-                SR.flipX = false;
-                Direction = -1;
-            }
+            SR.flipX = player.transform.position.x >= transform.position.x;
+            Direction = player.transform.position.x >= transform.position.x ? 1 : -1;
         }
     }
 

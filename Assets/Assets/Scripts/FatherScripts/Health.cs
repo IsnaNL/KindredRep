@@ -15,7 +15,7 @@ abstract public class Health : MonoBehaviour
 
 
 
-     public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         if (isVulnerable)
         {

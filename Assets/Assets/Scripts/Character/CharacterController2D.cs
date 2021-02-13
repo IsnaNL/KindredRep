@@ -85,7 +85,7 @@ public class CharacterController2D : Health
         HorizontalMovement(acceleration, deceleration);
         HitImpact();
         GetInputJumpMethod();
-        if (!IsGrounded && !inventory.pickaxe.isPickaxeClawed)//gravity
+        if (!IsGrounded && !inventory.pickaxe.isPickaxeClawed)//gravity set
         {
             SetGravity();
             SetFalling();
@@ -112,6 +112,7 @@ public class CharacterController2D : Health
 
         }
     }
+
     private void SetGravity()
     {
         if (velocity.y >= -10)
