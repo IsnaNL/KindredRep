@@ -21,7 +21,6 @@ public class GameManager : MonoBehaviour
         //Application.targetFrameRate = 30;
         //QualitySettings.vSyncCount = 0;
 
-        //   levelgenerator.Init();
         Player.Init();
         weaponInit = Player.GetComponentInChildren<JetSword>();
         BennyList = new List<Benny>();
@@ -30,8 +29,6 @@ public class GameManager : MonoBehaviour
         trapsList.AddRange(FindObjectsOfType<TrapCol>());
         weaponInit.Init();
         PlayerFollow.Init();
-
-        //print(BennyList.Count);
         foreach (Benny b in BennyList)
         {
             b.Init();

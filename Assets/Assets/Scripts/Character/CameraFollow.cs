@@ -9,7 +9,6 @@ public class CameraFollow : MonoBehaviour
     public float lookUpAmount;
     public float lookDownAmount;
     public float lookSpeed;
-    private float verInputTimer;
     public void Init()
     {
         Debug.Log("caminit");
@@ -21,11 +20,6 @@ public class CameraFollow : MonoBehaviour
         if (!player.IsGrounded)
         {
             return;
-        }
-
-        if (Mathf.Abs(player.verInput) > 0)
-        {
-            verInputTimer = 0;
         }
 
         if (player.verInput < 0)

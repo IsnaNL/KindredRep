@@ -40553,6 +40553,16 @@ PrefabInstance:
       propertyPath: m_LinearDrag
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6747397642060985173, guid: 3805726ce2268d14e92c51e2fc6569a8,
+        type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6747397642060985173, guid: 3805726ce2268d14e92c51e2fc6569a8,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6747397642060985174, guid: 3805726ce2268d14e92c51e2fc6569a8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -90399,11 +90409,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 69058928, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
       propertyPath: m_Offset.y
-      value: -0.68185854
+      value: -0.71580505
       objectReference: {fileID: 0}
     - target: {fileID: 69058928, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
       propertyPath: m_Size.y
-      value: 0.28296757
+      value: 0.06485081
       objectReference: {fileID: 0}
     - target: {fileID: 69058928, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
       propertyPath: m_Offset.x
@@ -90413,10 +90423,14 @@ PrefabInstance:
       propertyPath: m_Size.x
       value: 0.57489777
       objectReference: {fileID: 0}
+    - target: {fileID: 464099669, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
+      propertyPath: shotgunBlastForce.y
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 799295094, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: fd7429aea6bfc364d96c28dce78a2488, type: 2}
+      objectReference: {fileID: 9100000, guid: a32e1472f9a92cb44a31935b604e3d20, type: 2}
     - target: {fileID: 1271393726, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
       propertyPath: lookSpeed
       value: 5
@@ -90433,6 +90447,16 @@ PrefabInstance:
         type: 3}
       propertyPath: jumpAcceleration.y
       value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 2187893808038624325, guid: 6d349fe5026649048bf2e330c163de78,
+        type: 3}
+      propertyPath: gravityScale
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2187893808038624325, guid: 6d349fe5026649048bf2e330c163de78,
+        type: 3}
+      propertyPath: walkAcceleration
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2187893808038624329, guid: 6d349fe5026649048bf2e330c163de78,
         type: 3}
@@ -90493,6 +90517,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844203791084126978, guid: 6d349fe5026649048bf2e330c163de78,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -0.12318683
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844203791084126978, guid: 6d349fe5026649048bf2e330c163de78,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1.1347556
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d349fe5026649048bf2e330c163de78, type: 3}

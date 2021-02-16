@@ -14,7 +14,14 @@ public class Pickaxe : Weapon
     Vector2 curPlayerPos;
     public override void GetInput()
     {
-        if(pickaxeRunningCD < pickaxeCD)
+        if (player.IsGrounded)
+        {
+            player.animator.SetBool("Clawing", false);
+            player.animator.SetBool("WallJump", false);
+
+
+        }
+        if (pickaxeRunningCD < pickaxeCD)
         {
             pickaxeRunningCD += Time.deltaTime;
         }
@@ -35,7 +42,7 @@ public class Pickaxe : Weapon
             }
             else
             {
-                player.animator.SetTrigger("Clawing");    
+                player.animator.SetBool("Clawing",true);    
                 isClawing = true;
             }                      
         }
@@ -90,6 +97,7 @@ public class Pickaxe : Weapon
         isClawing = false;
         player.canMove = false;
         player.IsGrounded = false;
+        player.animator.SetBool("Clawing", false);
         player.animator.SetBool("WallJump", false);
         player.animator.SetBool("Clawed", true);
         player.velocity = Vector2.zero;
@@ -108,18 +116,11 @@ public class Pickaxe : Weapon
     public IEnumerator CheckForWall()
     {
         Vector2 dir;
-        if (player.islookingright)
-        {
-            dir = Vector2.right;
-        }
-        else
-        {
-            dir = Vector2.left;
-        }
-        yield return new WaitForSeconds(0.2f);
+        dir = player.islookingright ? Vector2.right : Vector2.left;
+        yield return new WaitForSeconds(0.1f);
         if (isClawing)
         {
-            RaycastHit2D checkforwall = Physics2D.CircleCast(new Vector2(player.transform.position.x, player.transform.position.y), pickaxeRange, dir, 0.6f, player.groundLayerMask);
+            RaycastHit2D checkforwall = Physics2D.CircleCast(new Vector2(player.transform.position.x, player.transform.position.y), pickaxeRange, dir, 0.59f, player.groundLayerMask);
             isPickaxeClawed =  checkforwall;
             isClawing = !isPickaxeClawed;
             curPlayerPos = checkforwall.point;

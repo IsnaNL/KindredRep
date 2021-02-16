@@ -85,12 +85,7 @@ public class CharacterController2D : Health
         HorizontalMovement(acceleration, deceleration);
         HitImpact();
         GetInputJumpMethod();
-        if (!IsGrounded && !inventory.pickaxe.isPickaxeClawed)//gravity set
-        {
-            SetGravity();
-            SetFalling();
-
-        }
+       
 
     }
     private void FixedUpdate()
@@ -98,7 +93,13 @@ public class CharacterController2D : Health
         rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
         CeilingCheck();
         WallCol();
-        
+        if (!IsGrounded && !inventory.pickaxe.isPickaxeClawed)//gravity set
+        {
+            SetGravity();
+            SetFalling();
+
+        }
+
     }
     private void SetFalling()
     {
@@ -115,17 +116,16 @@ public class CharacterController2D : Health
 
     private void SetGravity()
     {
-        if (velocity.y >= -10)
-        {
+        if (velocity.y >= -9.5f)
             velocity.y -= gravityScale * Time.deltaTime;
-        }
+        
     }
     private void HorizontalMovement(float acceleration, float deceleration)
     {
         if (moveInput != 0 && IsGrounded && !TopWallCheck && !FrontWallCheck)
         {
-            animator.SetBool("Idle", false); 
             animator.SetBool("IsRunning", true);
+            animator.SetBool("Idle", false); 
             animator.speed = Mathf.Abs(velocity.x) / speed * secondMaxSpeedModifier;
         }
         else if(moveInput == 0 && IsGrounded)
@@ -137,10 +137,6 @@ public class CharacterController2D : Health
             if (!inventory.sword.isSwordDashing)
             {
                 MovePlayer(acceleration);
-            }
-            if (inventory.shotgun.enabled && verInput != 0)
-            {
-                StopPlayer(deceleration);
             }
             SmallLedgeInteraction();
             Turn();
@@ -202,7 +198,6 @@ public class CharacterController2D : Health
         animator.speed = 1;
         canMove = false;
         animator.SetTrigger("JumpAnim");
-        yield return new WaitForSeconds(JumpDelaytime);
         canMove = true;
         velocity.x = startVel;
         isJumping = true;
@@ -326,7 +321,6 @@ public class CharacterController2D : Health
                 isJumping = false;
                 isFalling = false;
                 inventory.pickaxe.isClawing = false;
-                animator.SetBool("WallJump", false);
                 animator.SetBool("IsFalling", false);
                 animator.SetBool("IsLedgeJump", false);
 
