@@ -90409,11 +90409,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 69058928, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
       propertyPath: m_Offset.y
-      value: -0.71580505
+      value: -0.71184254
       objectReference: {fileID: 0}
     - target: {fileID: 69058928, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
       propertyPath: m_Size.y
-      value: 0.06485081
+      value: 0.056925774
       objectReference: {fileID: 0}
     - target: {fileID: 69058928, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
       propertyPath: m_Offset.x

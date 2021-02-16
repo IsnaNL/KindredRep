@@ -154,16 +154,20 @@ public class Benny : Health
   
     public void CheckPeekCondition()
     {
-        Vector2 dir = new Vector2(player.transform.position.x - transform.position.x, player.transform.transform.position.y - transform.transform.position.y).normalized;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position,dir,3); 
-        if (hit.transform == player.transform)
+        if (player != null)
         {
-            animator.SetTrigger("PeekTrigger");
+            Vector2 dir = new Vector2(player.transform.position.x - transform.position.x, player.transform.transform.position.y - transform.transform.position.y).normalized;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, 3);
+            if (hit.transform == player.transform)
+            {
+                animator.SetTrigger("PeekTrigger");
+            }
+            else
+            {
+                animator.SetTrigger("BackToIdle");
+            }
         }
-        else
-        {
-            animator.SetTrigger("BackToIdle");
-        }
+    
     }
     public void PlayPeakSound()
     {
