@@ -27,25 +27,26 @@ public  class Inventory : MonoBehaviour
         weaponList.Add(shotgun);
         pickaxe = GetComponentInChildren<Pickaxe>();
         weaponList.Add(pickaxe);
-        enableCurrentWeapon(weaponCheck);
+        EnableCurrentWeapon(weaponCheck);
         WAC.SetWeapon(weaponCheck);
     }
 
     private void SwapWeapon()
     {
+        int startingWeaponCheck = weaponCheck;
         CheckKeyMapping();
         if (!swapKeyMapping)
         {
-            if (Input.GetKeyDown(Sword))
+            if (Input.GetKeyDown(Sword) && sword.enabled == false)
             {
                 weaponCheck = 0;
             }
-            else if (Input.GetKeyDown(Shotgun))
+            else if (Input.GetKeyDown(Shotgun) && shotgun.enabled == false)
             {
                 weaponCheck = 1;
 
             }
-            else if (Input.GetKeyDown(Pickaxe))
+            else if (Input.GetKeyDown(Pickaxe) && pickaxe.enabled == false)
             {
                 weaponCheck = 2;
             }
@@ -70,8 +71,12 @@ public  class Inventory : MonoBehaviour
         {
             weaponCheck = 0;
         }
-        enableCurrentWeapon(weaponCheck);
-        WAC.SetWeapon(weaponCheck);
+        if(weaponCheck != startingWeaponCheck)
+        {
+            EnableCurrentWeapon(weaponCheck);
+            WAC.SetWeapon(weaponCheck);
+        }
+   
     }
 
     private void CheckKeyMapping()
@@ -106,7 +111,7 @@ public  class Inventory : MonoBehaviour
         }
     }
 
-    void enableCurrentWeapon(int weaponIndex)
+    void EnableCurrentWeapon(int weaponIndex)
     {   
         foreach (Weapon w in weaponList)
         {

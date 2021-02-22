@@ -19,7 +19,7 @@ public class CharacterController2D : Health
     private int coinLayer;
     public RaycastHit2D FrontWallCheck;
     public RaycastHit2D TopWallCheck;
-    private float savedGravityScale;
+    public float savedGravityScale;
     private WeaponAnimatorController animationControllerSwapper;
     public bool canMove;
     public bool isJumping;
@@ -30,7 +30,7 @@ public class CharacterController2D : Health
     public Inventory inventory;
     public LayerMask groundLayerMask;
     public LayerMask playerLayerMask;
-    public bool IsGrounded;
+    public bool isGrounded;
     public Vector2 hitKnockBack;
     public Vector2 jumpAcceleration;
     public float ceilingCheckDis;
@@ -42,7 +42,7 @@ public class CharacterController2D : Health
     public float secondMaxAccelrationModifier;
     public float secondMaxSpeedModifier;
     public float JumpDelaytime;
-    private float dirAxis = 1;
+    public float dirAxis = 1;
     public override void Start()
     {
         base.Start();
@@ -52,7 +52,7 @@ public class CharacterController2D : Health
         Debug.Log("characterinit");   
         groundLayer = 8;  
         coinLayer = 14;
-        IsGrounded = false;
+        isGrounded = false;
         animationControllerSwapper = GetComponentInChildren<WeaponAnimatorController>();
         rb = GetComponent<Rigidbody2D>();
         islookingright = true;
@@ -67,8 +67,8 @@ public class CharacterController2D : Health
     }
     private void Update()
     {  
-        float acceleration = IsGrounded ? walkAcceleration : airAcceleration;
-        float deceleration = IsGrounded ? groundDeceleration : 0;
+        float acceleration = isGrounded ? walkAcceleration : airAcceleration;
+        float deceleration = isGrounded ? groundDeceleration : 0;
         if (inventory.swapKeyMapping)
         {
             moveInput = canMove ? Input.GetAxisRaw("Horizontal") : 0;
@@ -80,7 +80,7 @@ public class CharacterController2D : Health
             verInput = canMove ? Input.GetAxisRaw("VerticalKeys") : 0;
         }
        
-        dirAxis = (velocity.x >= 0f) ? 1f : -1f;
+        dirAxis = islookingright ? 1f : -1f;
         CheckFlip();
         HorizontalMovement(acceleration, deceleration);
         HitImpact();
@@ -93,7 +93,7 @@ public class CharacterController2D : Health
         rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
         CeilingCheck();
         WallCol();
-        if (!IsGrounded && !inventory.pickaxe.isPickaxeClawed)//gravity set
+        if (!isGrounded && !inventory.pickaxe.isPickaxeClawed)//gravity set
         {
             SetGravity();
             SetFalling();
@@ -103,7 +103,7 @@ public class CharacterController2D : Health
     }
     private void SetFalling()
     {
-        if (velocity.y < 0f)
+        if (velocity.y < 0f && !isGrounded)
         {
             isFalling = true;
             isJumping = false;
@@ -122,13 +122,13 @@ public class CharacterController2D : Health
     }
     private void HorizontalMovement(float acceleration, float deceleration)
     {
-        if (moveInput != 0 && IsGrounded && !TopWallCheck && !FrontWallCheck)
+        if (moveInput != 0 && isGrounded /*&& !TopWallCheck && !FrontWallCheck*/)
         {
-            animator.SetBool("IsRunning", true);
+          
             animator.SetBool("Idle", false); 
-            animator.speed = Mathf.Abs(velocity.x) / speed * secondMaxSpeedModifier;
+         //   animator.speed = Mathf.Abs(velocity.x) / speed * secondMaxSpeedModifier;
         }
-        else if(moveInput == 0 && IsGrounded)
+        else if(moveInput == 0 && isGrounded)
         {
             animator.SetBool("Idle", true);
         }
@@ -136,6 +136,7 @@ public class CharacterController2D : Health
         {
             if (!inventory.sword.isSwordDashing)
             {
+              
                 MovePlayer(acceleration);
             }
             SmallLedgeInteraction();
@@ -175,6 +176,8 @@ public class CharacterController2D : Health
     }
     private void MovePlayer(float acceleration)
     {
+        animator.SetBool("IsRunning", true);
+
         velocity.x = Mathf.MoveTowards(velocity.x, speed * moveInput, acceleration * Time.deltaTime);
         if (velocity.x == speed * moveInput)
         {
@@ -186,7 +189,7 @@ public class CharacterController2D : Health
     {
         if (Input.GetButtonDown("Jump"))
         {
-            if (IsGrounded && canMove)
+            if (isGrounded && canMove)
             {
                 StartCoroutine("JumpCoroutine");
             }
@@ -285,7 +288,7 @@ public class CharacterController2D : Health
     }
     private void SmallLedgeInteraction()
     {
-        if (velocity.x >= speed * 0.5f && IsGrounded || velocity.x <= -speed * 0.5f && IsGrounded)
+        if (velocity.x >= speed * 0.5f && isGrounded || velocity.x <= -speed * 0.5f && isGrounded)
         {
 
             if (!TopWallCheck && FrontWallCheck)
@@ -297,11 +300,7 @@ public class CharacterController2D : Health
             }
 
         }
-        else 
-        {
-
-            animator.SetBool("IsRunning", false);
-        }
+      
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {     
@@ -312,7 +311,7 @@ public class CharacterController2D : Health
             if (groundTriggerCount == 1)
             {
                 StopCoroutine("JumpCoroutine");
-                IsGrounded = true;
+                isGrounded = true;
                 canMove = true;
                 animator.speed = 1;
                 gravityScale = 0f;
@@ -339,7 +338,7 @@ public class CharacterController2D : Health
             if (groundTriggerCount == 0)
             {
                 gravityScale = savedGravityScale;        
-                IsGrounded = false;
+                isGrounded = false;
                 animator.SetBool("Idle", false);
                 animator.SetBool("IsRunning", false);
             }

@@ -17,7 +17,7 @@ public class CameraFollow : MonoBehaviour
     }
     public void FixedUpdate()
     {
-        if (!player.IsGrounded)
+        if (!player.isGrounded)
         {
             return;
         }

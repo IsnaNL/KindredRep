@@ -9,8 +9,8 @@ public class SunflowerShooter : MonoBehaviour
     public float shootCoolDownCounting;
     public SunFlowerBullet sunflowerBullet;
     private SunFlower sunflowerRef;
-    public float BulletShootTriggerRangeFar;
-    public Transform Player;
+    public float bulletShootTriggerRangeFar;
+  
     
 
     // Start is called before the first frame update
@@ -26,11 +26,11 @@ public class SunflowerShooter : MonoBehaviour
         {
             shootCoolDownCounting += Time.deltaTime;
         }
-        if ((Vector2.Distance(Player.position, transform.position) <= BulletShootTriggerRangeFar && Vector2.Distance(Player.position, transform.position) >= BulletShootTriggerRangeFar * 0.5f))
+        if ((Vector2.Distance(sunflowerRef.PlayerRef.transform.position, transform.position) <= bulletShootTriggerRangeFar && Vector2.Distance(sunflowerRef.PlayerRef.transform.position, transform.position) >= bulletShootTriggerRangeFar * 0.5f))
         {
             if(shootCooldown <= shootCoolDownCounting)
             {
-                Instantiate<GameObject>(sunflowerBullet.gameObject, new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
+                Instantiate(sunflowerBullet.gameObject, new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
                 sunflowerBullet.direction = sunflowerRef.direction;
                 shootCoolDownCounting = 0f;
 
@@ -44,6 +44,6 @@ public class SunflowerShooter : MonoBehaviour
    
     private void OnDrawGizmos()
     {
-       Gizmos.DrawLine(new Vector2(transform.position.x + BulletShootTriggerRangeFar * 0.5f * sunflowerRef.direction, transform.position.y), new Vector2(transform.position.x + BulletShootTriggerRangeFar * sunflowerRef.direction, transform.position.y));
+    //   Gizmos.DrawLine(new Vector2(transform.position.x + bulletShootTriggerRangeFar * 0.5f * sunflowerRef.direction, transform.position.y), new Vector2(transform.position.x + bulletShootTriggerRangeFar * sunflowerRef.direction, transform.position.y));
     }
 }

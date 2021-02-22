@@ -9,7 +9,7 @@ public class JetSword : Weapon
     public float maxLength;
     public float dashForce;
     float axis;
-    public float dashwaitTime;
+    public float dashCDCurTime;
     public bool dashRight;
     RaycastHit2D des;
     public float dashCooldown;
@@ -17,8 +17,14 @@ public class JetSword : Weapon
     public float afterDashVel;
     public override void Init()
     {
-        canDash = true;
+       
         base.Init();
+    }
+    private void OnEnable()
+    {
+        canDash = true;
+        runningCooldown = Cooldown;
+        dashCDCurTime = dashCooldown;
     }
     public override void Attack()
     {
@@ -51,9 +57,9 @@ public class JetSword : Weapon
     public override void GetInput()
     {
        
-        if (dashwaitTime <= dashCooldown)
+        if (dashCDCurTime <= dashCooldown)
         {
-            dashwaitTime += Time.deltaTime;
+            dashCDCurTime += Time.deltaTime;
         }
         else
         {
@@ -62,7 +68,7 @@ public class JetSword : Weapon
         }
         if (Input.GetKeyDown(mobilityAbility) && canDash)
         {
-            axis = player.islookingright ? 1 : -1;
+            axis = player.dirAxis;
             des = Physics2D.CircleCast(player.transform.position, 0.1f, Vector2.right * axis, maxLength, player.groundLayerMask) ;
            
             if(des.transform == null)
@@ -73,7 +79,7 @@ public class JetSword : Weapon
             player.rb.velocity = new Vector3(0, 0, 0);
             player.velocity = Vector2.zero;
             player.gravityScale = 0;
-            dashwaitTime = 0f;
+            dashCDCurTime = 0f;
             AudioManager.a_Instance.AlyxJetSwordDashAudio();
             player.animator.SetTrigger("SwordDash");    
             isSwordDashing = true;
@@ -105,7 +111,7 @@ public class JetSword : Weapon
                 else
                 {
                     player.velocity.x = afterDashVel;
-                    player.gravityScale = 25;
+                    player.gravityScale = player.savedGravityScale;
                     isSwordDashing = false;
                 }
            }
@@ -118,7 +124,7 @@ public class JetSword : Weapon
                 else
                 {
                     player.velocity.x = -afterDashVel;
-                    player.gravityScale = 25;
+                    player.gravityScale = player.savedGravityScale;
                     isSwordDashing = false;
                 }
             }
@@ -151,7 +157,7 @@ public class JetSword : Weapon
     {
         isSwordDashing = false;
         canDash = false;
-        player.gravityScale = 25;
+        player.gravityScale = player.savedGravityScale;
         player.canMove = true;
     }
 

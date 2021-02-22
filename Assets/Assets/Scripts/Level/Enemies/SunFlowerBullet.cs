@@ -12,7 +12,7 @@ public class SunFlowerBullet : MonoBehaviour
     public float BulletDes;
     public Vector2 BulletAcceleration;
     public int direction;
-   
+    public int damage;
 
     // Start is called before the first frame update
     void Start()
@@ -23,19 +23,34 @@ public class SunFlowerBullet : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         velocity.y -= Gravity * Time.deltaTime;
         transform.Translate(velocity);
-        
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == GroundLayer || collision.gameObject.layer == PlayerLayer)
+
+        Collider2D collider2D = Physics2D.OverlapCircle(transform.position, 0.5f);
+        if (collider2D)
         {
-            velocity = Vector2.zero;
+            if (collider2D.CompareTag("Player"))
+            {
+
+                velocity = Vector2.zero;
+                collider2D.GetComponent<CharacterController2D>().TakeDamage(damage);
+                Destroy(gameObject);
+
+            }
+            if (collider2D.CompareTag("Ground"))
+            {
+                velocity = Vector2.zero;
+                Destroy(gameObject);
+            }
+
         }
+
+
     }
+ 
+    
     IEnumerator Shoot()
     {
         isShoot = true;
@@ -54,9 +69,14 @@ public class SunFlowerBullet : MonoBehaviour
 
 
                velocity *= 0.5f;
-               isShoot = false;
+             
+                isShoot = false;
             }
             yield return null;
         }
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, 0.5f);
     }
 }

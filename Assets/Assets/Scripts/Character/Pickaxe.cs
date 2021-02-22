@@ -4,7 +4,7 @@ using UnityEngine;
 public class Pickaxe : Weapon
 {
    
-    public bool isPickaxeClawed = false;
+    public bool isPickaxeClawed;
     public bool isClawing;
     public Vector2 pickaxeJump;
     public float pickaxeRange;
@@ -12,9 +12,21 @@ public class Pickaxe : Weapon
     public float pickaxeRunningCD;
     public float takeControlDur;
     Vector2 curPlayerPos;
+    public override void Init()
+    {
+
+        base.Init();
+    }
+    private void OnEnable()
+    {
+        isPickaxeClawed = false;
+        isClawing = false;
+        runningCooldown = Cooldown;
+        pickaxeRunningCD = pickaxeCD;
+    }
     public override void GetInput()
     {
-        if (player.IsGrounded)
+        if (player.isGrounded)
         {
             player.animator.SetBool("Clawing", false);
             player.animator.SetBool("WallJump", false);
@@ -25,7 +37,7 @@ public class Pickaxe : Weapon
         {
             pickaxeRunningCD += Time.deltaTime;
         }
-        if (Input.GetKeyDown(mobilityAbility) && !player.IsGrounded && pickaxeRunningCD >= pickaxeCD)
+        if (Input.GetKeyDown(mobilityAbility) && !player.isGrounded && pickaxeRunningCD >= pickaxeCD)
         {
             player.animator.SetBool("Clawed", false);
             pickaxeRunningCD = 0;       
@@ -96,7 +108,7 @@ public class Pickaxe : Weapon
         }
         isClawing = false;
         player.canMove = false;
-        player.IsGrounded = false;
+        player.isGrounded = false;
         player.animator.SetBool("Clawing", false);
         player.animator.SetBool("WallJump", false);
         player.animator.SetBool("Clawed", true);

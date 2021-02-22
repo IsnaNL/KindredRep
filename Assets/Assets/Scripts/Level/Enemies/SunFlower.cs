@@ -3,13 +3,15 @@ using UnityEngine;
 
 public class SunFlower : Health
 {
-    public Collider2D Player;
-    public SunFlowerSword Sword;
+    
     public CharacterController2D PlayerRef;
-    public float SlashAttackRange;
-    public float SlashAttackCooldown;
-    public float SlashAttackCounting;
-    public bool SlashAttackReady;
+    public SunFlowerSword sword;
+    private SpriteRenderer spriteRenderer;
+    private Rigidbody2D rb2d;
+    public float slashAttackRange;
+    public float slashAttackCooldown;
+    public float slashAttackCounting;
+    public bool slashAttackReady;
     private Vector2 scale;
     private Vector2 negscale;
     public float JumpAttackDes;
@@ -28,7 +30,8 @@ public class SunFlower : Health
     public bool jumpAttackFollowUpReady;
     public int playerLayerInt;
     public LayerMask playerLayer;
-    public float BackWalkSpeed;
+    public float backWalkSpeed;
+    private bool isWalkBack;
 
 
 
@@ -44,71 +47,112 @@ public class SunFlower : Health
         base.Start();
         scale = transform.localScale;
         negscale = new Vector2(-scale.x, scale.y);
+        PlayerRef = FindObjectOfType<CharacterController2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        rb2d = GetComponent<Rigidbody2D>();
         //hitDamage = 0;
     }
-
+    public override void TakeDamage(int damage)
+    {
+        base.TakeDamage(damage);
+        EffectsManager.e_Instance.BloodHitEffect(transform.position);
+        EffectsManager.e_Instance.HitEffect(transform.position);
+    }
     // Update is called once per frame
     void Update()
     {
-        flip();
+        Flip();
         SlashCD();
         JumpAttackCD();
-        
-        if (!IsGrounded())
+        Gravity();
+        AttackCheck();
+        if (!isjumpAttack)
         {
-            velocity.y -= gravityScale * Time.deltaTime;
-        }
-        else
-        {
-            if (!isTouchingPlayer())
-            {
-                velocity = new Vector2(direction * moveSpeed * Time.deltaTime, 0f);
-
-            }
-            else
-            {
-                velocity = new Vector2(-direction * moveSpeed * Time.deltaTime * BackWalkSpeed, 0f);
-            }
-
-        }
-        if (Vector2.Distance(Player.transform.position, transform.position) <= SlashAttackRange)
-        {
-
-            if (SlashAttackReady && IsGrounded() && !jumpAttackFollowUpReady)
-            {
-
-                animator.SetTrigger("SlashAttackSunflower");
-                SlashAttackCounting = 0;
-                SlashAttackReady = false;
-            }
+            SetWalk();
         }
         if (jumpAttackFollowUpReady && IsGrounded())
         {
-            animator.SetTrigger("FollowUpAttackSunflower");
+            animator.SetTrigger("FollowUpAttack");
 
             jumpAttackFollowUpReady = false;
 
         }
-        if (Vector2.Distance(Player.transform.position, transform.position) <= JumpAttackRange && Vector2.Distance(Player.transform.position, transform.position) >= JumpAttackRange * 0.5f)
+        CheckJumpAttack();
+
+    }
+
+    private void CheckJumpAttack()
+    {
+        if (Vector2.Distance(PlayerRef.transform.position, transform.position) <= JumpAttackRange && Vector2.Distance(PlayerRef.transform.position, transform.position) >= JumpAttackRange * 0.5f)
         {
             if (JumpAttackReady)
             {
                 JumpAttackCounting = 0;
                 JumpAttackReady = false;
                 StartCoroutine(JumpAttack());
-
+                animator.SetTrigger("JumpAttack");
             }
         }
+    }
 
+    void SetWalk()
+    {
+        if (IsGrounded())
+        {
+            if (!IsTouchingPlayer() && !isWalkBack)
+            {
+                velocity = new Vector2(direction * moveSpeed * Time.deltaTime, 0f);
+
+            }
+            else
+            {
+                StartCoroutine(WalkBack());
+                
+            }
+
+        }
+    }
+    IEnumerator WalkBack()
+    {
+        isWalkBack = true;
+        velocity = new Vector2(-direction * backWalkSpeed * Time.deltaTime, 0f);
+
+        yield return new WaitForSeconds(1.4f);
+        isWalkBack = false;
+
+    }
+    private void AttackCheck()
+    {
+        if (Vector2.Distance(PlayerRef.transform.position, transform.position) <= slashAttackRange)
+        {
+
+            if (slashAttackReady && IsGrounded() && !jumpAttackFollowUpReady)
+            {
+
+                animator.SetTrigger("CloseAttack");
+                slashAttackCounting = 0;
+                slashAttackReady = false;
+            }
+        }
+    }
+
+    private void Gravity()
+    {
+        if (!IsGrounded())
+        {
+            velocity.y -= gravityScale * Time.deltaTime;
+        }
+      
     }
 
     void FixedUpdate()
     {
-        transform.Translate(velocity);
+        rb2d.MovePosition(rb2d.position + velocity);
+       
     }
-    void flip()
+    void Flip()
     {
-        if (transform.position.x + 1 >= Player.transform.position.x)
+        if (transform.position.x >= PlayerRef.transform.position.x)
         {
 
             transform.localScale = scale;
@@ -124,14 +168,14 @@ public class SunFlower : Health
     void SlashCD()
     {
 
-        if (SlashAttackCounting <= SlashAttackCooldown)
+        if (slashAttackCounting <= slashAttackCooldown)
         {
-            SlashAttackReady = false;
-            SlashAttackCounting += Time.deltaTime;
+            slashAttackReady = false;
+            slashAttackCounting += Time.deltaTime;
         }
         else
         {
-            SlashAttackReady = true;
+            slashAttackReady = true;
         }
     }
     void JumpAttackCD()
@@ -161,7 +205,7 @@ public class SunFlower : Health
             if (transform.position.y >= Destination)
             {
                 jumpAttackFollowUpReady = true;
-                SlashAttackCounting = 2.5f;
+                slashAttackCounting = 2.5f;
                 velocity *= 0.5f;
                 isjumpAttack = false;
             }
@@ -172,7 +216,7 @@ public class SunFlower : Health
     {
         if (!isjumpAttack)
         {
-            RaycastHit2D groundCheckCol = Physics2D.CircleCast(transform.position, 0.5f, Vector2.down, 1.6f, groundLayerMask);
+            RaycastHit2D groundCheckCol = Physics2D.CircleCast(transform.position, 0.5f, Vector2.down, 0.5f, groundLayerMask);
 
 
             if (groundCheckCol)
@@ -185,9 +229,9 @@ public class SunFlower : Health
         return
                false;
     }
-    public bool isTouchingPlayer()
+    public bool IsTouchingPlayer()
     {
-        RaycastHit2D PlayerCheck = Physics2D.CircleCast(transform.position, 1f,new Vector2(direction, 0),1.6f, playerLayer);
+        RaycastHit2D PlayerCheck = Physics2D.CircleCast(transform.position, 0.5f,new Vector2(direction, 0),0.8f, playerLayer);
         if (PlayerCheck)
         {
             return true;
@@ -198,24 +242,13 @@ public class SunFlower : Health
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(new Vector2(transform.position.x, transform.position.y - 1.5f), 0.5f);
+        Gizmos.DrawWireSphere(new Vector2(transform.position.x, transform.position.y - 0.5f), 0.5f);
         Gizmos.DrawLine(new Vector2 (transform.position.x + JumpAttackRange * 0.5f * direction,transform.position.y) , new Vector2(transform.position.x + JumpAttackRange * direction, transform.position.y));
         Gizmos.color = Color.yellow;
         Gizmos.DrawRay(transform.position, new Vector2(direction * 1.5f, 0));
-        Gizmos.DrawWireSphere(new Vector2(transform.position.x + direction * 1.5f, transform.position.y), 1f);
+        Gizmos.DrawWireSphere(new Vector2(transform.position.x + direction * 1f, transform.position.y), 0.5f);
       
     }
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if(collision.gameObject.layer == groundLayerInt)
-    //    {
-    //        velocity = Vector2.zero;
-    //        isGrounded = true;
-    //    }
-    //}
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    isGrounded = false;
-    //}
+  
 }
 
