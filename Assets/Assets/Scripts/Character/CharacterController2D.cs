@@ -63,7 +63,7 @@ public class CharacterController2D : Health
         inventory = GetComponentInChildren<Inventory>();
         inventory.Init();
         canMove = true;
-      
+        
     }
     private void Update()
     {  
@@ -83,7 +83,6 @@ public class CharacterController2D : Health
         dirAxis = islookingright ? 1f : -1f;
         CheckFlip();
         HorizontalMovement(acceleration, deceleration);
-        HitImpact();
         GetInputJumpMethod();
        
 
@@ -259,8 +258,10 @@ public class CharacterController2D : Health
         }
       
     }
-    private void HitImpact()
+ 
+    public override void TakeDamage(int damage)
     {
+        base.TakeDamage(damage);
         if (isHit)
         {
             EffectsManager.e_Instance.BloodHitEffect(transform.position);
@@ -301,6 +302,15 @@ public class CharacterController2D : Health
 
         }
       
+    }
+    private void OnDisable()
+    {
+      
+        GameManager.instace.StartCoroutine(GameManager.instace.ReviveCharacter());
+    }
+    private void OnEnable()
+    {
+        velocity = Vector2.zero;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {     

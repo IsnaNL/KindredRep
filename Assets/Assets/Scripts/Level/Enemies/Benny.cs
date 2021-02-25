@@ -45,7 +45,7 @@ public class Benny : Health
     {
         animator.SetBool("IsLand", !isJumping);
         healthBar.value = health;
-        if (!IsAttacking)
+        if (!IsAttacking && player != null)
         {
             SR.flipX = player.transform.position.x >= transform.position.x;
             Direction = player.transform.position.x >= transform.position.x ? 1 : -1;

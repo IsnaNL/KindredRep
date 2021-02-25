@@ -29,7 +29,7 @@ abstract public class Health : MonoBehaviour
 
         if (health <= 0)
         {
-            Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
         }
 
     }

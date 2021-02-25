@@ -6,7 +6,8 @@ public class EffectsManager : MonoBehaviour
 {
     public static EffectsManager e_Instance;
     public GameObject BloodEffect;
-    public GameObject HitImpact;
+    public GameObject hitImpact;
+    public GameObject smokeEffect;
     public void Start()
     {
        
@@ -20,7 +21,12 @@ public class EffectsManager : MonoBehaviour
     public void HitEffect(Vector2 pos)
     {
 
-        Instantiate(HitImpact, pos, Quaternion.identity, transform);
+        Instantiate(hitImpact, pos, Quaternion.identity, transform);
+    }
+    public void SmokeEffect(Vector2 pos)
+    {
+
+        Instantiate(smokeEffect, pos, Quaternion.identity, transform);
     }
     public IEnumerator DeleteEffect(GameObject gameObject, float EffectTime)
     {
