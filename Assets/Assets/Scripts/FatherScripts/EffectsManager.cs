@@ -7,7 +7,7 @@ public class EffectsManager : MonoBehaviour
     public static EffectsManager e_Instance;
     public GameObject BloodEffect;
     public GameObject hitImpact;
-    public GameObject smokeEffect;
+    public GameObject checkPointEffect;
     public void Start()
     {
        
@@ -23,10 +23,9 @@ public class EffectsManager : MonoBehaviour
 
         Instantiate(hitImpact, pos, Quaternion.identity, transform);
     }
-    public void SmokeEffect(Vector2 pos)
+    public void CheckPointEffect(Vector2 pos, Transform parent)
     {
-
-        Instantiate(smokeEffect, pos, Quaternion.identity, transform);
+        Instantiate(checkPointEffect, pos, Quaternion.identity, parent);
     }
     public IEnumerator DeleteEffect(GameObject gameObject, float EffectTime)
     {
