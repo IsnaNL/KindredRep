@@ -1,39 +1,63 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class MainMenuButtons : MonoBehaviour
 {
-    public GameObject frontPage;
-    public GameObject settingsPage;
-
-    // Start is called before the first frame update
+    public const float PressAnimTime = .5f;
+    public const float MenuLoadAnimTime = .5f;
+    public List<GameObject> Menus;
     private void OnEnable()
     {
-        UnityEngine.Cursor.lockState = CursorLockMode.Confined; 
+        UnityEngine.Cursor.lockState = CursorLockMode.Confined;
     }
-    public void ExitButtonPressed()
+    public void Quit()
     {
+        StartCoroutine(QuitCoro());
+    }
+    public IEnumerator QuitCoro()
+    {
+        yield return new WaitForSeconds(MenuLoadAnimTime);
         Application.Quit();
     }
-  public  void NewGameButtonPressed()
+    public void StartButton()
     {
+        StartCoroutine(StartButtonCoro());
+    }
+    public IEnumerator StartButtonCoro()
+    {
+        yield return new WaitForSeconds(PressAnimTime);
         SceneManager.LoadScene(1);
     }
-    
-    public void SettingsButtonPressed()
+    public void SelectMenu(GameObject menuRef)
     {
-        frontPage.SetActive(false);
-        settingsPage.SetActive(true);
-        //CoinCol.Instance.TestFunc();
+        StartCoroutine(SelectMenuCoro(menuRef));
     }
-    public void BackToMainMenuButtonPressed()
+    private IEnumerator SelectMenuCoro(GameObject menuRef)
     {
-        frontPage.SetActive(true);
-        settingsPage.SetActive(false);
+        int tempIndex = 0;
+        if (Menus.Contains(menuRef))
+        {
+            yield return new WaitForSeconds(PressAnimTime);
+            for (int i = 0; i < Menus.Count; i++)
+            {
+                Menus[i].SetActive(Menus[i].Equals(menuRef));
+                if (Menus[i].Equals(menuRef))
+                {
+                    tempIndex = i;
+                }
+                Menus[i].GetComponent<Animator>().SetBool("Active", Menus[i].Equals(menuRef));
+            }
+            yield return new WaitForSeconds(MenuLoadAnimTime);
+            Menus[tempIndex].GetComponentInChildren<Button>().Select();
+        }
+        else
+        {
+            Debug.LogError("{0} cant be selected as a menu", menuRef);
+        }
+        
     }
-    // Update is called once per frame
-   
 }

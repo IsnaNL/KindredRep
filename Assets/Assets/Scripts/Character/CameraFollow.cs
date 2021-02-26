@@ -12,7 +12,6 @@ public class CameraFollow : MonoBehaviour
     public void Init()
     {
         Debug.Log("caminit");
-        Cursor.lockState = CursorLockMode.Locked;
         player = GetComponentInParent<CharacterController2D>();
     }
     public void FixedUpdate()
