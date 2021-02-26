@@ -221,7 +221,7 @@ public class SunFlower : Health
 
             if (groundCheckCol)
             {
-                Debug.Log("StickManGrounded");
+               // Debug.Log("StickManGrounded");
                 return true;
             }
             

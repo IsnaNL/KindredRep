@@ -9,6 +9,7 @@ public class NewSnapTrapScript : Health
     public float RangeToTrigger;
     private CharacterController2D player;
     public Collider2D hitColldier;
+    public BlinkRed blinkRed;
     public int damage;
     public float delayBetweenTriggers;
     public float SnapTrapTriggerConditionDelay;
@@ -55,6 +56,11 @@ public class NewSnapTrapScript : Health
             }
         }
       
+    }
+    public override void TakeDamage(int damage)
+    {
+        base.TakeDamage(damage);
+        StartCoroutine(blinkRed?.BlinkRoutine());
     }
     public void ExecuteSnapTrap()
     {
