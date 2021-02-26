@@ -29,9 +29,10 @@ public class Benny : Health
     public float startingJumpAccelerationX;
     public int damage;
     public int EnemyLayer;
-    private int groundTriggerCount;
     public bool isJumping;
+    private int groundTriggerCount;
     private bool IdleAudioTrigger;
+    public BlinkRed blinkRed;
     public float RangeForIdleAudio;
 
 
@@ -52,9 +53,11 @@ public class Benny : Health
         }
     }
 
-    private void WhenHit()
+    public override void TakeDamage(int damage)
     {
-        
+        base.TakeDamage(damage);
+        if (isHit)
+        {
             EffectsManager.e_Instance.BloodHitEffect(transform.position);
             EffectsManager.e_Instance.HitEffect(transform.position);
 
@@ -70,14 +73,12 @@ public class Benny : Health
             isVulnerable = false;
             AudioManager.a_Instance.BennyHurtAudio();
             isHit = false;
+            StartCoroutine(blinkRed.BlinkRoutine());
+        }
     }
 
-     void FixedUpdate()
+    void FixedUpdate()
     {
-        if (isHit)
-        {
-          WhenHit();
-        }
         CheckPeekCondition();
         
         if (!isGrounded)

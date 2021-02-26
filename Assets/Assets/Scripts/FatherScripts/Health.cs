@@ -20,16 +20,17 @@ abstract public class Health : MonoBehaviour
         if (isVulnerable)
         {
             health -= damage;
-            Debug.Log(this.gameObject.name + "takendamage" + "health" + "  " + health);
-            isHit = true;
-          
- 
-
+           // Debug.Log(this.gameObject.name + "takendamage" + "health" + "  " + health);
         }
 
         if (health <= 0)
         {
             this.gameObject.SetActive(false);
+        }
+        else
+        {
+            isHit = true;
+
         }
 
     }

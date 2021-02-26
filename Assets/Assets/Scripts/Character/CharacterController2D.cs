@@ -21,6 +21,7 @@ public class CharacterController2D : Health
     public RaycastHit2D TopWallCheck;
     public float savedGravityScale;
     private WeaponAnimatorController animationControllerSwapper;
+    private BlinkRed blinkRed;
     public bool canMove;
     public bool isJumping;
     public float moveInput;
@@ -54,6 +55,7 @@ public class CharacterController2D : Health
         coinLayer = 14;
         isGrounded = false;
         animationControllerSwapper = GetComponentInChildren<WeaponAnimatorController>();
+        blinkRed = GetComponentInChildren<BlinkRed>();
         rb = GetComponent<Rigidbody2D>();
         islookingright = true;
         currentScale = new Vector2(transform.localScale.x, transform.localScale.y);
@@ -267,6 +269,7 @@ public class CharacterController2D : Health
             EffectsManager.e_Instance.BloodHitEffect(transform.position);
             EffectsManager.e_Instance.HitEffect(transform.position);
             AudioManager.a_Instance.AlyxHitAudio();
+            StartCoroutine(blinkRed?.BlinkRoutine());
             isHit = false;
         }
     }
@@ -297,7 +300,7 @@ public class CharacterController2D : Health
                 animator.SetBool("IsRunning", true);
                 animator.SetBool("IsLedgeJump", true);
                 //transform.position = new Vector2(transform.position.x + 0.2f,FrontWallCheck.point.y + 0.5f);
-                velocity  = new Vector2(0,5f);
+                velocity  = new Vector2(0,5.4f);
             }
 
         }
