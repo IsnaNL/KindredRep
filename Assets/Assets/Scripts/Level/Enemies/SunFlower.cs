@@ -7,6 +7,7 @@ public class SunFlower : Health
     public CharacterController2D PlayerRef;
     public SunFlowerSword sword;
     private SpriteRenderer spriteRenderer;
+    private BlinkRed blinkRed;
     private Rigidbody2D rb2d;
     public float slashAttackRange;
     public float slashAttackCooldown;
@@ -50,13 +51,19 @@ public class SunFlower : Health
         PlayerRef = FindObjectOfType<CharacterController2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb2d = GetComponent<Rigidbody2D>();
+        blinkRed = GetComponent<BlinkRed>();
         //hitDamage = 0;
     }
     public override void TakeDamage(int damage)
     {
         base.TakeDamage(damage);
-        EffectsManager.e_Instance.BloodHitEffect(transform.position);
-        EffectsManager.e_Instance.HitEffect(transform.position);
+        if (isHit && this.gameObject.activeInHierarchy)
+        {
+            EffectsManager.e_Instance.BloodHitEffect(transform.position);
+            EffectsManager.e_Instance.HitEffect(transform.position);
+            blinkRed?.StartCoroutine(blinkRed?.BlinkRoutine());
+        }
+    
     }
     // Update is called once per frame
     void Update()

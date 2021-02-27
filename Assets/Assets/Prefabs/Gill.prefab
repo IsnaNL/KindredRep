@@ -160,6 +160,7 @@ GameObject:
   - component: {fileID: 5460056977293863222}
   - component: {fileID: 5460056977293863221}
   - component: {fileID: 5460056977293863220}
+  - component: {fileID: 2580368367723694842}
   m_Layer: 15
   m_Name: Gill
   m_TagString: Untagged
@@ -342,6 +343,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.5}
   m_EdgeRadius: 0
+--- !u!114 &2580368367723694842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5460056977293863211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490b9c6b751a3a74db651cf0326045f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sr: {fileID: 5460056977293863216}
+  blinkSpeed: 0.1
 --- !u!1 &8486502854140672196
 GameObject:
   m_ObjectHideFlags: 0
