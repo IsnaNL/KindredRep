@@ -51,17 +51,17 @@ public class UIOverlayScript : MonoBehaviour
     private IEnumerator MainMenubuttCoro()
     {
         PauseMenu.GetComponent<Animator>().SetBool("Active", false);
+        Time.timeScale = 1;
         yield return new WaitForSeconds(MenuLoadAnimTime);
+        Cursor.lockState = CursorLockMode.Confined;
         SceneManager.LoadScene(0);
     }
     private IEnumerator SwapToHUD()
     {
         PauseMenu.SetActive(true);
         HUD.SetActive(true);
-
         PauseMenu.GetComponent<Animator>().SetBool("Active", false);
         HUD.GetComponent<Animator>().SetBool("Active", true);
-
         yield return new WaitForSeconds(MenuLoadAnimTime);
         PauseMenu.SetActive(false);
     }
@@ -69,10 +69,8 @@ public class UIOverlayScript : MonoBehaviour
     {
         PauseMenu.SetActive(true);
         HUD.SetActive(true);
-
         PauseMenu.GetComponent<Animator>().SetBool("Active", true);
         HUD.GetComponent<Animator>().SetBool("Active", false);
-
         yield return new WaitForSeconds(MenuLoadAnimTime);
         HUD.SetActive(false);
     }
