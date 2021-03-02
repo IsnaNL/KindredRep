@@ -9,46 +9,31 @@ public class UIOverlayScript : MonoBehaviour
     public const float PressAnimTime = .5f;
     public const float MenuLoadAnimTime = .25f;
 
+    public GameObject PauseMenu;
+    public GameObject HUD;
+
     private bool isPaused;
 
-    public GameObject PauseMenu;
-    public GameObject Main;
-    public GameObject Controls;
-    
-    public GameObject HUD;
-    private void Start()
+    public GameObject PauseBackground;
+
+
+    private GameObject activeMenu;
+    public List<GameObject> Menus;
+    public void Init()
     {
-        Time.timeScale = 1;
-        HUD.SetActive(true);
+        GetComponent<Canvas>().worldCamera = Camera.main;
         isPaused = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        activeMenu = HUD;
+        ChangeToMenu(HUD);
+        PauseBackground.GetComponent<Animator>().SetBool("Active", isPaused);
+        Cursor.lockState = isPaused ? CursorLockMode.Confined : CursorLockMode.Locked;
     }
-    private void Update()
+    private void OnGUI()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !isPaused)
         {
-            StartCoroutine(Pause());
+            TogglePause();
         }
-    }
-    public IEnumerator Pause()
-    {
-        isPaused = true;
-        Cursor.lockState = CursorLockMode.Confined;
-        Time.timeScale = 0;
-        StartCoroutine(SwapToPause());
-        yield return null;
-    }
-    public void Resume()
-    {
-        StartCoroutine(ResumeCoro());
-    }
-    public IEnumerator ResumeCoro()
-    {
-        isPaused = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Time.timeScale = 1;
-        yield return new WaitForSeconds(MenuLoadAnimTime);
-        StartCoroutine(SwapToHUD());
     }
     public void MainMenuButt()
     {
@@ -56,58 +41,42 @@ public class UIOverlayScript : MonoBehaviour
     }
     private IEnumerator MainMenubuttCoro()
     {
-        PauseMenu.GetComponent<Animator>().SetBool("Active", false);
+        PauseBackground.GetComponent<Animator>().SetBool("Active", true);
         Time.timeScale = 1;
         yield return new WaitForSeconds(MenuLoadAnimTime);
-        Cursor.lockState = CursorLockMode.Confined;
         SceneManager.LoadScene(0);
     }
-    private IEnumerator SwapToHUD()
+    public void ChangeToMenu(GameObject selectedMenu)
     {
-        PauseMenu.SetActive(true);
-        HUD.SetActive(true);
-        PauseMenu.GetComponent<Animator>().SetBool("Active", false);
-        HUD.GetComponent<Animator>().SetBool("Active", true);
-        yield return new WaitForSeconds(MenuLoadAnimTime);
-        PauseMenu.SetActive(false);
+        for (int i = 0; i < Menus.Count; i++)
+        {
+            if (Menus[i] == selectedMenu)
+            {
+                StartCoroutine(ChangeToMenuCoro(selectedMenu));
+                return;
+            }
+        }
     }
-    private IEnumerator SwapToPause()
+    public void TogglePause()
     {
-        PauseMenu.SetActive(true);
-        HUD.SetActive(true);
-        PauseMenu.GetComponent<Animator>().SetBool("Active", true);
-        HUD.GetComponent<Animator>().SetBool("Active", false);
-        yield return new WaitForSeconds(MenuLoadAnimTime);
-        HUD.SetActive(false);
+        isPaused = !isPaused;
+        PauseBackground.GetComponent<Animator>().SetBool("Active", isPaused); //set pause background by pause
+        Cursor.lockState = isPaused ? CursorLockMode.Confined : CursorLockMode.Locked; //determine lockmode by pause
+        Time.timeScale = isPaused ? 0 : 1;
+        GameObject menuForCoro = isPaused ? PauseMenu : HUD;
+        StartCoroutine(ChangeToMenuCoro(menuForCoro));
     }
-    public void ControlsButt()
+    private IEnumerator ChangeToMenuCoro(GameObject selectedMenu)
     {
-        StartCoroutine(controlsButtCoro());
-    }
-    private IEnumerator controlsButtCoro()
-    {
-        Controls.SetActive(true);
-        Main.SetActive(true);
-        Main.GetComponent<Animator>().SetBool("Active", false);
-        Controls.GetComponent<Animator>().SetBool("Active", true);
-        yield return new WaitForSeconds(MenuLoadAnimTime);
-        Controls.GetComponentInChildren<Button>().Select();
-        Main.SetActive(false);
-    }
-    public void MainButt()
-    {
-        StartCoroutine(MainButtCoro());
-    }
-    private IEnumerator MainButtCoro()
-    {
-        Main.SetActive(true);
-        Controls.SetActive(true);
-        Main.GetComponent<Animator>().SetBool("Active", true);
-        Controls.GetComponent<Animator>().SetBool("Active", false);
-        yield return new WaitForSeconds(MenuLoadAnimTime);
-        Controls.SetActive(false);
-        Main.GetComponentInChildren<Button>().Select();
-    }
+        for (int i = 0; i < Menus.Count; i++)
+        {
+            Menus[i].SetActive(Menus[i] == selectedMenu);
+            Menus[i].GetComponent<Animator>().SetBool("Active", Menus[i] == selectedMenu);
+        }
 
+        yield return new WaitForSeconds(MenuLoadAnimTime);
 
+        activeMenu = selectedMenu;
+        activeMenu.GetComponent<Button>().Select();
+    }
 }

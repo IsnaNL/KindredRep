@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public CameraFollow PlayerFollow;
     public LevelGenerator levelgenerator;
     public Transform curCheckPoint;
+    public UIOverlayScript uiOverlay;
     
     //public EffectsManager effects_Instance;
     
@@ -22,6 +23,8 @@ public class GameManager : MonoBehaviour
     {
         //Application.targetFrameRate = 30;
         //QualitySettings.vSyncCount = 0;
+        uiOverlay.gameObject.SetActive(true);
+        uiOverlay.Init();
         instace = this;
         Player.Init();
         weaponInit = Player.GetComponentInChildren<JetSword>();

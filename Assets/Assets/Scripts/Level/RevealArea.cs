@@ -10,6 +10,7 @@ public class RevealArea : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         isRevealed = false;
+        anim.SetBool("Revealed", isRevealed);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
