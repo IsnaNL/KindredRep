@@ -8800,7 +8800,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1388256595
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9404,7 +9404,7 @@ GameObject:
   - component: {fileID: 1622473735}
   - component: {fileID: 1622473734}
   m_Layer: 0
-  m_Name: New Sprite
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9450,7 +9450,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b0fe7f17976251f4c92ca6e4224428b5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c064d8a755f1bdc42a6f0e4fb018e8bd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -9470,7 +9470,7 @@ Transform:
   m_GameObject: {fileID: 1622473733}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 50}
-  m_LocalScale: {x: 0.06382105, y: 0.06382105, z: 0.06382105}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -10016,7 +10016,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1885104539
 MonoBehaviour:
   m_ObjectHideFlags: 0
