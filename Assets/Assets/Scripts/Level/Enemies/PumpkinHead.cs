@@ -145,8 +145,9 @@ public class PumpkinHead : Health
     {
         if (isHit)
         {
-            EffectsManager.e_Instance.BloodHitEffect(transform.position);
-            EffectsManager.e_Instance.HitEffect(transform.position);
+            EffectsManager EMRef = EffectsManager.e_Instance;
+            EMRef.CreateEffect(transform.position, EMRef.BloodEffect);
+            EMRef.CreateEffect(transform.position, EMRef.hitImpact);
 
             isHit = false;
         }

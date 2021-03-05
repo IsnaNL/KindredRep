@@ -44,6 +44,7 @@ public class CharacterController2D : Health
     public float secondMaxSpeedModifier;
     public float JumpDelaytime;
     public float dirAxis = 1;
+    public Transform Step;
     public override void Start()
     {
         base.Start();
@@ -266,8 +267,9 @@ public class CharacterController2D : Health
         base.TakeDamage(damage);
         if (isHit)
         {
-            EffectsManager.e_Instance.BloodHitEffect(transform.position);
-            EffectsManager.e_Instance.HitEffect(transform.position);
+            EffectsManager EMRef = EffectsManager.e_Instance;
+            EMRef.CreateEffect(transform.position, EMRef.BloodEffect);
+            EMRef.CreateEffect(transform.position, EMRef.hitImpact);
             AudioManager.a_Instance.AlyxHitAudio();
             StartCoroutine(blinkRed?.BlinkRoutine());
             isHit = false;
@@ -337,7 +339,6 @@ public class CharacterController2D : Health
                 inventory.pickaxe.isClawing = false;
                 animator.SetBool("IsFalling", false);
                 animator.SetBool("IsLedgeJump", false);
-
             }
         }
         if (collision.gameObject.layer == coinLayer)
@@ -370,4 +371,5 @@ public class CharacterController2D : Health
         Gizmos.DrawWireSphere(transform.position + new Vector3(0, ceilingCheckDis, 0), 0.35f);
         Gizmos.color = Color.blue;
     }
+    
 }

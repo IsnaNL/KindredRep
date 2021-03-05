@@ -8,28 +8,17 @@ public class EffectsManager : MonoBehaviour
     public GameObject BloodEffect;
     public GameObject hitImpact;
     public GameObject checkPointEffect;
+    public GameObject StepEffect;
     public void Start()
     {
-       
         e_Instance = this;   
-        
     }
-    public void BloodHitEffect(Vector2 pos)
-    {     
-            Instantiate(BloodEffect, pos,Quaternion.identity,transform);   
-    }
-    public void HitEffect(Vector2 pos)
+    public void CreateEffect(Vector2 pos, GameObject Effect, Transform parent)
     {
-
-        Instantiate(hitImpact, pos, Quaternion.identity, transform);
+        Instantiate(Effect, pos, Quaternion.identity, parent);
     }
-    public void CheckPointEffect(Vector2 pos, Transform parent)
+    public void CreateEffect(Vector2 pos, GameObject Effect)
     {
-        Instantiate(checkPointEffect, pos, Quaternion.identity, parent);
-    }
-    public IEnumerator DeleteEffect(GameObject gameObject, float EffectTime)
-    {
-     yield return new WaitForSeconds(EffectTime);
-        Destroy(gameObject);
+        Instantiate(Effect, pos, Quaternion.identity);
     }
 }

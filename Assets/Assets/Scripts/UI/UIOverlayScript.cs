@@ -72,6 +72,7 @@ public class UIOverlayScript : MonoBehaviour
         Button B = activeMenu.GetComponentInChildren<Button>();
         if (B != null)
         {
+            yield return new WaitForSeconds(MenuLoadAnimTime);
             B.Select();
         }
     }
