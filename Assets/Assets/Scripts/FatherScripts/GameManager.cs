@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     }
    public IEnumerator ReviveCharacter()
     {
-        curCheckPoint?.gameObject.SetActive(true);
+        curCheckPoint.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         Player.enabled = false;
         Player.GetComponentInChildren<SpriteRenderer>().enabled = false;

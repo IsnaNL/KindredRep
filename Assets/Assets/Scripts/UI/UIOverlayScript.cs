@@ -8,15 +8,10 @@ public class UIOverlayScript : MonoBehaviour
 {
     public const float PressAnimTime = .5f;
     public const float MenuLoadAnimTime = .25f;
-
     public GameObject PauseMenu;
     public GameObject HUD;
-
     private bool isPaused;
-
     public GameObject PauseBackground;
-
-
     private GameObject activeMenu;
     public List<GameObject> Menus;
     public void Init()
@@ -24,7 +19,6 @@ public class UIOverlayScript : MonoBehaviour
         GetComponent<Canvas>().worldCamera = Camera.main;
         isPaused = false;
         activeMenu = HUD;
-        ChangeToMenu(HUD);
         PauseBackground.GetComponent<Animator>().SetBool("Active", isPaused);
         Cursor.lockState = isPaused ? CursorLockMode.Confined : CursorLockMode.Locked;
     }
@@ -73,10 +67,12 @@ public class UIOverlayScript : MonoBehaviour
             Menus[i].SetActive(Menus[i] == selectedMenu);
             Menus[i].GetComponent<Animator>().SetBool("Active", Menus[i] == selectedMenu);
         }
-
         yield return new WaitForSeconds(MenuLoadAnimTime);
-
         activeMenu = selectedMenu;
-        activeMenu.GetComponent<Button>().Select();
+        Button B = activeMenu.GetComponentInChildren<Button>();
+        if (B != null)
+        {
+            B.Select();
+        }
     }
 }

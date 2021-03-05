@@ -58,6 +58,5 @@ public class MainMenuButtons : MonoBehaviour
         {
             Debug.LogError("{0} cant be selected as a menu", menuRef);
         }
-        
     }
 }

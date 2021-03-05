@@ -309,7 +309,9 @@ public class CharacterController2D : Health
     private void OnDisable()
     {
         if(GameManager.instace != null)
-         GameManager.instace?.StartCoroutine(GameManager.instace?.ReviveCharacter());
+        {
+            GameManager.instace?.StartCoroutine(GameManager.instace?.ReviveCharacter());
+        }
     }
     private void OnEnable()
     {
