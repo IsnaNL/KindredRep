@@ -3,21 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 public class GatePrefab : MonoBehaviour
 {
-    private enum GateMode
+    public enum GateMode
     {
         OnTriggerEnter, OnTriggerExit, OnLivebodyKilled
     }
     private Animator myAnimator;
     [SerializeField]private bool IsOpen;
     private bool executeLiveBodyCheck;
-    [SerializeField] private GateMode OpenMode;
-    [SerializeField] private GateMode CloseMode;
+    public GateMode OpenCondition;
+    public bool DoesRequireAllToOpenTheGate;
+    public GateMode CloseCondition;
+    public bool DoesRequireAllToCloseTheGate;
     public GameObject liveBodyRef;
     void Start()
     {
+        IsOpen = true;
         myAnimator = GetComponent<Animator>();
         executeLiveBodyCheck = liveBodyRef != null && 
-            (OpenMode == GateMode.OnLivebodyKilled || CloseMode == GateMode.OnLivebodyKilled);
+            (OpenCondition == GateMode.OnLivebodyKilled || CloseCondition == GateMode.OnLivebodyKilled);
 
         myAnimator.SetBool("IsOpen", IsOpen);
     }
@@ -45,6 +48,7 @@ public class GatePrefab : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             TriggerMode(GateMode.OnTriggerExit);
+
         }
     }
     private void Open()
@@ -67,11 +71,11 @@ public class GatePrefab : MonoBehaviour
     }
     private void TriggerMode(GateMode Context)
     {
-        if (OpenMode == Context)
+        if (OpenCondition == Context)
         {
             Open();
         }
-        else if (CloseMode == Context)
+        if (CloseCondition == Context)
         {
             Close();
         }

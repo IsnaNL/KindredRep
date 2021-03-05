@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2813501243005257803}
   - component: {fileID: 9163898487990416751}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6920401873431039294}
   - component: {fileID: 2444876267984154133}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Collision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 3883763736664421010}
   - component: {fileID: 8328840726886975840}
   - component: {fileID: 1874747958}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Gate
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -168,7 +168,7 @@ Transform:
   m_GameObject: {fileID: 6889774178254484560}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -38.57, y: 14.27, z: 0}
-  m_LocalScale: {x: 1, y: 1.8505, z: 1}
+  m_LocalScale: {x: 0.51473, y: 0.9525078, z: 0.51473}
   m_Children:
   - {fileID: 6920401873431039294}
   - {fileID: 2813501243005257803}
@@ -189,7 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsOpen: 0
   OpenMode: 0
-  CloseMode: 0
+  CloseMode: 1
   liveBodyRef: {fileID: 0}
 --- !u!95 &8328840726886975840
 Animator:
