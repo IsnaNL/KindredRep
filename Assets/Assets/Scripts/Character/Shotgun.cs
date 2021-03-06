@@ -7,28 +7,30 @@ public class Shotgun : Weapon
     public Vector2 ShotDir;
     public GameObject shotgunBullet;
     public float MobilityAbilityCoolDown;
-    public ParticleSystem MobilityEffect;
-    public ParticleSystem AttackEffect;
     public float MobilityAbilityCoolDownCurrentTime;
     public bool canShotGunBlast;
     public Vector2 shotgunBlastForce;
     public bool IsShotgunKnockback;
     private bool blastTrigger;
 
+    public Transform BarrelPivot;
+    public Transform Barrel;
+    EffectsManager EMRef;
+
     private SpriteRenderer GFX;
 
     public override void Init()
     {
         base.Init();
-        GFX = GameManager.instace.Player.GetComponentInChildren<SpriteRenderer>();
+        GFX = GameManager.instance.Player.GetComponentInChildren<SpriteRenderer>();
     }
     private void OnEnable()
     {
         MobilityAbilityCoolDownCurrentTime = MobilityAbilityCoolDown;
+        EMRef = EffectsManager.e_Instance;
     }
     public override void Attack()
     {
-       
         // base.Attack();
         if (Input.GetKeyDown(attack))
         {
@@ -42,7 +44,6 @@ public class Shotgun : Weapon
         {
             runningCooldown += Time.deltaTime;
         }
-      
     }
     void ShotgunShot()
     {
@@ -50,9 +51,7 @@ public class Shotgun : Weapon
         AudioManager.a_Instance.AlyxShotGunShotAudio();
         GameObject bulletInstance = Instantiate(shotgunBullet, weaponCollider.position, Quaternion.identity);
         player.animator.SetTrigger("Shoot");
-
-        PlayParticle(AttackEffect);
-        AttackEffect.transform.rotation = Quaternion.Euler(Vector3.forward * dir);
+        EMRef.CreateEffect(Barrel.position, EMRef.DragunAttack, null, !player.islookingright);
         if (bulletInstance != null)
         {
             bulletInstance.GetComponent<OnBulletCollision>().velocity = ShotDir * bulletSpeed;
@@ -65,14 +64,12 @@ public class Shotgun : Weapon
         if (Input.GetKeyDown(mobilityAbility) && canShotGunBlast)
         {
             player.velocity.y *= 0.1f;
-            PlayParticle(MobilityEffect);
             MobilityAbilityCoolDownCurrentTime = 0f;
             canShotGunBlast = false;
-            AudioManager.a_Instance.AlyxShotGunMobilityAudio();
             IsShotgunKnockback = true;
             if (IsShotgunKnockback)
             {
-                this.MobilityAbility();
+                this.MobilityAbility(); 
              
                 IsShotgunKnockback = false;
             }
@@ -92,17 +89,10 @@ public class Shotgun : Weapon
     { 
         if (IsShotgunKnockback && blastTrigger)
         {
+            AudioManager.a_Instance.AlyxShotGunMobilityAudio();
+            EMRef.CreateEffect(Barrel.position, EMRef.DragunMobility);
             player.velocity += Vector2.up * shotgunBlastForce;
         }
     }
-    private void PlayParticle(ParticleSystem particle)
-    {
-        particle.transform.position = transform.position;
-        particle.transform.parent = null;
-        particle.Play();
-    }
-    protected override void TakePlayerControl(float time)
-    {
-        base.TakePlayerControl(time);
-    }
+    
 }

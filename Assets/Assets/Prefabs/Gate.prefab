@@ -188,8 +188,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsOpen: 0
-  OpenMode: 0
-  CloseMode: 1
+  OpenCondition: 2
+  DoesRequireAllToOpenTheGate: 0
+  CloseCondition: 0
+  DoesRequireAllToCloseTheGate: 0
   liveBodyRef: {fileID: 0}
 --- !u!95 &8328840726886975840
 Animator:

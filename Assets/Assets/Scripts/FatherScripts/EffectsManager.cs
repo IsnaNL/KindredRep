@@ -9,6 +9,8 @@ public class EffectsManager : MonoBehaviour
     public GameObject hitImpact;
     public GameObject checkPointEffect;
     public GameObject StepEffect;
+    public GameObject DragunAttack;
+    public GameObject DragunMobility;
     public void Start()
     {
         e_Instance = this;

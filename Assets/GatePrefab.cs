@@ -11,9 +11,7 @@ public class GatePrefab : MonoBehaviour
     [SerializeField]private bool IsOpen;
     private bool executeLiveBodyCheck;
     public GateMode OpenCondition;
-    public bool DoesRequireAllToOpenTheGate;
     public GateMode CloseCondition;
-    public bool DoesRequireAllToCloseTheGate;
     public GameObject liveBodyRef;
     void Start()
     {

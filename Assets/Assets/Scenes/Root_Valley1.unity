@@ -8610,12 +8610,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 355545765}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &368187247 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6302509524129368199, guid: 6d349fe5026649048bf2e330c163de78,
-    type: 3}
-  m_PrefabInstance: {fileID: 1790957061}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &377138809
 GameObject:
   m_ObjectHideFlags: 0
@@ -9612,16 +9606,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7515731039794044785, guid: 6dda2c965cee32245b3ca561226d08ae,
-        type: 3}
-      propertyPath: m_Volume
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7515731039794044785, guid: 6dda2c965cee32245b3ca561226d08ae,
-        type: 3}
-      propertyPath: spreadCustomCurve.m_Curve.Array.data[0].value
-      value: 0.0055555557
-      objectReference: {fileID: 0}
     - target: {fileID: 7515731041117220112, guid: 6dda2c965cee32245b3ca561226d08ae,
         type: 3}
       propertyPath: m_Name
@@ -9692,11 +9676,6 @@ PrefabInstance:
       propertyPath: weaponInit
       value: 
       objectReference: {fileID: 1731001219}
-    - target: {fileID: 7515731041117220115, guid: 6dda2c965cee32245b3ca561226d08ae,
-        type: 3}
-      propertyPath: PlayerCam
-      value: 
-      objectReference: {fileID: 1271393726}
     - target: {fileID: 7515731041117220115, guid: 6dda2c965cee32245b3ca561226d08ae,
         type: 3}
       propertyPath: PlayerFollow
@@ -49134,12 +49113,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!198 &911578818 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 26377206175490047, guid: 6d349fe5026649048bf2e330c163de78,
-    type: 3}
-  m_PrefabInstance: {fileID: 1790957061}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &936395024
 GameObject:
   m_ObjectHideFlags: 0
@@ -63612,6 +63585,36 @@ SpriteMask:
   m_BackSortingOrder: 0
   m_IsCustomRangeActive: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1121139765
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1121139766}
+  m_Layer: 10
+  m_Name: Barrel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1121139766
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121139765}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.476, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1545212949}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1129458583
 GameObject:
   m_ObjectHideFlags: 0
@@ -64158,28 +64161,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6550605029236055291, guid: 5bf2b0baf683a864e97310e992817fa5,
-        type: 3}
-      propertyPath: smokeEffect
-      value: 
-      objectReference: {fileID: 1844191813266838, guid: 968c924d2be019d4b9e67647551eec3e,
-        type: 3}
-    - target: {fileID: 6550605029236055291, guid: 5bf2b0baf683a864e97310e992817fa5,
-        type: 3}
-      propertyPath: hitImpact
-      value: 
-      objectReference: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b, type: 3}
-    - target: {fileID: 6550605029236055291, guid: 5bf2b0baf683a864e97310e992817fa5,
-        type: 3}
-      propertyPath: checkPointEffect
-      value: 
-      objectReference: {fileID: 1844191813266838, guid: 968c924d2be019d4b9e67647551eec3e,
-        type: 3}
-    - target: {fileID: 6550605029236055291, guid: 5bf2b0baf683a864e97310e992817fa5,
-        type: 3}
-      propertyPath: StepEffect
-      value: 
-      objectReference: {fileID: 100000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bf2b0baf683a864e97310e992817fa5, type: 3}
 --- !u!1 &1181988535
@@ -101334,6 +101315,37 @@ SortingGroup:
   m_SortingLayerID: -1237771029
   m_SortingLayer: 3
   m_SortingOrder: 10
+--- !u!1 &1545212948
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1545212949}
+  m_Layer: 10
+  m_Name: BarrelPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1545212949
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1545212948}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.092, y: -0.236, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1121139766}
+  m_Father: {fileID: 100719719}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1569071917
 GameObject:
   m_ObjectHideFlags: 0
@@ -105022,11 +105034,21 @@ PrefabInstance:
     - target: {fileID: 464099669, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
       propertyPath: MobilityEffect
       value: 
-      objectReference: {fileID: 911578818}
+      objectReference: {fileID: 198796712453205768, guid: 90ae1fe9cc198f84995e8592462e84f4,
+        type: 3}
     - target: {fileID: 464099669, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
       propertyPath: AttackEffect
       value: 
-      objectReference: {fileID: 368187247}
+      objectReference: {fileID: 1544289250956567169, guid: ce4294c4a189a4a4e866717e32c3cfa9,
+        type: 3}
+    - target: {fileID: 464099669, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
+      propertyPath: BarrelPivot
+      value: 
+      objectReference: {fileID: 1545212949}
+    - target: {fileID: 464099669, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
+      propertyPath: Barrel
+      value: 
+      objectReference: {fileID: 1121139766}
     - target: {fileID: 1763441709, guid: 6d349fe5026649048bf2e330c163de78, type: 3}
       propertyPath: bombLayer
       value: 17

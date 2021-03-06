@@ -44,4 +44,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BloodEffect: {fileID: 100000, guid: bc98890f6028f444eaa7789bde5e2eeb, type: 3}
-  HitImpact: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b, type: 3}
+  hitImpact: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b, type: 3}
+  checkPointEffect: {fileID: 1844191813266838, guid: 968c924d2be019d4b9e67647551eec3e,
+    type: 3}
+  StepEffect: {fileID: 100000, guid: 83cd9cc9f9c88824ba18dc59b05ae328, type: 3}
+  DragunAttack: {fileID: 1705189902282002531, guid: ce4294c4a189a4a4e866717e32c3cfa9,
+    type: 3}
+  DragunMobility: {fileID: 1727626132299242, guid: 90ae1fe9cc198f84995e8592462e84f4,
+    type: 3}

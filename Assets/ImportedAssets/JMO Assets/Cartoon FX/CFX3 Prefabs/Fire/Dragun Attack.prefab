@@ -40,7 +40,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1704821148605449681}
   serializedVersion: 6
-  lengthInSec: 1
+  lengthInSec: 0.2
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 3
@@ -4728,7 +4728,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1705189902282002531}
   serializedVersion: 6
-  lengthInSec: 1
+  lengthInSec: 0.2
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 3
@@ -9411,7 +9411,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0.15
+    scalar: 0
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -9471,8 +9471,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.7
-      minScalar: 0.3
+      scalar: 0.25
+      minScalar: 0.35
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9525,7 +9525,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 3
-      minScalar: 0.5
+      minScalar: 5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9578,7 +9578,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.9879315, g: 1, b: 0.107547104, a: 1}
+      maxColor: {r: 0.9622642, g: 0.9048461, b: 0.5029192, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -14284,7 +14284,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.6
+      scalar: 0.1
       minScalar: 1.4
       maxCurve:
         serializedVersion: 2
@@ -14318,9 +14318,9 @@ ParticleSystem:
         m_RotationOrder: 4
     startSpeed:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 3
-      minScalar: 3
+      minMaxState: 3
+      scalar: 1
+      minScalar: 8
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -14355,7 +14355,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.684481, b: 0.09811318, a: 1}
+      maxColor: {r: 1, g: 0.53730816, b: 0.09803921, a: 0.654902}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -14417,8 +14417,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.8
-      minScalar: 0.4
+      scalar: 0.5
+      minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -15072,7 +15072,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 1
+        scalar: 10
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -15122,8 +15122,8 @@ ParticleSystem:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-      cycleCount: 20
-      repeatInterval: 0.02
+      cycleCount: 5
+      repeatInterval: 0.025
       probability: 1
   SizeModule:
     enabled: 1
@@ -15145,22 +15145,22 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.07818909
-          value: 1
-          inSlope: 0.02446687
-          outSlope: 0.02446687
+          time: 0.09974976
+          value: 0.5230751
+          inSlope: 3.9688172
+          outSlope: 3.9688172
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
-          outWeight: 0.33333334
+          outWeight: 0.12917699
         - serializedVersion: 3
           time: 1
-          value: 0.49230957
-          inSlope: -2
-          outSlope: -2
+          value: 1
+          inSlope: 2.8750842
+          outSlope: 2.8750842
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
+          inWeight: 0.12800847
           outWeight: 0.33333334
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -15466,7 +15466,7 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 13107
+        atime1: 60909
         atime2: 65535
         atime3: 65535
         atime4: 65535

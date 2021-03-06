@@ -5,7 +5,7 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instace;
+    public static GameManager instance;
     public List<Benny> BennyList;
     public List<TrapCol> trapsList;
     public CharacterController2D Player;
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         //QualitySettings.vSyncCount = 0;
         uiOverlay.gameObject.SetActive(true);
         uiOverlay.Init();
-        instace = this;
+        instance = this;
         Player.Init();
         weaponInit = Player.GetComponentInChildren<JetSword>();
         BennyList = new List<Benny>();

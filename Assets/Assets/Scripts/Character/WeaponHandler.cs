@@ -55,7 +55,7 @@ public class WeaponHandler : MonoBehaviour
         }
         if (collision.gameObject.layer == bombLayer)
         {
-            Vector2 originPos = GameManager.instace.Player.transform.position;
+            Vector2 originPos = GameManager.instance.Player.transform.position;
             Vector2 dir = new Vector2(originPos.x - collision.transform.position.x, transform.position.y - collision.transform.position.y);
             Rigidbody2D bomb = collision.gameObject.GetComponent<Rigidbody2D>();
             Debug.LogFormat("Dir: {0} \n Bomb: {1}",dir, bomb);
