@@ -83,7 +83,7 @@ public class JetSword : Weapon
             AudioManager.a_Instance.AlyxJetSwordDashAudio();
             player.animator.SetTrigger("SwordDash");    
             isSwordDashing = true;
-            StartCoroutine(TakePlayerControl(0.5f));
+            TakePlayerControl(0.5f);
             canDash = false;
            
 
@@ -136,22 +136,21 @@ public class JetSword : Weapon
     }
     IEnumerator SlashAnimation()
     {
-        StartCoroutine(TakePlayerControl(0.5f));
+        TakePlayerControl(0.5f);
         player.animator.SetTrigger("JetSwordAttack");
         yield return new WaitForSeconds(0.3f);
         AudioManager.a_Instance.AlyxJetSwordAttackAudio();
     }
     IEnumerator SlashDashAnimation()
     {
-        StartCoroutine(TakePlayerControl(0.5f));
+        TakePlayerControl(0.5f);
         player.animator.SetTrigger("SwordDashAttack");
         yield return new WaitForSeconds(0.3f);
         AudioManager.a_Instance.AlyxJetSwordAttackAudio();
     }
-    protected override IEnumerator TakePlayerControl(float time)
+    protected override void TakePlayerControl(float time)
     {
-        StartCoroutine(base.TakePlayerControl(time));
-        yield break;
+        base.TakePlayerControl(time);
     }
     private void OnDisable()
     {

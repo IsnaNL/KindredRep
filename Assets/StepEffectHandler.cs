@@ -8,6 +8,6 @@ public class StepEffectHandler : MonoBehaviour
     public void StepEffectHandle()
     {
         EffectsManager reference = EffectsManager.e_Instance;
-        reference.CreateEffect(origin.position, reference.StepEffect, reference.transform);
+        reference.CreateEffect(origin.position, reference.StepEffect, reference.transform, !GameManager.instace.Player.islookingright);
     }
 }

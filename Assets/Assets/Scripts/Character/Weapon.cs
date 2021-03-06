@@ -32,7 +32,11 @@ public abstract class Weapon : MonoBehaviour
     {
         Gizmos.color = Color.white;
     }
-    protected virtual IEnumerator TakePlayerControl(float time)
+    protected virtual void TakePlayerControl(float time)
+    {
+        StartCoroutine(TakePlayerControlCoro(time));
+    }
+    private IEnumerator TakePlayerControlCoro(float time)
     {
         player.animator.speed = 1;
         player.canMove = false;

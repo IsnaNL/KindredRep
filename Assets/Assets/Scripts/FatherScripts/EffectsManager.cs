@@ -11,7 +11,11 @@ public class EffectsManager : MonoBehaviour
     public GameObject StepEffect;
     public void Start()
     {
-        e_Instance = this;   
+        e_Instance = this;
+    }
+    public void CreateEffect(Vector2 pos, GameObject Effect, Transform parent, bool flip)
+    {
+        Instantiate(Effect, pos, Quaternion.Euler(Vector3.forward * (flip ? 180 : 0)), parent);
     }
     public void CreateEffect(Vector2 pos, GameObject Effect, Transform parent)
     {

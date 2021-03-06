@@ -122,7 +122,7 @@ public class Pickaxe : Weapon
         {
             player.animator.SetTrigger("PickaxeAttack");
             Debug.Log("Pickaxe Attack");
-            StartCoroutine(TakePlayerControl(takeControlDur));
+            TakePlayerControl(takeControlDur);
         }
     }
     public IEnumerator CheckForWall()
@@ -139,10 +139,9 @@ public class Pickaxe : Weapon
             this.MobilityAbility();       
         }
     }
-    protected override IEnumerator TakePlayerControl(float time)
+    protected override void TakePlayerControl(float time)
     {
-        StartCoroutine(base.TakePlayerControl(time));
-        yield break;
+        base.TakePlayerControl(time);
     }    
     void OnDisable()
     {
