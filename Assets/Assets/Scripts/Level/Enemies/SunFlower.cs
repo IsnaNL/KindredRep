@@ -59,9 +59,8 @@ public class SunFlower : Health
         base.TakeDamage(damage);
         if (isHit && this.gameObject.activeInHierarchy)
         {
-            EffectsManager EMRef = EffectsManager.e_Instance;
-            EMRef.CreateEffect(transform.position, EMRef.BloodEffect);
-            EMRef.CreateEffect(transform.position, EMRef.hitImpact);
+            EffectsManager.instance.CreateEffect(effects.blood, transform);
+            EffectsManager.instance.CreateEffect(effects.hit, transform);
             blinkRed?.StartCoroutine(blinkRed?.BlinkRoutine());
         }
     

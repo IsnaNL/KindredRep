@@ -183,12 +183,12 @@ MonoBehaviour:
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 1024
-  RangeToTrigger: 0.3
+  RangeToTrigger: 0.2
   hitColldier: {fileID: 6071323934992092431}
   blinkRed: {fileID: 4430845293926253745}
   damage: 10
   delayBetweenTriggers: 0
-  SnapTrapTriggerConditionDelay: 4
+  SnapTrapTriggerConditionDelay: 2
   canTrigger: 0
   playerCaught: 0
 --- !u!50 &1939944067

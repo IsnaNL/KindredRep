@@ -7,7 +7,6 @@ public class CheckPointParticalTrigger : MonoBehaviour
     // Start is called before the first frame update
     private void OnTriggerExit2D(Collider2D collision)
     {
-        EffectsManager EMRef = EffectsManager.e_Instance;
-        EMRef.CreateEffect(collision.transform.position, EMRef.checkPointEffect, collision.transform);
+        EffectsManager.instance.CreateEffect(effects.alyx_checkpoint, GameManager.instance.Player.transform);
     }
 }

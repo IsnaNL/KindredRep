@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public List<Benny> BennyList;
-    public List<TrapCol> trapsList;
+    public List<NewSnapTrapScript> trapsList;
     public CharacterController2D Player;
     public JetSword weaponInit;
     public CameraFollow PlayerFollow;
@@ -29,18 +29,19 @@ public class GameManager : MonoBehaviour
         Player.Init();
         weaponInit = Player.GetComponentInChildren<JetSword>();
         BennyList = new List<Benny>();
-        trapsList = new List<TrapCol>();
+        trapsList = new List<NewSnapTrapScript>();
         BennyList.AddRange(FindObjectsOfType<Benny>());
-        trapsList.AddRange(FindObjectsOfType<TrapCol>());
+        trapsList.AddRange(FindObjectsOfType<NewSnapTrapScript>());
         weaponInit.Init();
         PlayerFollow.Init();
+        
         foreach (Benny b in BennyList)
         {
             b.Init();
             b.player = Player;
           
         }
-        foreach(TrapCol t in trapsList)
+        foreach(NewSnapTrapScript t in trapsList)
         {
             t.Init();
         }

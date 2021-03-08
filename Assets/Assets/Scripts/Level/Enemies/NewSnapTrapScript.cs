@@ -25,19 +25,20 @@ public class NewSnapTrapScript : Health
     {
         delayBetweenTriggers = SnapTrapTriggerConditionDelay;
         posForCheck = new Vector2(transform.position.x, transform.position.y - 0.7f);
+        canTrigger = true;
     }
     void Update()
     {
         CheckForTrapTriggerCondition();
-        if (delayBetweenTriggers <= SnapTrapTriggerConditionDelay)
-        {
-            canTrigger = false;
-            delayBetweenTriggers += Time.deltaTime;
-        }
-        else
-        {
-            canTrigger = true;
-        }
+        //if (delayBetweenTriggers <= SnapTrapTriggerConditionDelay)
+        //{
+        //    canTrigger = false;
+        //    delayBetweenTriggers += Time.deltaTime;
+        //}
+        //else
+        //{
+        //    canTrigger = true;
+        //}
     }
     public void CheckForTrapTriggerCondition()
     {
@@ -64,12 +65,14 @@ public class NewSnapTrapScript : Health
     }
     public void ExecuteSnapTrap()
     {
-        animator.SetTrigger("SnapTrapTrigger");   
+        animator.SetTrigger("SnapTrapTrigger");
+        canTrigger = false;
     }  
    
     public void BackToIdle()
     {
-        animator.SetTrigger("BackToIdle");     
+        animator.SetTrigger("BackToIdle");
+        canTrigger = true;
     }
     void ResetDelay()
     {

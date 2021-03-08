@@ -13,21 +13,16 @@ public class Shotgun : Weapon
     public bool IsShotgunKnockback;
     private bool blastTrigger;
 
-    public Transform BarrelPivot;
-    public Transform Barrel;
-    EffectsManager EMRef;
-
-    private SpriteRenderer GFX;
+    public Transform BarrelDown;
+    public Transform BarrelSide;
 
     public override void Init()
     {
         base.Init();
-        GFX = GameManager.instance.Player.GetComponentInChildren<SpriteRenderer>();
     }
     private void OnEnable()
     {
         MobilityAbilityCoolDownCurrentTime = MobilityAbilityCoolDown;
-        EMRef = EffectsManager.e_Instance;
     }
     public override void Attack()
     {
@@ -47,11 +42,11 @@ public class Shotgun : Weapon
     }
     void ShotgunShot()
     {
-        float dir = player.islookingright ? 0f : 180f;
         AudioManager.a_Instance.AlyxShotGunShotAudio();
-        GameObject bulletInstance = Instantiate(shotgunBullet, weaponCollider.position, Quaternion.identity);
         player.animator.SetTrigger("Shoot");
-        EMRef.CreateEffect(Barrel.position, EMRef.DragunAttack, null, !player.islookingright);
+        GameObject bulletInstance = Instantiate(shotgunBullet, weaponCollider.position, Quaternion.identity);
+        EffectsManager.instance.CreateEffect(effects.dragun_attack, weaponCollider, false);
+
         if (bulletInstance != null)
         {
             bulletInstance.GetComponent<OnBulletCollision>().velocity = ShotDir * bulletSpeed;
@@ -90,8 +85,8 @@ public class Shotgun : Weapon
         if (IsShotgunKnockback && blastTrigger)
         {
             AudioManager.a_Instance.AlyxShotGunMobilityAudio();
-            EMRef.CreateEffect(Barrel.position, EMRef.DragunMobility);
             player.velocity += Vector2.up * shotgunBlastForce;
+            EffectsManager.instance.CreateEffect(effects.dragun_mobility, BarrelDown);
         }
     }
     

@@ -77,6 +77,7 @@ public class Bomb : MonoBehaviour
                 }
             }
         }
+        EffectsManager.instance.CreateEffect(effects.bomb, myColl.transform, false);
         gameObject.SetActive(false);
     }
     private void OnDrawGizmosSelected()

@@ -267,9 +267,8 @@ public class CharacterController2D : Health
         base.TakeDamage(damage);
         if (isHit)
         {
-            EffectsManager EMRef = EffectsManager.e_Instance;
-            EMRef.CreateEffect(transform.position, EMRef.BloodEffect);
-            EMRef.CreateEffect(transform.position, EMRef.hitImpact);
+            EffectsManager.instance.CreateEffect(effects.blood, transform, false);
+            EffectsManager.instance.CreateEffect(effects.hit, transform, false);
             AudioManager.a_Instance.AlyxHitAudio();
             StartCoroutine(blinkRed?.BlinkRoutine());
             isHit = false;
@@ -288,7 +287,7 @@ public class CharacterController2D : Health
             {
                 velocity.y = 0;
             }
-            Debug.Log("Ceilinghit");
+
         }
         
     }

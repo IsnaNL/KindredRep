@@ -53,6 +53,7 @@ MonoBehaviour:
   levelgenerator: {fileID: 7515731041012343369}
   curCheckPoint: {fileID: 0}
   uiOverlay: {fileID: 0}
+  effectsManager: {fileID: 0}
 --- !u!1001 &927297240264904136
 PrefabInstance:
   m_ObjectHideFlags: 0

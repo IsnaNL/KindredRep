@@ -174,9 +174,8 @@ public class Enemy : Health
                     velocity += new Vector2(hitKnockBack * Time.deltaTime, 0f);
 
                 }
-                EffectsManager EMRef = EffectsManager.e_Instance;
-                EMRef.CreateEffect(transform.position, EMRef.BloodEffect);
-                EMRef.CreateEffect(transform.position, EMRef.hitImpact);
+                EffectsManager.instance.CreateEffect(effects.blood, transform);
+                EffectsManager.instance.CreateEffect(effects.hit, transform);
 
 
                 isHit = false;
