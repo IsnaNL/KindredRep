@@ -58,14 +58,6 @@ public class Bomb : MonoBehaviour
                 }
                 else
                 {
-                    hit = Physics2D.Raycast(bombCenter, direction, direction.magnitude, HitLayerMask);
-                }
-                if (hit)
-                {
-
-                }
-                {
-                    //Debug.Log(hit.transform.name + " " + (bool)hit);
                     if (isParent)
                     {
                         item.gameObject.GetComponentInParent<Health>().TakeDamage(Damage);
@@ -75,6 +67,7 @@ public class Bomb : MonoBehaviour
                         item.gameObject.GetComponent<Health>().TakeDamage(Damage);
                     }
                 }
+                
             }
         }
         EffectsManager.instance.CreateEffect(Effects.bomb, myColl.transform, false);
