@@ -45,7 +45,7 @@ public class Shotgun : Weapon
         AudioManager.a_Instance.AlyxShotGunShotAudio();
         player.animator.SetTrigger("Shoot");
         GameObject bulletInstance = Instantiate(shotgunBullet, weaponCollider.position, Quaternion.identity);
-        EffectsManager.instance.CreateEffect(effects.dragun_attack, weaponCollider, false);
+        EffectsManager.instance.CreateEffect(Effects.dragun_attack, weaponCollider, false);
 
         if (bulletInstance != null)
         {
@@ -86,7 +86,7 @@ public class Shotgun : Weapon
         {
             AudioManager.a_Instance.AlyxShotGunMobilityAudio();
             player.velocity += Vector2.up * shotgunBlastForce;
-            EffectsManager.instance.CreateEffect(effects.dragun_mobility, BarrelDown);
+            EffectsManager.instance.CreateEffect(Effects.dragun_mobility, BarrelDown);
         }
     }
     

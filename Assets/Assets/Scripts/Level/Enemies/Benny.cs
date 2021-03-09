@@ -58,8 +58,8 @@ public class Benny : Health
         base.TakeDamage(damage);
         if (isHit)
         {
-            EffectsManager.instance.CreateEffect(effects.blood, transform);
-            EffectsManager.instance.CreateEffect(effects.hit, transform);
+            EffectsManager.instance.CreateEffect(Effects.blood, transform);
+            EffectsManager.instance.CreateEffect(Effects.hit, transform);
 
             if (player.transform.position.x >= transform.position.x)
             {

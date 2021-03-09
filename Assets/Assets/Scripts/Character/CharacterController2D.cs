@@ -267,8 +267,8 @@ public class CharacterController2D : Health
         base.TakeDamage(damage);
         if (isHit)
         {
-            EffectsManager.instance.CreateEffect(effects.blood, transform, false);
-            EffectsManager.instance.CreateEffect(effects.hit, transform, false);
+            EffectsManager.instance.CreateEffect(Effects.blood, transform, false);
+            EffectsManager.instance.CreateEffect(Effects.hit, transform, false);
             AudioManager.a_Instance.AlyxHitAudio();
             StartCoroutine(blinkRed?.BlinkRoutine());
             isHit = false;

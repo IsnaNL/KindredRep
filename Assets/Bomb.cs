@@ -65,7 +65,7 @@ public class Bomb : MonoBehaviour
 
                 }
                 {
-                    Debug.Log(hit.transform.name + " " + (bool)hit);
+                    //Debug.Log(hit.transform.name + " " + (bool)hit);
                     if (isParent)
                     {
                         item.gameObject.GetComponentInParent<Health>().TakeDamage(Damage);
@@ -77,7 +77,7 @@ public class Bomb : MonoBehaviour
                 }
             }
         }
-        EffectsManager.instance.CreateEffect(effects.bomb, myColl.transform, false);
+        EffectsManager.instance.CreateEffect(Effects.bomb, myColl.transform, false);
         gameObject.SetActive(false);
     }
     private void OnDrawGizmosSelected()

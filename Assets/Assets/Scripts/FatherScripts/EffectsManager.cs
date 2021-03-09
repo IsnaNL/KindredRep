@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum effects
+public enum Effects
 {
     blood, hit, alyx_checkpoint, alyx_step, dragun_attack, dragun_mobility, bomb
 }
@@ -27,7 +27,7 @@ public class EffectsManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public void CreateEffect(effects effect, Transform parent)
+    public void CreateEffect(Effects effect, Transform parent)
     {
         Transform tempGO = GetFromEnum(effect).transform;
         Instantiate(tempGO.gameObject, parent);
@@ -35,7 +35,7 @@ public class EffectsManager : MonoBehaviour
         tempGO.localRotation = Quaternion.identity;
         //tempGO.scale = Vector2.one;
     }
-    public void CreateEffect(effects effect, Transform parent, bool isBound)
+    public void CreateEffect(Effects effect, Transform parent, bool isBound)
     {
         if (isBound)
         {
@@ -43,21 +43,21 @@ public class EffectsManager : MonoBehaviour
         }
         else
         {
-            Transform tempGO = Instantiate(GetFromEnum(effect), parent).transform;
+            Transform tempGO = Instantiate(GetFromEnum(effect).transform, parent.transform.position,Quaternion.identity);
             tempGO.SetParent(null);
         }
     }
-    private GameObject GetFromEnum(effects effect)
+    private GameObject GetFromEnum(Effects effect)
     {
         switch (effect)
         {
-            case effects.blood: return Blood;
-            case effects.hit: return Hit;
-            case effects.alyx_checkpoint: return AlyxCheckpoint;
-            case effects.alyx_step: return AlyxStep;
-            case effects.dragun_attack: return DragunAttack;
-            case effects.dragun_mobility: return DragunMobility;
-            case effects.bomb: return Bomb;
+            case Effects.blood: return Blood;
+            case Effects.hit: return Hit;
+            case Effects.alyx_checkpoint: return AlyxCheckpoint;
+            case Effects.alyx_step: return AlyxStep;
+            case Effects.dragun_attack: return DragunAttack;
+            case Effects.dragun_mobility: return DragunMobility;
+            case Effects.bomb: return Bomb;
             default: return null;
         }
     }

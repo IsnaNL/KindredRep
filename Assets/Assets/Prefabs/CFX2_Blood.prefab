@@ -52,7 +52,7 @@ ParticleSystem:
   looping: 0
   prewarm: 0
   playOnAwake: 1
-  useUnscaledTime: 0
+  useUnscaledTime: 1
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
   startDelay:
@@ -108,7 +108,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
   randomSeed: 0
@@ -4754,7 +4754,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c2f2f34832b0d84bb2ed488a348d540, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggered: 0
 --- !u!1 &100002
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ public class StepEffectHandler : MonoBehaviour
         {
             origin.rotation = Quaternion.Euler(GameManager.instance.Player.velocity.normalized);
 
-            EffectsManager.instance.CreateEffect(effects.alyx_step, origin);
+            EffectsManager.instance.CreateEffect(Effects.alyx_step, origin);
         }
     }
 }
